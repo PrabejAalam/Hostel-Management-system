@@ -38,6 +38,14 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(226, 232, 240, 0.8);
         }
+        /* Full Page Background Image Styling for Homepage with BMSIT Campus Image */
+        .full-page-bg {
+            background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.82), rgba(30, 27, 75, 0.88)), url('https://upload.wikimedia.org/wikipedia/commons/e/e2/BMSIT_Entrance.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: calc(100vh - 5rem);
+        }
         @media print {
             .no-print { display: none !important; }
             .print-only { display: block !important; }
@@ -77,22 +85,22 @@
     </div>
 
     <!-- MAIN CONTAINER -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="flex-grow w-full mx-auto">
 
         <!-- ========================================== -->
         <!-- 1. HOMEPAGE & DUAL LOGIN PORTAL -->
         <!-- ========================================== -->
-        <div id="view-home" class="space-y-12">
-            <!-- Hero Banner -->
-            <div class="text-center max-w-3xl mx-auto space-y-3 pt-4">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800">
+        <div id="view-home" class="full-page-bg py-10 px-4 sm:px-6 lg:px-8 space-y-10 text-white">
+            <!-- Hero Title -->
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md text-white border border-white/30">
                     <i class="fa-solid fa-shield-halved mr-1.5"></i> Authorized Campus Living Portal
                 </span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight drop-shadow-md">
                     Smart Hostel Management & Student Care
                 </h2>
-                <p class="text-slate-600 text-base">
-                    Seamless attendance logging, rapid grievance redressements, digital gate passes, and double-seater room allocations.
+                <p class="text-slate-200 text-sm sm:text-base leading-relaxed">
+                    Seamless attendance logging, rapid grievance redressal, digital gate passes, and double-seater room allocations.
                 </p>
             </div>
 
@@ -100,7 +108,7 @@
             <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 
                 <!-- Student Portal Card -->
-                <div class="glass-card rounded-2xl p-8 hover:shadow-xl transition-all duration-300 border-t-4 border-indigo-600 flex flex-col justify-between">
+                <div class="bg-white/95 text-slate-800 backdrop-blur-xl rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 border-t-4 border-indigo-600 flex flex-col justify-between shadow-xl">
                     <div>
                         <div class="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mb-6">
                             <i class="fa-solid fa-user-graduate"></i>
@@ -117,7 +125,7 @@
                 </div>
 
                 <!-- Warden Portal Card -->
-                <div class="glass-card rounded-2xl p-8 hover:shadow-xl transition-all duration-300 border-t-4 border-purple-600 flex flex-col justify-between">
+                <div class="bg-white/95 text-slate-800 backdrop-blur-xl rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 border-t-4 border-purple-600 flex flex-col justify-between shadow-xl">
                     <div>
                         <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mb-6">
                             <i class="fa-solid fa-user-shield"></i>
@@ -136,7 +144,7 @@
             </div>
 
             <!-- NEW REGISTRATION SECTION -->
-            <div class="max-w-4xl mx-auto bg-white rounded-2xl p-8 border border-slate-200 shadow-sm text-center">
+            <div class="max-w-4xl mx-auto bg-white/95 text-slate-800 backdrop-blur-xl rounded-2xl p-8 border border-white/40 shadow-xl text-center">
                 <div class="max-w-md mx-auto space-y-4">
                     <div class="inline-flex items-center justify-center w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full mb-1">
                         <i class="fa-solid fa-id-card text-xl"></i>
@@ -160,20 +168,20 @@
             <div class="max-w-4xl mx-auto">
                 <div class="flex items-center justify-between mb-6">
                     <div>
-                        <h3 class="text-xl font-bold text-slate-900">Hostel Help & Emergency Directory</h3>
-                        <p class="text-slate-500 text-xs">Direct technical support and emergency assistance</p>
+                        <h3 class="text-xl font-bold text-white">Hostel Help & Emergency Directory</h3>
+                        <p class="text-slate-300 text-xs">Direct technical support and emergency assistance</p>
                     </div>
-                    <span class="px-3 py-1 bg-red-100 text-red-700 font-bold text-xs rounded-full flex items-center">
+                    <span class="px-3 py-1 bg-red-500/20 border border-red-400/30 text-red-200 font-bold text-xs rounded-full flex items-center">
                         <i class="fa-solid fa-phone-flip mr-1.5 animate-pulse"></i> 24/7 Helpline Active
                     </span>
                 </div>
 
-                <div id="emergency-contacts-grid" class="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+                <div id="emergency-contacts-grid" class="grid sm:grid-cols-2 md:grid-cols-4 gap-4 text-slate-800">
                     <!-- Dynamic Contact Cards Rendered Here -->
                 </div>
 
-                <div class="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 flex items-start space-x-3">
-                    <i class="fa-solid fa-triangle-exclamation text-amber-600 text-base mt-0.5"></i>
+                <div class="mt-4 p-4 bg-amber-500/10 border border-amber-400/30 backdrop-blur-md rounded-xl text-xs text-amber-200 flex items-start space-x-3">
+                    <i class="fa-solid fa-triangle-exclamation text-amber-400 text-base mt-0.5"></i>
                     <div>
                         <span class="font-bold">Emergency Notice:</span> For immediate life-threatening medical or fire safety emergencies, please dial local national emergency services (112/108) immediately alongside calling hostel warden staff.
                     </div>
@@ -598,41 +606,56 @@
                         <p id="wdash-sub" class="text-xs text-purple-200 mt-1">Emp ID: - | Assigned: -</p>
                     </div>
                 </div>
-                <div class="flex items-center space-x-3">
+                <div class="flex items-center space-x-3 flex-wrap gap-2">
+                    <button onclick="app.showOutboxModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-semibold text-xs transition flex items-center">
+                        <i class="fa-solid fa-paper-plane mr-1.5"></i> Parent SMS/Email Outbox (<span id="outbox-count">0</span>)
+                    </button>
                     <button onclick="app.showManageContactsModal()" class="px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white rounded-xl font-semibold text-xs transition">
-                        <i class="fa-solid fa-address-book mr-1.5"></i> Manage Emergency Contacts
+                        <i class="fa-solid fa-address-book mr-1.5"></i> Emergency Contacts
                     </button>
                 </div>
             </div>
 
             <!-- Warden Navigation Tabs -->
-            <div class="flex border-b border-slate-200 space-x-6 overflow-x-auto pb-1">
+            <div class="flex border-b border-slate-200 space-x-4 overflow-x-auto pb-1">
                 <button id="wtab-btn-attendance" onclick="app.switchWardenTab('attendance')" class="pb-3 border-b-2 border-purple-600 font-bold text-purple-600 text-sm whitespace-nowrap">
-                    <i class="fa-solid fa-clipboard-user mr-1.5"></i> Night Roll Call
+                    <i class="fa-solid fa-clipboard-user mr-1.5"></i> Daily Roll Call
+                </button>
+                <button id="wtab-btn-directory" onclick="app.switchWardenTab('directory')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
+                    <i class="fa-solid fa-users text-sm mr-1.5"></i> Student Directory & Edit
+                </button>
+                <button id="wtab-btn-occupancy" onclick="app.switchWardenTab('occupancy')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
+                    <i class="fa-solid fa-bed text-sm mr-1.5"></i> Room Occupancy & Seater
+                </button>
+                <button id="wtab-btn-gate" onclick="app.switchWardenTab('gate')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
+                    <i class="fa-solid fa-person-walking-arrow-right text-sm mr-1.5"></i> Gate Movement Log
                 </button>
                 <button id="wtab-btn-approvals" onclick="app.switchWardenTab('approvals')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
-                    <i class="fa-solid fa-user-check mr-1.5"></i> Student Approvals <span id="badge-pending-reg" class="ml-1 px-1.5 py-0.5 text-xs bg-red-500 text-white rounded-full">0</span>
+                    <i class="fa-solid fa-user-check mr-1.5"></i> Registrations <span id="badge-pending-reg" class="ml-1 px-1.5 py-0.5 text-xs bg-red-500 text-white rounded-full">0</span>
                 </button>
                 <button id="wtab-btn-leaves" onclick="app.switchWardenTab('leaves')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
-                    <i class="fa-solid fa-plane-departure mr-1.5"></i> Leave Requests <span id="badge-pending-leave" class="ml-1 px-1.5 py-0.5 text-xs bg-amber-500 text-white rounded-full">0</span>
+                    <i class="fa-solid fa-plane-departure mr-1.5"></i> Leaves <span id="badge-pending-leave" class="ml-1 px-1.5 py-0.5 text-xs bg-amber-500 text-white rounded-full">0</span>
                 </button>
                 <button id="wtab-btn-grievances" onclick="app.switchWardenTab('grievances')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
-                    <i class="fa-solid fa-headset mr-1.5"></i> Grievances & Anti-Ragging
+                    <i class="fa-solid fa-headset mr-1.5"></i> Grievances
                 </button>
                 <button id="wtab-btn-replacement" onclick="app.switchWardenTab('replacement')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
-                    <i class="fa-solid fa-users-gear mr-1.5"></i> Warden Replacement & Audit
+                    <i class="fa-solid fa-users-gear mr-1.5"></i> Replacement & Audit
                 </button>
             </div>
 
             <!-- TAB 1: NIGHT ATTENDANCE -->
             <div id="wtab-content-attendance" class="space-y-6">
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                    <div class="flex items-center justify-between">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div>
-                            <h3 class="font-bold text-slate-900 text-lg">Warden Night Roll Call & Parent Alerts</h3>
-                            <p class="text-slate-500 text-xs">Confirming an absence triggers immediate SMS/Email alert triggers to Parents.</p>
+                            <h3 class="font-bold text-slate-900 text-lg">Warden Daily Roll Call & Retroactive Editing</h3>
+                            <p class="text-slate-500 text-xs">Select any historical or present date, take attendance, and submit roll call.</p>
                         </div>
-                        <input type="date" id="attendance-date" value="2026-10-29" class="px-3 py-1.5 border rounded-xl text-xs font-bold">
+                        <div class="flex items-center space-x-3">
+                            <label class="text-xs font-bold text-slate-700">Roll Call Date:</label>
+                            <input type="date" id="attendance-date" onchange="app.renderAttendanceTable()" class="px-3 py-1.5 border rounded-xl text-xs font-bold">
+                        </div>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -642,8 +665,8 @@
                                     <th class="p-3">Student Name / USN</th>
                                     <th class="p-3">Block / Room</th>
                                     <th class="p-3">Parent Contacts</th>
-                                    <th class="p-3">Attendance Status</th>
-                                    <th class="p-3 text-right">Confirm Absence Action</th>
+                                    <th class="p-3">Roll Call Status</th>
+                                    <th class="p-3 text-right">Attendance Action</th>
                                 </tr>
                             </thead>
                             <tbody id="attendance-table-body" class="divide-y divide-slate-100">
@@ -651,10 +674,77 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="flex justify-end pt-3 border-t">
+                        <button onclick="app.submitDailyRollCall()" class="px-6 py-2.5 bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs rounded-xl shadow">
+                            <i class="fa-solid fa-circle-check mr-1.5"></i> Submit & Lock Roll Call for Selected Date
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <!-- TAB 2: PENDING REGISTRATIONS -->
+            <!-- TAB 2: STUDENT DIRECTORY & EDIT -->
+            <div id="wtab-content-directory" class="hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-bold text-slate-900 text-lg">Registered Student Directory</h3>
+                        <span class="text-xs text-slate-500">Warden privileges permit editing and correcting student profiles.</span>
+                    </div>
+                    <div id="student-directory-grid" class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <!-- Dynamic Student Cards -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: ROOM OCCUPANCY & SEATER INSPECTOR -->
+            <div id="wtab-content-occupancy" class="hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-900 text-lg">Room Occupancy & Seater Map</h3>
+                    <div id="room-occupancy-list" class="space-y-4">
+                        <!-- Dynamic Single/Double Seater Cards -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: GATE MOVEMENT LOG -->
+            <div id="wtab-content-gate" class="hidden space-y-6">
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="md:col-span-1 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-900 text-base">Record Gate Outing</h3>
+                        <form onsubmit="app.handleGateMovement(event)" class="space-y-3 text-xs">
+                            <div>
+                                <label class="block font-bold mb-1">Select Approved Student *</label>
+                                <select id="gate-student-usn" required class="w-full p-2 border rounded-lg">
+                                    <!-- Options populated by JS -->
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-bold mb-1">Outing Type *</label>
+                                <select id="gate-type" required class="w-full p-2 border rounded-lg">
+                                    <option value="Local Outing">Local Outing (City)</option>
+                                    <option value="Outstation Leave">Outstation Leave</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-bold mb-1">Destination Address *</label>
+                                <input type="text" id="gate-dest" required placeholder="Destination address..." class="w-full p-2 border rounded-lg">
+                            </div>
+                            <button type="submit" class="w-full py-2.5 bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl shadow">
+                                <i class="fa-solid fa-arrow-right-from-bracket mr-1"></i> Mark Student OUT
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="md:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-900 text-base">Live Gate Movement Tracker</h3>
+                        <div id="gate-movement-table" class="space-y-3 max-h-96 overflow-y-auto">
+                            <!-- Gate Logs -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: PENDING REGISTRATIONS -->
             <div id="wtab-content-approvals" class="hidden space-y-6">
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
                     <h3 class="font-bold text-slate-900 text-lg">Pending Student Hostel Registrations</h3>
@@ -664,7 +754,7 @@
                 </div>
             </div>
 
-            <!-- TAB 3: LEAVE REQUESTS & APPROVALS -->
+            <!-- TAB 6: LEAVE REQUESTS & APPROVALS -->
             <div id="wtab-content-leaves" class="hidden space-y-6">
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
                     <h3 class="font-bold text-slate-900 text-lg">Leave Applications Approval Panel</h3>
@@ -674,7 +764,7 @@
                 </div>
             </div>
 
-            <!-- TAB 4: GRIEVANCES & ANTI-RAGGING -->
+            <!-- TAB 7: GRIEVANCES & ANTI-RAGGING -->
             <div id="wtab-content-grievances" class="hidden space-y-6">
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
                     <h3 class="font-bold text-slate-900 text-lg">Grievances Desk & Confidential Ragging Logs</h3>
@@ -684,7 +774,7 @@
                 </div>
             </div>
 
-            <!-- TAB 5: WARDEN REPLACEMENT & AUDIT LOGS -->
+            <!-- TAB 8: WARDEN REPLACEMENT & AUDIT LOGS -->
             <div id="wtab-content-replacement" class="hidden space-y-6">
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6">
                     <div class="border-b pb-4">
@@ -713,10 +803,10 @@
     <!-- ========================================== -->
 
     <!-- STUDENT LOGIN MODAL -->
-    <div id="student-login-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+    <div id="student-login-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white/95 backdrop-blur-lg rounded-2xl max-w-md w-full p-6 shadow-2xl border border-white/50 space-y-4">
             <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="font-bold text-slate-900 text-lg">Student Portal Authentication</h3>
+                <h3 class="font-bold text-slate-900 text-lg flex items-center"><i class="fa-solid fa-user-graduate text-indigo-600 mr-2"></i> Student Login</h3>
                 <button onclick="app.hideModal('student-login-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <form onsubmit="app.handleStudentLogin(event)" class="space-y-4">
@@ -743,10 +833,10 @@
     </div>
 
     <!-- WARDEN LOGIN MODAL -->
-    <div id="warden-login-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+    <div id="warden-login-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white/95 backdrop-blur-lg rounded-2xl max-w-md w-full p-6 shadow-2xl border border-white/50 space-y-4">
             <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="font-bold text-slate-900 text-lg">Warden Portal Authentication</h3>
+                <h3 class="font-bold text-slate-900 text-lg flex items-center"><i class="fa-solid fa-user-shield text-purple-600 mr-2"></i> Warden Login</h3>
                 <button onclick="app.hideModal('warden-login-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <form onsubmit="app.handleWardenLogin(event)" class="space-y-4">
@@ -832,11 +922,118 @@
         </div>
     </div>
 
+    <!-- WARDEN EDIT STUDENT MODAL -->
+    <div id="edit-student-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="font-bold text-slate-900 text-lg">Edit Student Record (Warden Portal)</h3>
+                <button onclick="app.hideModal('edit-student-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form onsubmit="app.saveStudentEdit(event)" class="space-y-4 text-xs">
+                <input type="hidden" id="edit-usn-original">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Full Name</label>
+                        <input type="text" id="edit-name" required class="w-full p-2 border rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">USN / Reg No</label>
+                        <input type="text" id="edit-usn" required class="w-full p-2 border rounded-lg uppercase">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Hostel Management</label>
+                        <select id="edit-hostel" onchange="app.updateBlockDropdown(this.value, 'edit-block')" class="w-full p-2 border rounded-lg">
+                            <option value="Om Sai Hostel">Om Sai Hostel Management</option>
+                            <option value="Comfort World Hostel">Comfort World Hostel Management</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Block</label>
+                        <select id="edit-block" class="w-full p-2 border rounded-lg"></select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Room No</label>
+                        <input type="text" id="edit-room" required class="w-full p-2 border rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Seater Capacity</label>
+                        <select id="edit-sharing" class="w-full p-2 border rounded-lg">
+                            <option value="Double Seater">Double Seater</option>
+                            <option value="Single Seater">Single Seater</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Student Phone</label>
+                        <input type="tel" id="edit-phone" required class="w-full p-2 border rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Student Email</label>
+                        <input type="email" id="edit-email" required class="w-full p-2 border rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Father's Name & Contact</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" id="edit-fname" required placeholder="Father Name" class="w-full p-2 border rounded-lg">
+                            <input type="tel" id="edit-fphone" required placeholder="Phone" class="w-full p-2 border rounded-lg">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Academic Year</label>
+                        <select id="edit-year" class="w-full p-2 border rounded-lg">
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year">3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Permanent Residential Address</label>
+                    <textarea id="edit-address" rows="2" class="w-full p-2 border rounded-lg"></textarea>
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="app.hideModal('edit-student-modal')" class="px-4 py-2 border rounded-lg">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-purple-700 text-white rounded-lg font-bold">Save Student Profile Edits</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- OUTBOX SMS/EMAIL SIMULATION MODAL -->
+    <div id="outbox-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 space-y-4 max-h-[85vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b pb-3">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-paper-plane text-emerald-600 text-xl"></i>
+                    <h3 class="font-bold text-slate-900 text-lg">Dispatched Parent SMS & Email Outbox</h3>
+                </div>
+                <button onclick="app.hideModal('outbox-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <p class="text-xs text-slate-500">Live payload log generated when absence roll calls are triggered or leave approvals are granted.</p>
+            <div id="outbox-list" class="space-y-3 font-mono text-xs">
+                <!-- Dynamic Logs -->
+            </div>
+        </div>
+    </div>
+
+    <!-- STUDENT ACTIVITY TIMELINE MODAL -->
+    <div id="timeline-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 space-y-4 max-h-[85vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="font-bold text-slate-900 text-lg" id="timeline-student-title">Student Activity Timeline</h3>
+                <button onclick="app.hideModal('timeline-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div id="timeline-content" class="space-y-3 text-xs">
+                <!-- Activity Logs -->
+            </div>
+        </div>
+    </div>
+
     <!-- APPLICATION ENGINE JAVASCRIPT -->
     <script>
         // Global Application Database State (Initialized with Mock Data & LocalStorage)
         const AppState = {
-            currentUser: null, // { role: 'student' | 'warden', data: ... }
+            currentUser: null,
             students: JSON.parse(localStorage.getItem('ch_students')) || [
                 {
                     usn: '1MS23CS01',
@@ -883,6 +1080,29 @@
                     password: '123',
                     status: 'Approved',
                     photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'
+                },
+                {
+                    usn: '1BY24CS220',
+                    name: 'Rahul Verma',
+                    year: '1st Year',
+                    gender: 'Male',
+                    age: 19,
+                    blood: 'B+',
+                    phone: '+91 98333 44556',
+                    email: 'rahul@gmail.com',
+                    hostel: 'Om Sai Hostel',
+                    block: 'Block 1',
+                    room: 'Room 303',
+                    sharing: 'Single Seater',
+                    fname: 'Suresh Verma',
+                    fphone: '+91 85211 73550',
+                    mname: 'Rita Verma',
+                    gname: '',
+                    gphone: '',
+                    address: '88 MG Road, Mysuru',
+                    password: '123',
+                    status: 'Approved',
+                    photo: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150'
                 }
             ],
             wardens: JSON.parse(localStorage.getItem('ch_wardens')) || [
@@ -901,6 +1121,9 @@
             complaints: JSON.parse(localStorage.getItem('ch_complaints')) || [],
             leaves: JSON.parse(localStorage.getItem('ch_leaves')) || [],
             attendance: JSON.parse(localStorage.getItem('ch_attendance')) || {},
+            outbox: JSON.parse(localStorage.getItem('ch_outbox')) || [],
+            gateLogs: JSON.parse(localStorage.getItem('ch_gate')) || [],
+            timeline: JSON.parse(localStorage.getItem('ch_timeline')) || {},
             contacts: JSON.parse(localStorage.getItem('ch_contacts')) || [
                 { title: 'Chief Hostel Warden', name: 'Dr. K. V. Raman', phone: '+91 99000 11223' },
                 { title: 'Campus Plumber Services', name: 'Mr. Shivu', phone: '+91 98450 12345' },
@@ -912,13 +1135,14 @@
             ]
         };
 
-        // App Controller
         const app = {
             init() {
                 this.renderUserStatusBar();
                 this.renderContacts();
                 this.updateBlockDropdown('Om Sai Hostel', 'sreg-block');
                 this.updateBlockDropdown('Om Sai Hostel', 'wreg-block');
+                const dateEl = document.getElementById('attendance-date');
+                if (dateEl) dateEl.value = new Date().toISOString().split('T')[0];
                 this.saveState();
             },
 
@@ -928,50 +1152,40 @@
                 localStorage.setItem('ch_complaints', JSON.stringify(AppState.complaints));
                 localStorage.setItem('ch_leaves', JSON.stringify(AppState.leaves));
                 localStorage.setItem('ch_attendance', JSON.stringify(AppState.attendance));
+                localStorage.setItem('ch_outbox', JSON.stringify(AppState.outbox));
+                localStorage.setItem('ch_gate', JSON.stringify(AppState.gateLogs));
+                localStorage.setItem('ch_timeline', JSON.stringify(AppState.timeline));
                 localStorage.setItem('ch_contacts', JSON.stringify(AppState.contacts));
                 localStorage.setItem('ch_audits', JSON.stringify(AppState.auditLogs));
+            },
+
+            logActivity(usn, msg) {
+                if (!AppState.timeline[usn]) AppState.timeline[usn] = [];
+                AppState.timeline[usn].unshift({ time: new Date().toLocaleString(), text: msg });
+                this.saveState();
             },
 
             toast(msg, type = 'success') {
                 const toastEl = document.getElementById('toast');
                 const contentEl = document.getElementById('toast-content');
                 const msgEl = document.getElementById('toast-msg');
-
+                if (!toastEl || !contentEl || !msgEl) return;
                 msgEl.innerText = msg;
                 contentEl.className = `flex items-center space-x-3 px-5 py-3.5 rounded-xl shadow-2xl text-white text-sm font-medium ${type === 'success' ? 'bg-emerald-600' : 'bg-red-600'}`;
-                
                 toastEl.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
-                setTimeout(() => {
-                    toastEl.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
-                }, 3000);
+                setTimeout(() => { toastEl.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none'); }, 3000);
             },
 
-            showHome() {
-                this.hideAllViews();
-                document.getElementById('view-home').classList.remove('hidden');
-            },
-
-            showStudentRegForm() {
-                this.hideAllViews();
-                document.getElementById('view-student-reg').classList.remove('hidden');
-            },
-
-            showWardenRegForm() {
-                this.hideAllViews();
-                document.getElementById('view-warden-reg').classList.remove('hidden');
-            },
-
-            hideAllViews() {
-                ['view-home', 'view-student-reg', 'view-warden-reg', 'view-student-dash', 'view-warden-dash'].forEach(id => {
-                    document.getElementById(id).classList.add('hidden');
-                });
-            },
-
-            showModal(id) { document.getElementById(id).classList.remove('hidden'); },
-            hideModal(id) { document.getElementById(id).classList.add('hidden'); },
+            showHome() { this.hideAllViews(); const el = document.getElementById('view-home'); if (el) el.classList.remove('hidden'); },
+            showStudentRegForm() { this.hideAllViews(); const el = document.getElementById('view-student-reg'); if (el) el.classList.remove('hidden'); },
+            showWardenRegForm() { this.hideAllViews(); const el = document.getElementById('view-warden-reg'); if (el) el.classList.remove('hidden'); },
+            hideAllViews() { ['view-home', 'view-student-reg', 'view-warden-reg', 'view-student-dash', 'view-warden-dash'].forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('hidden'); }); },
+            showModal(id) { const el = document.getElementById(id); if (el) el.classList.remove('hidden'); },
+            hideModal(id) { const el = document.getElementById(id); if (el) el.classList.add('hidden'); },
 
             updateBlockDropdown(hostelName, targetSelectId) {
                 const select = document.getElementById(targetSelectId);
+                if (!select) return;
                 select.innerHTML = '';
                 let blocks = [];
                 if (hostelName === 'Om Sai Hostel') {
@@ -990,8 +1204,9 @@
             handlePhotoPreview(input, containerId) {
                 if (input.files && input.files[0]) {
                     const reader = new FileReader();
-                    reader.onload = function(e) {
-                        document.getElementById(containerId).innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover rounded-xl">`;
+                    reader.onload = function(e) { 
+                        const container = document.getElementById(containerId);
+                        if (container) container.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover rounded-xl">`; 
                     }
                     reader.readAsDataURL(input.files[0]);
                 }
@@ -999,6 +1214,7 @@
 
             renderUserStatusBar() {
                 const container = document.getElementById('user-status-bar');
+                if (!container) return;
                 if (!AppState.currentUser) {
                     container.innerHTML = `
                         <button onclick="app.showModal('student-login-modal')" class="text-xs font-semibold px-3 py-2 rounded-lg bg-indigo-700 hover:bg-indigo-600 transition">Student Login</button>
@@ -1019,85 +1235,47 @@
                 }
             },
 
-            logout() {
-                AppState.currentUser = null;
-                this.renderUserStatusBar();
-                this.showHome();
-                this.toast('Logged out successfully');
-            },
+            logout() { AppState.currentUser = null; this.renderUserStatusBar(); this.showHome(); this.toast('Logged out successfully'); },
 
-            // ---------------- STUDENT REGISTRATION ----------------
             handleStudentReg(e) {
                 e.preventDefault();
                 const usn = document.getElementById('sreg-usn').value.trim().toUpperCase();
-                
-                if (AppState.students.some(s => s.usn === usn)) {
-                    this.toast('College USN already registered!', 'error');
-                    return;
-                }
-
+                if (AppState.students.some(s => s.usn === usn)) { this.toast('College USN already registered!', 'error'); return; }
                 const pass1 = document.getElementById('sreg-pass').value;
-                const pass2 = document.getElementById('sreg-pass2').value;
-                if (pass1 !== pass2) {
-                    this.toast('Passwords do not match!', 'error');
-                    return;
-                }
-
+                if (pass1 !== document.getElementById('sreg-pass2').value) { this.toast('Passwords do not match!', 'error'); return; }
                 const photoImg = document.querySelector('#sreg-preview-container img');
 
                 const newStudent = {
-                    usn: usn,
-                    name: document.getElementById('sreg-name').value,
-                    year: document.getElementById('sreg-year').value,
-                    gender: document.getElementById('sreg-gender').value,
-                    age: document.getElementById('sreg-age').value,
-                    blood: document.getElementById('sreg-blood').value,
-                    phone: document.getElementById('sreg-phone').value,
-                    email: document.getElementById('sreg-email').value,
-                    hostel: document.getElementById('sreg-hostel').value,
-                    block: document.getElementById('sreg-block').value,
-                    room: document.getElementById('sreg-room').value,
-                    sharing: document.getElementById('sreg-sharing').value,
-                    fname: document.getElementById('sreg-fname').value,
-                    fphone: document.getElementById('sreg-fphone').value,
-                    mname: document.getElementById('sreg-mname').value,
-                    gname: document.getElementById('sreg-gname').value,
-                    gphone: document.getElementById('sreg-gphone').value,
-                    address: document.getElementById('sreg-address').value,
-                    password: pass1,
-                    status: 'Pending Verification',
+                    usn: usn, name: document.getElementById('sreg-name').value, year: document.getElementById('sreg-year').value,
+                    gender: document.getElementById('sreg-gender').value, age: document.getElementById('sreg-age').value,
+                    blood: document.getElementById('sreg-blood').value, phone: document.getElementById('sreg-phone').value,
+                    email: document.getElementById('sreg-email').value, hostel: document.getElementById('sreg-hostel').value,
+                    block: document.getElementById('sreg-block').value, room: document.getElementById('sreg-room').value,
+                    sharing: document.getElementById('sreg-sharing').value, fname: document.getElementById('sreg-fname').value,
+                    fphone: document.getElementById('sreg-fphone').value, mname: document.getElementById('sreg-mname').value,
+                    gname: document.getElementById('sreg-gname').value, gphone: document.getElementById('sreg-gphone').value,
+                    address: document.getElementById('sreg-address').value, password: pass1, status: 'Pending Verification',
                     photo: photoImg ? photoImg.src : 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
                 };
 
                 AppState.students.push(newStudent);
+                this.logActivity(usn, 'Submitted Student Hostel Registration');
                 this.saveState();
                 this.toast('Registration submitted! Pending Warden Verification.');
                 this.showHome();
             },
 
-            // ---------------- WARDEN REGISTRATION ----------------
             handleWardenReg(e) {
                 e.preventDefault();
                 const empid = document.getElementById('wreg-empid').value.trim();
-                
                 const pass1 = document.getElementById('wreg-pass').value;
-                const pass2 = document.getElementById('wreg-pass2').value;
-                if (pass1 !== pass2) {
-                    this.toast('Passwords do not match!', 'error');
-                    return;
-                }
-
+                if (pass1 !== document.getElementById('wreg-pass2').value) { this.toast('Passwords do not match!', 'error'); return; }
                 const photoImg = document.querySelector('#wreg-preview-container img');
 
                 const newWarden = {
-                    empid: empid,
-                    name: document.getElementById('wreg-name').value,
-                    hostel: document.getElementById('wreg-hostel').value,
-                    block: document.getElementById('wreg-block').value,
-                    email: document.getElementById('wreg-email').value,
-                    phone: document.getElementById('wreg-phone').value,
-                    password: pass1,
-                    status: 'Pending Approval',
+                    empid: empid, name: document.getElementById('wreg-name').value, hostel: document.getElementById('wreg-hostel').value,
+                    block: document.getElementById('wreg-block').value, email: document.getElementById('wreg-email').value,
+                    phone: document.getElementById('wreg-phone').value, password: pass1, status: 'Pending Approval',
                     photo: photoImg ? photoImg.src : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150'
                 };
 
@@ -1107,18 +1285,12 @@
                 this.showHome();
             },
 
-            // ---------------- LOGINS ----------------
             handleStudentLogin(e) {
                 e.preventDefault();
                 const usn = document.getElementById('slogin-usn').value.trim().toUpperCase();
                 const pass = document.getElementById('slogin-pass').value;
-
                 const student = AppState.students.find(s => s.usn === usn && s.password === pass);
-                if (!student) {
-                    this.toast('Invalid USN or Password!', 'error');
-                    return;
-                }
-
+                if (!student) { this.toast('Invalid USN or Password!', 'error'); return; }
                 AppState.currentUser = { role: 'student', data: student };
                 this.hideModal('student-login-modal');
                 this.renderUserStatusBar();
@@ -1129,70 +1301,70 @@
                 e.preventDefault();
                 const empid = document.getElementById('wlogin-empid').value.trim();
                 const pass = document.getElementById('wlogin-pass').value;
-
                 const warden = AppState.wardens.find(w => w.empid === empid && w.password === pass && w.status === 'Approved');
-                if (!warden) {
-                    this.toast('Invalid Staff Credentials or Account Pending Approval!', 'error');
-                    return;
-                }
-
+                if (!warden) { this.toast('Invalid Staff Credentials or Account Pending Approval!', 'error'); return; }
                 AppState.currentUser = { role: 'warden', data: warden };
                 this.hideModal('warden-login-modal');
                 this.renderUserStatusBar();
                 this.renderWardenDashboard();
             },
 
-            // ---------------- STUDENT DASHBOARD RENDER ----------------
             renderStudentDashboard() {
                 this.hideAllViews();
-                document.getElementById('view-student-dash').classList.remove('hidden');
-
+                const dash = document.getElementById('view-student-dash');
+                if (dash) dash.classList.remove('hidden');
                 const s = AppState.currentUser.data;
-                document.getElementById('sdash-img').src = s.photo;
-                document.getElementById('sdash-name').innerText = s.name;
-                document.getElementById('sdash-sub').innerText = `USN: ${s.usn} | ${s.hostel} (${s.block}) | ${s.room}`;
-                
-                const badge = document.getElementById('sdash-status-badge');
-                const pendingAlert = document.getElementById('sdash-pending-alert');
+                const img = document.getElementById('sdash-img');
+                if (img) img.src = s.photo;
+                const name = document.getElementById('sdash-name');
+                if (name) name.innerText = s.name;
+                const sub = document.getElementById('sdash-sub');
+                if (sub) sub.innerText = `USN: ${s.usn} | ${s.hostel} (${s.block}) | ${s.room}`;
 
+                const badge = document.getElementById('sdash-status-badge');
+                const alertEl = document.getElementById('sdash-pending-alert');
                 if (s.status === 'Approved') {
-                    badge.innerText = 'Approved Access';
-                    badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500 text-white';
-                    pendingAlert.classList.add('hidden');
+                    if (badge) {
+                        badge.innerText = 'Approved Access';
+                        badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500 text-white';
+                    }
+                    if (alertEl) alertEl.classList.add('hidden');
                 } else {
-                    badge.innerText = 'Pending Review';
-                    badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-slate-900';
-                    pendingAlert.classList.remove('hidden');
+                    if (badge) {
+                        badge.innerText = 'Pending Review';
+                        badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-slate-900';
+                    }
+                    if (alertEl) alertEl.classList.remove('hidden');
                 }
 
-                // Render Profile Details
-                document.getElementById('sprof-year').innerText = s.year;
-                document.getElementById('sprof-blood').innerText = s.blood;
-                document.getElementById('sprof-phone').innerText = s.phone;
-                document.getElementById('sprof-email').innerText = s.email;
-                document.getElementById('sprof-fname').innerText = s.fname;
-                document.getElementById('sprof-fphone').innerText = s.fphone;
-                document.getElementById('sprof-address').innerText = s.address;
+                const profYear = document.getElementById('sprof-year'); if (profYear) profYear.innerText = s.year;
+                const profBlood = document.getElementById('sprof-blood'); if (profBlood) profBlood.innerText = s.blood;
+                const profPhone = document.getElementById('sprof-phone'); if (profPhone) profPhone.innerText = s.phone;
+                const profEmail = document.getElementById('sprof-email'); if (profEmail) profEmail.innerText = s.email;
+                const profFname = document.getElementById('sprof-fname'); if (profFname) profFname.innerText = s.fname;
+                const profFphone = document.getElementById('sprof-fphone'); if (profFphone) profFphone.innerText = s.fphone;
+                const profAddr = document.getElementById('sprof-address'); if (profAddr) profAddr.innerText = s.address;
 
-                // Render Roommate (Double Seater matching)
                 const roommateContainer = document.getElementById('roommate-container');
-                if (s.sharing !== 'Double Seater') {
-                    roommateContainer.innerHTML = `<p class="text-xs text-slate-500">Single Seater Room - No Roommate assigned.</p>`;
-                } else {
-                    const roommate = AppState.students.find(other => other.usn !== s.usn && other.hostel === s.hostel && other.block === s.block && other.room === s.room);
-                    if (roommate) {
-                        roommateContainer.innerHTML = `
-                            <div class="flex items-center space-x-4 bg-slate-50 p-3 rounded-xl border">
-                                <img src="${roommate.photo}" class="w-14 h-14 rounded-xl object-cover border">
-                                <div class="text-xs space-y-1">
-                                    <h4 class="font-bold text-slate-900">${roommate.name}</h4>
-                                    <p class="text-slate-500">Academic Year: ${roommate.year}</p>
-                                    <p class="text-indigo-600 font-semibold">USN: ${roommate.usn}</p>
-                                </div>
-                            </div>
-                        `;
+                if (roommateContainer) {
+                    if (s.sharing !== 'Double Seater') {
+                        roommateContainer.innerHTML = `<p class="text-xs text-slate-500">Single Seater Room - No Roommate assigned.</p>`;
                     } else {
-                        roommateContainer.innerHTML = `<p class="text-xs text-slate-500">Double Seater Room - Roommate slot currently vacant.</p>`;
+                        const roommate = AppState.students.find(other => other.usn !== s.usn && other.hostel === s.hostel && other.block === s.block && other.room === s.room);
+                        if (roommate) {
+                            roommateContainer.innerHTML = `
+                                <div class="flex items-center space-x-4 bg-slate-50 p-3 rounded-xl border">
+                                    <img src="${roommate.photo}" class="w-14 h-14 rounded-xl object-cover border">
+                                    <div class="text-xs space-y-1">
+                                        <h4 class="font-bold text-slate-900">${roommate.name}</h4>
+                                        <p class="text-slate-500">Academic Year: ${roommate.year}</p>
+                                        <p class="text-indigo-600 font-semibold">USN: ${roommate.usn}</p>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            roommateContainer.innerHTML = `<p class="text-xs text-slate-500">Double Seater Room - Roommate slot currently vacant.</p>`;
+                        }
                     }
                 }
 
@@ -1202,51 +1374,38 @@
 
             switchStudentTab(tab) {
                 ['profile', 'complaint', 'leave'].forEach(t => {
-                    document.getElementById(`stab-content-${t}`).classList.add('hidden');
-                    const btn = document.getElementById(`stab-btn-${t}`);
-                    btn.className = "pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-indigo-600 text-sm flex items-center space-x-2";
+                    const cEl = document.getElementById(`stab-content-${t}`);
+                    if (cEl) cEl.classList.add('hidden');
+                    const bEl = document.getElementById(`stab-btn-${t}`);
+                    if (bEl) bEl.className = "pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-indigo-600 text-sm flex items-center space-x-2";
                 });
-
-                document.getElementById(`stab-content-${tab}`).classList.remove('hidden');
-                document.getElementById(`stab-btn-${tab}`).className = "pb-3 border-b-2 border-indigo-600 font-bold text-indigo-600 text-sm flex items-center space-x-2";
+                const actContent = document.getElementById(`stab-content-${tab}`);
+                if (actContent) actContent.classList.remove('hidden');
+                const actBtn = document.getElementById(`stab-btn-${tab}`);
+                if (actBtn) actBtn.className = "pb-3 border-b-2 border-indigo-600 font-bold text-indigo-600 text-sm flex items-center space-x-2";
             },
 
-            // ---------------- COMPLAINTS HANDLING ----------------
             handleComplaintSubmit(e) {
                 e.preventDefault();
-                const cat = document.getElementById('cmp-cat').value;
-                const title = document.getElementById('cmp-title').value;
-                const desc = document.getElementById('cmp-desc').value;
-
                 const newCmp = {
-                    id: 'CMP-' + Date.now().toString().slice(-5),
-                    studentUsn: AppState.currentUser.data.usn,
-                    studentName: AppState.currentUser.data.name,
-                    category: cat,
-                    title: title,
-                    desc: desc,
-                    date: new Date().toLocaleDateString(),
-                    status: 'Pending',
-                    reply: ''
+                    id: 'CMP-' + Date.now().toString().slice(-5), studentUsn: AppState.currentUser.data.usn, studentName: AppState.currentUser.data.name,
+                    category: document.getElementById('cmp-cat').value, title: document.getElementById('cmp-title').value, desc: document.getElementById('cmp-desc').value,
+                    date: new Date().toLocaleDateString(), status: 'Pending', reply: ''
                 };
-
                 AppState.complaints.push(newCmp);
+                this.logActivity(AppState.currentUser.data.usn, `Filed Grievance: ${newCmp.category} - ${newCmp.title}`);
                 this.saveState();
                 this.toast('Grievance logged successfully!');
-                document.getElementById('cmp-title').value = '';
-                document.getElementById('cmp-desc').value = '';
+                const titleEl = document.getElementById('cmp-title'); if (titleEl) titleEl.value = '';
+                const descEl = document.getElementById('cmp-desc'); if (descEl) descEl.value = '';
                 this.renderMyComplaints();
             },
 
             renderMyComplaints() {
                 const list = document.getElementById('my-complaints-list');
+                if (!list) return;
                 const myCmps = AppState.complaints.filter(c => c.studentUsn === AppState.currentUser.data.usn);
-
-                if (myCmps.length === 0) {
-                    list.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No grievances logged yet.</p>`;
-                    return;
-                }
-
+                if (myCmps.length === 0) { list.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No grievances logged yet.</p>`; return; }
                 list.innerHTML = myCmps.map(c => `
                     <div class="p-4 rounded-xl border ${c.category.includes('Ragging') ? 'bg-red-50 border-red-200' : 'bg-slate-50 border-slate-200'} space-y-2">
                         <div class="flex justify-between items-start">
@@ -1260,36 +1419,19 @@
                 `).join('');
             },
 
-            // ---------------- LEAVE HANDLING ----------------
             handleLeaveSubmit(e) {
                 e.preventDefault();
-                const sdate = document.getElementById('leave-sdate').value;
-                const stime = document.getElementById('leave-stime').value;
-                const edate = document.getElementById('leave-edate').value;
-                const etime = document.getElementById('leave-etime').value;
-                const reason = document.getElementById('leave-reason').value;
-                const dest = document.getElementById('leave-dest').value;
-
                 const passNo = 'LP-' + new Date().getFullYear() + '-' + Math.random().toString(36).substring(2, 7).toUpperCase();
-
                 const newLeave = {
-                    id: passNo,
-                    studentUsn: AppState.currentUser.data.usn,
-                    studentName: AppState.currentUser.data.name,
-                    hostel: AppState.currentUser.data.hostel,
-                    block: AppState.currentUser.data.block,
-                    room: AppState.currentUser.data.room,
-                    photo: AppState.currentUser.data.photo,
-                    dept: `${sdate} ${stime}`,
-                    ret: `${edate} ${etime}`,
-                    reason: reason,
-                    dest: dest,
-                    status: 'Pending',
-                    approver: '',
-                    timestamp: ''
+                    id: passNo, studentUsn: AppState.currentUser.data.usn, studentName: AppState.currentUser.data.name,
+                    hostel: AppState.currentUser.data.hostel, block: AppState.currentUser.data.block, room: AppState.currentUser.data.room,
+                    photo: AppState.currentUser.data.photo, dept: `${document.getElementById('leave-sdate').value} ${document.getElementById('leave-stime').value}`,
+                    ret: `${document.getElementById('leave-edate').value} ${document.getElementById('leave-etime').value}`,
+                    reason: document.getElementById('leave-reason').value, dest: document.getElementById('leave-dest').value,
+                    status: 'Pending', approver: '', timestamp: ''
                 };
-
                 AppState.leaves.push(newLeave);
+                this.logActivity(AppState.currentUser.data.usn, `Submitted Leave Request [${passNo}]`);
                 this.saveState();
                 this.toast('Leave application submitted to Warden!');
                 this.renderMyLeaves();
@@ -1297,13 +1439,9 @@
 
             renderMyLeaves() {
                 const list = document.getElementById('my-leave-list');
+                if (!list) return;
                 const myLeaves = AppState.leaves.filter(l => l.studentUsn === AppState.currentUser.data.usn);
-
-                if (myLeaves.length === 0) {
-                    list.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No leave requests submitted yet.</p>`;
-                    return;
-                }
-
+                if (myLeaves.length === 0) { list.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No leave requests submitted yet.</p>`; return; }
                 list.innerHTML = myLeaves.map(l => `
                     <div class="p-4 rounded-xl border bg-slate-50 border-slate-200 space-y-3">
                         <div class="flex justify-between items-center">
@@ -1326,32 +1464,34 @@
             viewLeavePass(passId) {
                 const l = AppState.leaves.find(x => x.id === passId);
                 if (!l) return;
-
-                document.getElementById('pass-number').innerText = 'Pass No: ' + l.id;
-                document.getElementById('pass-student-name').innerText = l.studentName;
-                document.getElementById('pass-usn').innerText = 'USN: ' + l.studentUsn;
-                document.getElementById('pass-hostel').innerText = 'Hostel: ' + l.hostel;
-                document.getElementById('pass-room').innerText = 'Block & Room: ' + l.block + ' - ' + l.room;
-                document.getElementById('pass-dept').innerText = l.dept;
-                document.getElementById('pass-ret').innerText = l.ret;
-                document.getElementById('pass-photo').src = l.photo;
-                document.getElementById('pass-approver').innerText = l.approver;
-                document.getElementById('pass-timestamp').innerText = l.timestamp;
-
+                const numEl = document.getElementById('pass-number'); if (numEl) numEl.innerText = 'Pass No: ' + l.id;
+                const snameEl = document.getElementById('pass-student-name'); if (snameEl) snameEl.innerText = l.studentName;
+                const usnEl = document.getElementById('pass-usn'); if (usnEl) usnEl.innerText = 'USN: ' + l.studentUsn;
+                const hostelEl = document.getElementById('pass-hostel'); if (hostelEl) hostelEl.innerText = 'Hostel: ' + l.hostel;
+                const roomEl = document.getElementById('pass-room'); if (roomEl) roomEl.innerText = 'Block & Room: ' + l.block + ' - ' + l.room;
+                const deptEl = document.getElementById('pass-dept'); if (deptEl) deptEl.innerText = l.dept;
+                const retEl = document.getElementById('pass-ret'); if (retEl) retEl.innerText = l.ret;
+                const photoEl = document.getElementById('pass-photo'); if (photoEl) photoEl.src = l.photo;
+                const appEl = document.getElementById('pass-approver'); if (appEl) appEl.innerText = l.approver;
+                const tsEl = document.getElementById('pass-timestamp'); if (tsEl) tsEl.innerText = l.timestamp;
                 this.showModal('leave-pass-modal');
             },
 
-            // ---------------- WARDEN DASHBOARD RENDER ----------------
+            // ---------------- WARDEN DASHBOARD ----------------
             renderWardenDashboard() {
                 this.hideAllViews();
-                document.getElementById('view-warden-dash').classList.remove('hidden');
-
+                const wDash = document.getElementById('view-warden-dash');
+                if (wDash) wDash.classList.remove('hidden');
                 const w = AppState.currentUser.data;
-                document.getElementById('wdash-img').src = w.photo;
-                document.getElementById('wdash-name').innerText = w.name;
-                document.getElementById('wdash-sub').innerText = `Emp ID: ${w.empid} | Assigned: ${w.hostel} (${w.block})`;
+                const imgEl = document.getElementById('wdash-img'); if (imgEl) imgEl.src = w.photo;
+                const nameEl = document.getElementById('wdash-name'); if (nameEl) nameEl.innerText = w.name;
+                const subEl = document.getElementById('wdash-sub'); if (subEl) subEl.innerText = `Emp ID: ${w.empid} | Assigned: ${w.hostel} (${w.block})`;
 
+                const obCnt = document.getElementById('outbox-count'); if (obCnt) obCnt.innerText = AppState.outbox.length;
                 this.renderAttendanceTable();
+                this.renderStudentDirectory();
+                this.renderOccupancyMap();
+                this.renderGateLogs();
                 this.renderPendingStudents();
                 this.renderWardenLeaves();
                 this.renderWardenGrievances();
@@ -1359,19 +1499,19 @@
             },
 
             switchWardenTab(tab) {
-                ['attendance', 'approvals', 'leaves', 'grievances', 'replacement'].forEach(t => {
-                    document.getElementById(`wtab-content-${t}`).classList.add('hidden');
-                    const btn = document.getElementById(`wtab-btn-${t}`);
-                    btn.className = "pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap";
+                ['attendance', 'directory', 'occupancy', 'gate', 'approvals', 'leaves', 'grievances', 'replacement'].forEach(t => {
+                    const cEl = document.getElementById(`wtab-content-${t}`); if (cEl) cEl.classList.add('hidden');
+                    const bEl = document.getElementById(`wtab-btn-${t}`); if (bEl) bEl.className = "pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap";
                 });
-
-                document.getElementById(`wtab-content-${tab}`).classList.remove('hidden');
-                document.getElementById(`wtab-btn-${tab}`).className = "pb-3 border-b-2 border-purple-600 font-bold text-purple-600 text-sm whitespace-nowrap";
+                const actC = document.getElementById(`wtab-content-${tab}`); if (actC) actC.classList.remove('hidden');
+                const actB = document.getElementById(`wtab-btn-${tab}`); if (actB) actB.className = "pb-3 border-b-2 border-purple-600 font-bold text-purple-600 text-sm whitespace-nowrap";
             },
 
             renderAttendanceTable() {
                 const body = document.getElementById('attendance-table-body');
-                const dateVal = document.getElementById('attendance-date').value;
+                if (!body) return;
+                const dateEl = document.getElementById('attendance-date');
+                const dateVal = dateEl ? dateEl.value : new Date().toISOString().split('T')[0];
 
                 body.innerHTML = AppState.students.filter(s => s.status === 'Approved').map(s => {
                     const isAbsent = AppState.attendance[`${dateVal}_${s.usn}`] === 'Absent';
@@ -1387,7 +1527,7 @@
                             </td>
                             <td class="p-3 text-right">
                                 <button onclick="app.toggleAbsence('${s.usn}')" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white font-bold rounded text-[10px]">
-                                    ${isAbsent ? 'Mark Present' : 'Confirm Absence & Trigger Alert'}
+                                    ${isAbsent ? 'Mark Present' : 'Confirm Absence & Dispatch Alert'}
                                 </button>
                             </td>
                         </tr>
@@ -1396,32 +1536,247 @@
             },
 
             toggleAbsence(usn) {
-                const dateVal = document.getElementById('attendance-date').value;
+                const dateEl = document.getElementById('attendance-date');
+                const dateVal = dateEl ? dateEl.value : new Date().toISOString().split('T')[0];
                 const key = `${dateVal}_${usn}`;
+                const s = AppState.students.find(x => x.usn === usn);
+
                 if (AppState.attendance[key] === 'Absent') {
                     delete AppState.attendance[key];
-                    this.toast('Attendance restored to Present');
+                    this.toast('Attendance updated to Present');
                 } else {
                     AppState.attendance[key] = 'Absent';
-                    const s = AppState.students.find(x => x.usn === usn);
-                    AppState.auditLogs.push(`[ABSENCE ALERT TRIGGERED] Parent alert dispatched for ${s.name} to ${s.fphone}`);
-                    this.toast(`Absence confirmed! Alert dispatched to Parent (${s.fphone})`);
+                    const payload = {
+                        timestamp: new Date().toLocaleString(),
+                        toPhone: s.fphone,
+                        student: s.name,
+                        date: dateVal,
+                        body: `ALERT: Your ward ${s.name} (${s.usn}) was marked ABSENT during night roll call on ${dateVal} at Campus Haven Hostel. Please contact Warden immediately.`
+                    };
+                    AppState.outbox.unshift(payload);
+                    this.logActivity(s.usn, `Marked ABSENT on ${dateVal} - Parent SMS Dispatched`);
+                    this.toast(`Absence marked! Parent SMS Payload logged to Outbox.`);
                 }
                 this.saveState();
                 this.renderAttendanceTable();
+                const obCnt = document.getElementById('outbox-count'); if (obCnt) obCnt.innerText = AppState.outbox.length;
+            },
+
+            submitDailyRollCall() {
+                const dateEl = document.getElementById('attendance-date');
+                const dateVal = dateEl ? dateEl.value : new Date().toISOString().split('T')[0];
+                AppState.auditLogs.unshift(`[ROLL CALL SUBMITTED] Roll call locked for date ${dateVal} by Warden ${AppState.currentUser.data.name}`);
+                this.saveState();
+                this.toast(`Roll call submitted and saved for date ${dateVal}!`);
+            },
+
+            renderStudentDirectory() {
+                const grid = document.getElementById('student-directory-grid');
+                if (!grid) return;
+                grid.innerHTML = AppState.students.map(s => `
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                        <div class="flex items-center space-x-3">
+                            <img src="${s.photo}" class="w-12 h-12 rounded-xl object-cover border">
+                            <div class="text-xs">
+                                <h4 class="font-bold text-slate-900">${s.name}</h4>
+                                <span class="text-indigo-600 font-mono">${s.usn}</span>
+                            </div>
+                        </div>
+                        <div class="text-xs space-y-1 text-slate-600 border-t pt-2">
+                            <p><strong>Hostel:</strong> ${s.hostel} (${s.block})</p>
+                            <p><strong>Room:</strong> ${s.room} (${s.sharing})</p>
+                            <p><strong>Phone:</strong> ${s.phone}</p>
+                            <p><strong>Father:</strong> ${s.fname} (${s.fphone})</p>
+                        </div>
+                        <div class="flex space-x-2 pt-2">
+                            <button onclick="app.openStudentEdit('${s.usn}')" class="flex-1 py-1.5 bg-purple-700 text-white font-bold text-xs rounded-lg">
+                                <i class="fa-solid fa-pen-to-square mr-1"></i> Edit Details
+                            </button>
+                            <button onclick="app.viewStudentTimeline('${s.usn}')" class="px-2.5 py-1.5 border text-slate-700 font-bold text-xs rounded-lg">
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            },
+
+            openStudentEdit(usn) {
+                const s = AppState.students.find(x => x.usn === usn);
+                if (!s) return;
+                const origUsn = document.getElementById('edit-usn-original'); if (origUsn) origUsn.value = s.usn;
+                const nameEl = document.getElementById('edit-name'); if (nameEl) nameEl.value = s.name;
+                const usnEl = document.getElementById('edit-usn'); if (usnEl) usnEl.value = s.usn;
+                const hostelEl = document.getElementById('edit-hostel'); if (hostelEl) hostelEl.value = s.hostel;
+                this.updateBlockDropdown(s.hostel, 'edit-block');
+                const blockEl = document.getElementById('edit-block'); if (blockEl) blockEl.value = s.block;
+                const roomEl = document.getElementById('edit-room'); if (roomEl) roomEl.value = s.room;
+                const shareEl = document.getElementById('edit-sharing'); if (shareEl) shareEl.value = s.sharing;
+                const phoneEl = document.getElementById('edit-phone'); if (phoneEl) phoneEl.value = s.phone;
+                const emailEl = document.getElementById('edit-email'); if (emailEl) emailEl.value = s.email;
+                const fnameEl = document.getElementById('edit-fname'); if (fnameEl) fnameEl.value = s.fname;
+                const fphoneEl = document.getElementById('edit-fphone'); if (fphoneEl) fphoneEl.value = s.fphone;
+                const yearEl = document.getElementById('edit-year'); if (yearEl) yearEl.value = s.year;
+                const addrEl = document.getElementById('edit-address'); if (addrEl) addrEl.value = s.address;
+                this.showModal('edit-student-modal');
+            },
+
+            saveStudentEdit(e) {
+                e.preventDefault();
+                const origUsn = document.getElementById('edit-usn-original').value;
+                const s = AppState.students.find(x => x.usn === origUsn);
+                if (!s) return;
+
+                s.name = document.getElementById('edit-name').value;
+                s.usn = document.getElementById('edit-usn').value.toUpperCase();
+                s.hostel = document.getElementById('edit-hostel').value;
+                s.block = document.getElementById('edit-block').value;
+                s.room = document.getElementById('edit-room').value;
+                s.sharing = document.getElementById('edit-sharing').value;
+                s.phone = document.getElementById('edit-phone').value;
+                s.email = document.getElementById('edit-email').value;
+                s.fname = document.getElementById('edit-fname').value;
+                s.fphone = document.getElementById('edit-fphone').value;
+                s.year = document.getElementById('edit-year').value;
+                s.address = document.getElementById('edit-address').value;
+
+                this.logActivity(s.usn, `Profile record updated by Warden ${AppState.currentUser.data.name}`);
+                this.saveState();
+                this.toast('Student profile details updated!');
+                this.hideModal('edit-student-modal');
+                this.renderStudentDirectory();
+            },
+
+            renderOccupancyMap() {
+                const list = document.getElementById('room-occupancy-list');
+                if (!list) return;
+                const rooms = {};
+
+                AppState.students.forEach(s => {
+                    const roomKey = `${s.hostel} - ${s.block} - ${s.room}`;
+                    if (!rooms[roomKey]) rooms[roomKey] = [];
+                    rooms[roomKey].push(s);
+                });
+
+                list.innerHTML = Object.keys(rooms).map(rk => {
+                    const occupants = rooms[rk];
+                    const isDouble = occupants[0].sharing === 'Double Seater';
+                    return `
+                        <div class="p-4 rounded-xl border bg-slate-50 space-y-3">
+                            <div class="flex justify-between items-center text-xs font-bold border-b pb-2">
+                                <span>${rk}</span>
+                                <span class="px-2 py-0.5 rounded ${isDouble ? 'bg-indigo-100 text-indigo-800' : 'bg-purple-100 text-purple-800'}">${occupants[0].sharing}</span>
+                            </div>
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                ${occupants.map(occ => `
+                                    <div class="flex items-center space-x-3 bg-white p-3 rounded-lg border">
+                                        <img src="${occ.photo}" class="w-10 h-10 rounded-lg object-cover">
+                                        <div class="text-xs">
+                                            <h5 class="font-bold text-slate-900">${occ.name}</h5>
+                                            <p class="text-slate-500">${occ.usn} | Ph: ${occ.phone}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            renderGateLogs() {
+                const sel = document.getElementById('gate-student-usn');
+                if (sel) {
+                    sel.innerHTML = AppState.students.filter(s => s.status === 'Approved').map(s => `<option value="${s.usn}">${s.name} (${s.usn} - ${s.room})</option>`).join('');
+                }
+
+                const table = document.getElementById('gate-movement-table');
+                if (!table) return;
+                if (AppState.gateLogs.length === 0) { table.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No active gate movement logged.</p>`; return; }
+
+                table.innerHTML = AppState.gateLogs.map(g => `
+                    <div class="p-3 bg-slate-50 rounded-xl border flex justify-between items-center text-xs">
+                        <div>
+                            <strong class="text-slate-900 block">${g.studentName} (${g.type})</strong>
+                            <span class="text-slate-500">OUT: ${g.outTime} | Dest: ${g.dest}</span>
+                            ${g.inTime ? `<p class="text-emerald-600 font-bold">RETURNED IN: ${g.inTime}</p>` : `<p class="text-amber-600 font-bold">CURRENTLY OUTSIDE</p>`}
+                        </div>
+                        ${!g.inTime ? `<button onclick="app.markGateIn('${g.id}')" class="px-3 py-1 bg-emerald-600 text-white font-bold rounded text-xs">Mark IN</button>` : ''}
+                    </div>
+                `).join('');
+            },
+
+            handleGateMovement(e) {
+                e.preventDefault();
+                const usn = document.getElementById('gate-student-usn').value;
+                const s = AppState.students.find(x => x.usn === usn);
+                const gLog = {
+                    id: 'GATE-' + Date.now().toString().slice(-5), studentUsn: usn, studentName: s.name,
+                    type: document.getElementById('gate-type').value, dest: document.getElementById('gate-dest').value,
+                    outTime: new Date().toLocaleString(), inTime: ''
+                };
+                AppState.gateLogs.unshift(gLog);
+                this.logActivity(usn, `Gate Movement OUT [${gLog.type}] to ${gLog.dest}`);
+                this.saveState();
+                this.toast(`Student ${s.name} marked OUT!`);
+                this.renderGateLogs();
+            },
+
+            markGateIn(id) {
+                const g = AppState.gateLogs.find(x => x.id === id);
+                if (g) {
+                    g.inTime = new Date().toLocaleString();
+                    this.logActivity(g.studentUsn, `Gate Movement RETURNED IN`);
+                    this.saveState();
+                    this.toast(`Student ${g.studentName} marked IN!`);
+                    this.renderGateLogs();
+                }
+            },
+
+            showOutboxModal() {
+                const list = document.getElementById('outbox-list');
+                if (list) {
+                    if (AppState.outbox.length === 0) { list.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">Outbox payload log is currently empty.</p>`; }
+                    else {
+                        list.innerHTML = AppState.outbox.map(o => `
+                            <div class="p-3 bg-slate-900 text-emerald-400 rounded-xl space-y-1">
+                                <div class="flex justify-between text-[10px] text-slate-400 border-b border-slate-800 pb-1">
+                                    <span>TO: ${o.toPhone}</span>
+                                    <span>DISPATCHED: ${o.timestamp}</span>
+                                </div>
+                                <p class="pt-1">${o.body}</p>
+                            </div>
+                        `).join('');
+                    }
+                }
+                this.showModal('outbox-modal');
+            },
+
+            viewStudentTimeline(usn) {
+                const s = AppState.students.find(x => x.usn === usn);
+                const titleEl = document.getElementById('timeline-student-title');
+                if (titleEl) titleEl.innerText = `Activity Timeline: ${s ? s.name : ''} (${usn})`;
+                const logs = AppState.timeline[usn] || [];
+                const content = document.getElementById('timeline-content');
+
+                if (content) {
+                    if (logs.length === 0) { content.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No recorded activity history.</p>`; }
+                    else {
+                        content.innerHTML = logs.map(l => `
+                            <div class="p-3 bg-slate-50 rounded-xl border flex justify-between items-start">
+                                <span>${l.text}</span>
+                                <span class="text-[10px] text-slate-400 whitespace-nowrap ml-2">${l.time}</span>
+                            </div>
+                        `).join('');
+                    }
+                }
+                this.showModal('timeline-modal');
             },
 
             renderPendingStudents() {
                 const container = document.getElementById('pending-students-list');
                 const pendings = AppState.students.filter(s => s.status === 'Pending Verification');
-
-                document.getElementById('badge-pending-reg').innerText = pendings.length;
-
-                if (pendings.length === 0) {
-                    container.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No pending student registration requests.</p>`;
-                    return;
-                }
-
+                const badgeEl = document.getElementById('badge-pending-reg'); if (badgeEl) badgeEl.innerText = pendings.length;
+                if (!container) return;
+                if (pendings.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No pending student registration requests.</p>`; return; }
                 container.innerHTML = pendings.map(s => `
                     <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between">
                         <div class="flex items-center space-x-4">
@@ -1431,9 +1786,7 @@
                                 <p class="text-slate-500">${s.hostel} | ${s.block} - ${s.room}</p>
                             </div>
                         </div>
-                        <div class="flex space-x-2">
-                            <button onclick="app.approveStudent('${s.usn}')" class="px-3 py-1.5 bg-emerald-600 text-white rounded-lg font-bold text-xs">Approve</button>
-                        </div>
+                        <button onclick="app.approveStudent('${s.usn}')" class="px-3 py-1.5 bg-emerald-600 text-white rounded-lg font-bold text-xs">Approve</button>
                     </div>
                 `).join('');
             },
@@ -1442,7 +1795,7 @@
                 const s = AppState.students.find(x => x.usn === usn);
                 if (s) {
                     s.status = 'Approved';
-                    AppState.auditLogs.push(`Student ${s.name} (${s.usn}) verified by ${AppState.currentUser.data.name}`);
+                    this.logActivity(usn, 'Hostel Registration Approved by Warden');
                     this.saveState();
                     this.toast('Student registration approved!');
                     this.renderPendingStudents();
@@ -1452,14 +1805,9 @@
             renderWardenLeaves() {
                 const container = document.getElementById('warden-leave-list');
                 const pendingLeaves = AppState.leaves.filter(l => l.status === 'Pending');
-
-                document.getElementById('badge-pending-leave').innerText = pendingLeaves.length;
-
-                if (pendingLeaves.length === 0) {
-                    container.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No pending leave applications.</p>`;
-                    return;
-                }
-
+                const badgeEl = document.getElementById('badge-pending-leave'); if (badgeEl) badgeEl.innerText = pendingLeaves.length;
+                if (!container) return;
+                if (pendingLeaves.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No pending leave applications.</p>`; return; }
                 container.innerHTML = pendingLeaves.map(l => `
                     <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
                         <div class="flex justify-between items-center text-xs">
@@ -1481,6 +1829,18 @@
                     l.status = decision;
                     l.approver = AppState.currentUser.data.name;
                     l.timestamp = new Date().toLocaleString();
+                    this.logActivity(l.studentUsn, `Leave Pass [${id}] ${decision}`);
+                    if (decision === 'Approved') {
+                        const s = AppState.students.find(x => x.usn === l.studentUsn);
+                        if (s) {
+                            AppState.outbox.unshift({
+                                timestamp: new Date().toLocaleString(),
+                                toPhone: s.fphone,
+                                student: s.name,
+                                body: `LEAVE NOTICE: Outstation Leave Pass ${id} granted for student ${s.name} from ${l.dept} to ${l.ret}.`
+                            });
+                        }
+                    }
                     this.saveState();
                     this.toast(`Leave request ${decision.toLowerCase()}!`);
                     this.renderWardenLeaves();
@@ -1489,6 +1849,7 @@
 
             renderWardenGrievances() {
                 const container = document.getElementById('warden-grievance-list');
+                if (!container) return;
                 container.innerHTML = AppState.complaints.map(c => `
                     <div class="p-4 rounded-xl border ${c.category.includes('Ragging') ? 'bg-red-50 border-red-300' : 'bg-slate-50 border-slate-200'} space-y-2">
                         <div class="flex justify-between items-center text-xs">
@@ -1496,9 +1857,7 @@
                             <span class="text-slate-500">By: ${c.studentName} (${c.studentUsn})</span>
                         </div>
                         <p class="text-xs text-slate-600">${c.desc}</p>
-                        ${c.status === 'Pending' ? `
-                            <button onclick="app.resolveGrievance('${c.id}')" class="px-3 py-1 bg-indigo-600 text-white font-bold text-xs rounded-lg">Mark Resolved</button>
-                        ` : `<span class="text-xs text-emerald-600 font-bold">Resolved</span>`}
+                        ${c.status === 'Pending' ? `<button onclick="app.resolveGrievance('${c.id}')" class="px-3 py-1 bg-indigo-600 text-white font-bold text-xs rounded-lg">Mark Resolved</button>` : `<span class="text-xs text-emerald-600 font-bold">Resolved</span>`}
                     </div>
                 `).join('');
             },
@@ -1508,6 +1867,7 @@
                 if (c) {
                     c.status = 'Resolved';
                     c.reply = 'Inspected and resolved by Warden ' + AppState.currentUser.data.name;
+                    this.logActivity(c.studentUsn, `Grievance [${c.id}] resolved`);
                     this.saveState();
                     this.toast('Grievance marked as resolved!');
                     this.renderWardenGrievances();
@@ -1517,41 +1877,41 @@
             renderWardenReplacements() {
                 const pContainer = document.getElementById('pending-wardens-list');
                 const pendingWardens = AppState.wardens.filter(w => w.status === 'Pending Approval');
-
-                if (pendingWardens.length === 0) {
-                    pContainer.innerHTML = `<p class="text-xs text-slate-400 py-2">No pending warden replacement requests.</p>`;
-                } else {
-                    pContainer.innerHTML = pendingWardens.map(w => `
-                        <div class="p-3 bg-slate-50 rounded-xl border flex justify-between items-center text-xs">
-                            <div>
-                                <strong class="text-slate-900 block">${w.name} (${w.empid})</strong>
-                                <span class="text-slate-500">${w.hostel} - ${w.block}</span>
+                if (pContainer) {
+                    if (pendingWardens.length === 0) { pContainer.innerHTML = `<p class="text-xs text-slate-400 py-2">No pending warden replacement requests.</p>`; }
+                    else {
+                        pContainer.innerHTML = pendingWardens.map(w => `
+                            <div class="p-3 bg-slate-50 rounded-xl border flex justify-between items-center text-xs">
+                                <div>
+                                    <strong class="text-slate-900 block">${w.name} (${w.empid})</strong>
+                                    <span class="text-slate-500">${w.hostel} - ${w.block}</span>
+                                </div>
+                                <button onclick="app.approveWarden('${w.empid}')" class="px-3 py-1 bg-purple-700 text-white font-bold rounded">Approve Appointment</button>
                             </div>
-                            <button onclick="app.approveWarden('${w.empid}')" class="px-3 py-1 bg-purple-700 text-white font-bold rounded">Approve Appointment</button>
-                        </div>
-                    `).join('');
+                        `).join('');
+                    }
                 }
 
-                const auditContainer = document.getElementById('audit-logs-list');
-                auditContainer.innerHTML = AppState.auditLogs.map(log => `
-                    <div class="p-2 bg-slate-100 rounded border text-slate-700">> ${log}</div>
-                `).join('');
+                const auditEl = document.getElementById('audit-logs-list');
+                if (auditEl) {
+                    auditEl.innerHTML = AppState.auditLogs.map(log => `<div class="p-2 bg-slate-100 rounded border text-slate-700">> ${log}</div>`).join('');
+                }
             },
 
             approveWarden(empid) {
                 const w = AppState.wardens.find(x => x.empid === empid);
                 if (w) {
                     w.status = 'Approved';
-                    AppState.auditLogs.push(`[WARDEN REPLACEMENT] ${w.name} (${w.empid}) authorized as Warden by ${AppState.currentUser.data.name}`);
+                    AppState.auditLogs.unshift(`[WARDEN REPLACEMENT] ${w.name} (${w.empid}) authorized by ${AppState.currentUser.data.name}`);
                     this.saveState();
                     this.toast('Warden appointment approved!');
                     this.renderWardenReplacements();
                 }
             },
 
-            // ---------------- EMERGENCY CONTACTS ----------------
             renderContacts() {
                 const grid = document.getElementById('emergency-contacts-grid');
+                if (!grid) return;
                 grid.innerHTML = AppState.contacts.map(c => `
                     <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
                         <span class="text-[10px] font-bold uppercase text-indigo-600 tracking-wider">${c.title}</span>
@@ -1567,11 +1927,7 @@
 
             handleAddContact(e) {
                 e.preventDefault();
-                const title = document.getElementById('mcontact-title').value;
-                const name = document.getElementById('mcontact-name').value;
-                const phone = document.getElementById('mcontact-phone').value;
-
-                AppState.contacts.push({ title, name, phone });
+                AppState.contacts.push({ title: document.getElementById('mcontact-title').value, name: document.getElementById('mcontact-name').value, phone: document.getElementById('mcontact-phone').value });
                 this.saveState();
                 this.toast('Contact added to emergency directory!');
                 this.hideModal('manage-contacts-modal');
@@ -1579,10 +1935,7 @@
             }
         };
 
-        // Initialize application on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            app.init();
-        });
+        document.addEventListener('DOMContentLoaded', () => { app.init(); });
     </script>
 </body>
 </html>
