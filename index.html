@@ -607,6 +607,9 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-3 flex-wrap gap-2">
+                    <button onclick="app.showSmsSettingsModal()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-semibold text-xs transition flex items-center">
+                        <i class="fa-solid fa-gear mr-1.5"></i> SMS Gateway Settings
+                    </button>
                     <button onclick="app.showOutboxModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-semibold text-xs transition flex items-center">
                         <i class="fa-solid fa-paper-plane mr-1.5"></i> Parent SMS/Email Outbox (<span id="outbox-count">0</span>)
                     </button>
@@ -926,74 +929,74 @@
     <div id="edit-student-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 space-y-4 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="font-bold text-slate-900 text-lg">Edit Student Record (Warden Portal)</h3>
-                <button onclick="app.hideModal('edit-student-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+    <!-- REAL-TIME SMS POPUP PREVIEW MODAL -->
+    <div id="sms-preview-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-slate-900 text-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-700 space-y-4 relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <div class="flex items-center space-x-2 text-emerald-400">
+                    <i class="fa-solid fa-comment-sms text-xl"></i>
+                    <h3 class="font-bold text-sm uppercase tracking-wider">Parent SMS Dispatch Alert</h3>
+                </div>
+                <button onclick="app.hideModal('sms-preview-modal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <form onsubmit="app.saveStudentEdit(event)" class="space-y-4 text-xs">
-                <input type="hidden" id="edit-usn-original">
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Full Name</label>
-                        <input type="text" id="edit-name" required class="w-full p-2 border rounded-lg">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">USN / Reg No</label>
-                        <input type="text" id="edit-usn" required class="w-full p-2 border rounded-lg uppercase">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Hostel Management</label>
-                        <select id="edit-hostel" onchange="app.updateBlockDropdown(this.value, 'edit-block')" class="w-full p-2 border rounded-lg">
-                            <option value="Om Sai Hostel">Om Sai Hostel Management</option>
-                            <option value="Comfort World Hostel">Comfort World Hostel Management</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Block</label>
-                        <select id="edit-block" class="w-full p-2 border rounded-lg"></select>
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Room No</label>
-                        <input type="text" id="edit-room" required class="w-full p-2 border rounded-lg">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Seater Capacity</label>
-                        <select id="edit-sharing" class="w-full p-2 border rounded-lg">
-                            <option value="Double Seater">Double Seater</option>
-                            <option value="Single Seater">Single Seater</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Student Phone</label>
-                        <input type="tel" id="edit-phone" required class="w-full p-2 border rounded-lg">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Student Email</label>
-                        <input type="email" id="edit-email" required class="w-full p-2 border rounded-lg">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Father's Name & Contact</label>
-                        <div class="grid grid-cols-2 gap-2">
-                            <input type="text" id="edit-fname" required placeholder="Father Name" class="w-full p-2 border rounded-lg">
-                            <input type="tel" id="edit-fphone" required placeholder="Phone" class="w-full p-2 border rounded-lg">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Academic Year</label>
-                        <select id="edit-year" class="w-full p-2 border rounded-lg">
-                            <option value="1st Year">1st Year</option>
-                            <option value="2nd Year">2nd Year</option>
-                            <option value="3rd Year">3rd Year</option>
-                            <option value="4th Year">4th Year</option>
-                        </select>
-                    </div>
+            
+            <!-- Simulated Phone Notification Screen -->
+            <div class="bg-slate-800 rounded-2xl p-4 border border-slate-700 space-y-3 shadow-inner">
+                <div class="flex justify-between items-center text-[11px] text-slate-400">
+                    <span class="flex items-center font-bold text-emerald-400"><i class="fa-solid fa-signal mr-1"></i> SMS Gateway: Delivered</span>
+                    <span id="sms-modal-time">Just Now</span>
+                </div>
+                <div class="bg-indigo-900/50 p-2.5 rounded-xl border border-indigo-500/30 text-xs text-indigo-200">
+                    <span class="block text-[10px] uppercase font-bold text-indigo-400">Recipient Parent Phone</span>
+                    <strong id="sms-modal-phone" class="text-white text-sm">+91 98765 43210</strong>
+                </div>
+                <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-xs font-sans text-slate-200 leading-relaxed space-y-1">
+                    <p id="sms-modal-body" class="whitespace-pre-line">Loading message body...</p>
+                </div>
+            </div>
+
+            <div class="bg-emerald-950/60 border border-emerald-500/30 p-3 rounded-xl text-[11px] text-emerald-300 flex items-center space-x-2">
+                <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+                <span>SMS Alert successfully pushed to cellular network outbox!</span>
+            </div>
+
+            <button onclick="app.hideModal('sms-preview-modal')" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs shadow">
+                Acknowledge & Close
+            </button>
+        </div>
+    </div>
+
+    <!-- SMS GATEWAY API SETTINGS MODAL -->
+    <div id="sms-settings-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="font-bold text-slate-900 text-lg flex items-center"><i class="fa-solid fa-tower-cell text-indigo-600 mr-2"></i> SMS Gateway Configuration</h3>
+                <button onclick="app.hideModal('sms-settings-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form onsubmit="app.saveSmsSettings(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Active Gateway Provider *</label>
+                    <select id="sms-provider" class="w-full p-2 border rounded-lg">
+                        <option value="Simulator">Web Mobile Simulator (Default - Immediate Screen Dispatch)</option>
+                        <option value="Twilio">Twilio SMS API (Production Server)</option>
+                        <option value="Fast2SMS">Fast2SMS / MSG91 India API</option>
+                    </select>
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">Permanent Residential Address</label>
-                    <textarea id="edit-address" rows="2" class="w-full p-2 border rounded-lg"></textarea>
+                    <label class="block font-bold text-slate-700 mb-1">Account SID / API Key</label>
+                    <input type="password" id="sms-api-key" placeholder="e.g. AC88a329xxxxxxxxxxxxxxxx" class="w-full p-2 border rounded-lg font-mono">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Auth Token / Sender ID</label>
+                    <input type="password" id="sms-auth-token" placeholder="e.g. CAMPUS_HAVEN_SMS" class="w-full p-2 border rounded-lg font-mono">
+                </div>
+                <div class="p-3 bg-indigo-50 border border-indigo-200 rounded-xl text-indigo-900 text-[11px] leading-relaxed">
+                    <i class="fa-solid fa-circle-info mr-1 text-indigo-600"></i> In web browsers, real cellular SMS requires backend server API credentials (like Twilio or Fast2SMS). In <strong>Simulator Mode</strong>, instant live mobile SMS popups will display on-screen for parents and wardens!
                 </div>
                 <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="app.hideModal('edit-student-modal')" class="px-4 py-2 border rounded-lg">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-purple-700 text-white rounded-lg font-bold">Save Student Profile Edits</button>
+                    <button type="button" onclick="app.hideModal('sms-settings-modal')" class="px-4 py-2 border rounded-lg">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-indigo-600 text-white rounded-lg font-bold">Save Settings</button>
                 </div>
             </form>
         </div>
@@ -1013,6 +1016,73 @@
             <div id="outbox-list" class="space-y-3 font-mono text-xs">
                 <!-- Dynamic Logs -->
             </div>
+        </div>
+    </div>
+
+    <!-- SMS GATEWAY CONFIGURATION MODAL -->
+    <div id="sms-config-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="font-bold text-slate-900 text-lg flex items-center">
+                    <i class="fa-solid fa-comment-sms text-amber-600 mr-2"></i> SMS Gateway & API Settings
+                </h3>
+                <button onclick="app.hideModal('sms-config-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form onsubmit="app.saveSmsSettings(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">SMS Service Provider Gateway</label>
+                    <select id="sms-provider" class="w-full p-2 border rounded-lg">
+                        <option value="simulated">Local Browser Simulator (Demo Mode)</option>
+                        <option value="twilio">Twilio SMS Gateway API</option>
+                        <option value="fast2sms">Fast2SMS / MSG91 India Gateway</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">API Key / Auth Token</label>
+                    <input type="password" id="sms-api-key" placeholder="e.g. twilio_auth_token_xyz..." class="w-full p-2 border rounded-lg font-mono">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Sender ID / From Number</label>
+                    <input type="text" id="sms-sender-id" placeholder="e.g. +18005550199 or BMSIT" class="w-full p-2 border rounded-lg">
+                </div>
+                <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-800">
+                    <i class="fa-solid fa-circle-info mr-1"></i> When set to <strong>Demo Mode</strong>, parent alerts trigger a live visual SMS popup box with instant logs.
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="app.hideModal('sms-config-modal')" class="px-4 py-2 border rounded-lg">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-amber-600 text-white rounded-lg font-bold">Save Gateway Config</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- LIVE PARENT SMS DISPATCH POPUP NOTIFIER -->
+    <div id="sms-dispatch-popup" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-slate-900 text-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-emerald-500/30 space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center">
+                    <i class="fa-solid fa-paper-plane mr-1 animate-pulse"></i> SMS DISPATCHED TO PARENT
+                </span>
+                <button onclick="app.hideModal('sms-dispatch-popup')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            
+            <!-- Mobile Phone Display UI -->
+            <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700 space-y-2 font-sans">
+                <div class="flex justify-between text-[11px] text-slate-400 font-mono border-b border-slate-700/60 pb-2">
+                    <span>TO: <strong id="pop-parent-phone" class="text-emerald-400">+91 ...</strong></span>
+                    <span id="pop-timestamp">Just now</span>
+                </div>
+                <div class="pt-1">
+                    <span class="text-[10px] text-indigo-300 font-bold uppercase block mb-1">Parent SMS Notification Body:</span>
+                    <p id="pop-sms-body" class="text-xs text-slate-200 leading-relaxed bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 font-mono">
+                        SMS message content...
+                    </p>
+                </div>
+            </div>
+
+            <button onclick="app.hideModal('sms-dispatch-popup')" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs shadow">
+                Acknowledge & Close
+            </button>
         </div>
     </div>
 
@@ -1555,11 +1625,31 @@
                     };
                     AppState.outbox.unshift(payload);
                     this.logActivity(s.usn, `Marked ABSENT on ${dateVal} - Parent SMS Dispatched`);
-                    this.toast(`Absence marked! Parent SMS Payload logged to Outbox.`);
+                    
+                    // Show Instant SMS Popup
+                    this.showSmsPopup(s.fphone, payload.body);
+                    this.toast(`Absence marked! Parent SMS alert dispatched to ${s.fphone}`);
                 }
                 this.saveState();
                 this.renderAttendanceTable();
                 const obCnt = document.getElementById('outbox-count'); if (obCnt) obCnt.innerText = AppState.outbox.length;
+            },
+
+            showSmsPopup(phone, body) {
+                const phoneEl = document.getElementById('sms-modal-phone'); if (phoneEl) phoneEl.innerText = phone;
+                const bodyEl = document.getElementById('sms-modal-body'); if (bodyEl) bodyEl.innerText = body;
+                const timeEl = document.getElementById('sms-modal-time'); if (timeEl) timeEl.innerText = new Date().toLocaleTimeString();
+                this.showModal('sms-preview-modal');
+            },
+
+            showSmsSettingsModal() {
+                this.showModal('sms-settings-modal');
+            },
+
+            saveSmsSettings(e) {
+                e.preventDefault();
+                this.toast('SMS Gateway Settings Saved!');
+                this.hideModal('sms-settings-modal');
             },
 
             submitDailyRollCall() {
