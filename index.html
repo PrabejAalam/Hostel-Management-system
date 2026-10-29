@@ -1,32 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-50">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Haven - Hostel Student & Management Portal</title>
+    <title>Campus Haven - Hostel Management System</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
                     },
                     colors: {
                         brand: {
-                            50: '#eef2ff',
+                            50: '#f0f3ff',
                             100: '#e0e7ff',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            800: '#3730a3',
+                            500: '#4f46e5',
+                            600: '#4338ca',
+                            700: '#3730a3',
+                            800: '#1e1b4b',
+                            900: '#0f172a',
                         }
                     }
                 }
@@ -34,1416 +33,1556 @@
         }
     </script>
     <style>
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            body { background: white !important; color: black !important; }
+        }
+        .print-only { display: none; }
     </style>
 </head>
-<body class="h-full text-slate-800 antialiased flex flex-col font-sans">
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased">
 
-    <!-- TOP HEADER / NAVBAR -->
-    <header class="bg-indigo-950 text-white sticky top-0 z-30 shadow-md border-b border-indigo-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <!-- Logo & Brand Title -->
-            <div class="flex items-center space-x-3">
-                <div class="bg-gradient-to-tr from-indigo-600 to-violet-500 p-2 rounded-xl text-white shadow-md">
-                    <i class="fa-solid fa-building-user text-xl"></i>
+    <!-- TOP HEADER / BRANDING BAR -->
+    <header class="bg-brand-800 text-white shadow-lg sticky top-0 z-50 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="app.showHome()">
+                <div class="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center text-white shadow-md">
+                    <i class="fa-solid fa-building-user text-2xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-lg font-extrabold tracking-tight leading-tight bg-gradient-to-r from-white to-indigo-200 bg-clip-text text-transparent">Campus Haven</h1>
-                    <p class="text-[10px] text-indigo-300 font-medium">Om Sai & Comfort World Hostel Portal</p>
+                    <h1 class="text-xl font-bold tracking-tight text-white leading-tight">Campus Haven</h1>
+                    <p class="text-xs text-indigo-200">Om Sai & Comfort World Hostel Portal</p>
                 </div>
             </div>
 
-            <!-- Active User Indicator & Role Switcher -->
-            <div class="flex items-center space-x-4">
-                <div class="hidden sm:flex items-center bg-indigo-900/80 rounded-xl p-1 border border-indigo-700/60">
-                    <span class="text-[11px] text-indigo-300 font-bold px-2">Role:</span>
-                    <button id="roleBtnStudent" onclick="switchRole('student')" class="px-3 py-1 rounded-lg text-xs font-bold transition-all duration-200 bg-indigo-600 text-white shadow">
-                        <i class="fa-solid fa-user-graduate mr-1"></i> Student
-                    </button>
-                    <button id="roleBtnWarden" onclick="switchRole('warden')" class="px-3 py-1 rounded-lg text-xs font-bold transition-all duration-200 text-indigo-200 hover:text-white">
-                        <i class="fa-solid fa-user-shield mr-1"></i> Warden
-                    </button>
-                </div>
-
-                <!-- Current Active Profile Avatar Header -->
-                <div class="flex items-center space-x-2.5 border-l border-indigo-800 pl-4">
-                    <img id="currentUserAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150" alt="Avatar" class="w-9 h-9 rounded-full border-2 border-indigo-400 object-cover shadow-sm">
-                    <div class="text-left hidden md:block">
-                        <p id="currentUserName" class="text-xs font-bold leading-none text-white">Ananya Sharma</p>
-                        <p id="currentUserMeta" class="text-[10px] text-indigo-300 mt-0.5">Girls Hostel • Om Sai Block 2 (#204)</p>
-                    </div>
-                </div>
+            <!-- Current Logged User Status Bar -->
+            <div id="user-status-bar" class="flex items-center space-x-4">
+                <!-- Dynamic user menu rendered by JS -->
             </div>
         </div>
     </header>
 
-    <!-- MOBILE ROLE TOGGLE -->
-    <div class="sm:hidden bg-indigo-900 text-white px-4 py-2 flex justify-between items-center border-b border-indigo-800 text-xs">
-        <span class="text-indigo-300 font-medium">Switch View:</span>
-        <div class="flex space-x-1">
-            <button id="mobRoleStudent" onclick="switchRole('student')" class="px-2.5 py-1 text-xs rounded bg-indigo-600 font-bold">Student</button>
-            <button id="mobRoleWarden" onclick="switchRole('warden')" class="px-2.5 py-1 text-xs rounded text-indigo-300 font-bold">Warden</button>
+    <!-- NOTIFICATION TOAST -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform transition-all duration-300 translate-y-20 opacity-0 pointer-events-none no-print">
+        <div id="toast-content" class="flex items-center space-x-3 px-5 py-3.5 rounded-xl shadow-2xl text-white text-sm font-medium">
+            <i id="toast-icon" class="fa-solid fa-circle-check text-lg"></i>
+            <span id="toast-msg">Operation successful</span>
         </div>
     </div>
 
-    <!-- MAIN BODY WRAPPER -->
-    <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row gap-6">
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <!-- SIDEBAR NAVIGATION -->
-        <aside class="w-full md:w-64 flex-shrink-0">
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-4 sticky top-20">
+        <!-- ========================================== -->
+        <!-- 1. HOMEPAGE & DUAL LOGIN PORTAL -->
+        <!-- ========================================== -->
+        <div id="view-home" class="space-y-12">
+            <!-- Hero Banner -->
+            <div class="text-center max-w-3xl mx-auto space-y-3 pt-4">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800">
+                    <i class="fa-solid fa-shield-halved mr-1.5"></i> Authorized Campus Living Portal
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    Smart Hostel Management & Student Care
+                </h2>
+                <p class="text-slate-600 text-base">
+                    Seamless attendance logging, rapid grievance redressements, digital gate passes, and double-seater room allocations.
+                </p>
+            </div>
 
-                <div class="mb-3 px-2 flex justify-between items-center">
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider" id="sidebarRoleLabel">Student Menu</p>
-                    <span id="hostelTypeBadge" class="bg-pink-100 text-pink-700 font-bold text-[10px] px-2 py-0.5 rounded-full">Girls Hostel</span>
+            <!-- Portal Login Options (3 Main Portal Cards) -->
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                
+                <!-- Student Portal Card -->
+                <div class="glass-card rounded-2xl p-8 hover:shadow-xl transition-all duration-300 border-t-4 border-indigo-600 flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mb-6">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-2">Student Portal</h3>
+                        <p class="text-slate-600 text-sm mb-6 leading-relaxed">
+                            Access your profile, file grievances (Mess, Electricity, Plumbing), apply for gate passes, and check roommate details.
+                        </p>
+                    </div>
+                    <button onclick="app.showModal('student-login-modal')" class="w-full py-3.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2">
+                        <span>Login as Student</span>
+                        <i class="fa-solid fa-arrow-right text-sm"></i>
+                    </button>
                 </div>
 
-                <nav class="space-y-1" id="sidebarMenu">
-                    <!-- Nav items populated dynamically -->
-                </nav>
-
-                <!-- Anti-Ragging Urgent Emergency Contact -->
-                <div class="mt-6 p-3.5 bg-rose-50 border border-rose-200 rounded-2xl text-rose-800">
-                    <div class="flex items-center space-x-2 text-rose-700 font-bold text-xs mb-1">
-                        <i class="fa-solid fa-shield-cat text-rose-600"></i>
-                        <span>Anti-Ragging Helpline</span>
+                <!-- Warden Portal Card -->
+                <div class="glass-card rounded-2xl p-8 hover:shadow-xl transition-all duration-300 border-t-4 border-purple-600 flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mb-6">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-2">Warden Portal</h3>
+                        <p class="text-slate-600 text-sm mb-6 leading-relaxed">
+                            Conduct nightly roll calls, trigger parent absence alerts, approve leave applications, and manage room allocations.
+                        </p>
                     </div>
-                    <p class="text-[11px] text-rose-600 mb-2 leading-snug">Strict zero tolerance policy. Instant Warden escalation available.</p>
-                    <a href="tel:18001805522" class="inline-flex items-center text-xs font-bold text-rose-700 hover:underline">
-                        <i class="fa-solid fa-phone-flip mr-1.5"></i> 1800-180-5522
-                    </a>
+                    <button onclick="app.showModal('warden-login-modal')" class="w-full py-3.5 px-4 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2">
+                        <span>Login as Warden</span>
+                        <i class="fa-solid fa-arrow-right text-sm"></i>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- NEW REGISTRATION SECTION -->
+            <div class="max-w-4xl mx-auto bg-white rounded-2xl p-8 border border-slate-200 shadow-sm text-center">
+                <div class="max-w-md mx-auto space-y-4">
+                    <div class="inline-flex items-center justify-center w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full mb-1">
+                        <i class="fa-solid fa-id-card text-xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900">New Registration Section</h3>
+                    <p class="text-slate-600 text-sm">
+                        Are you a newly allotted student or appointed hostel warden? Register below for access verification.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 pt-2">
+                        <button onclick="app.showStudentRegForm()" class="flex-1 py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow transition">
+                            <i class="fa-solid fa-user-plus mr-2"></i> Register as Student
+                        </button>
+                        <button onclick="app.showWardenRegForm()" class="flex-1 py-3 px-4 bg-slate-800 hover:bg-slate-900 text-white font-semibold rounded-xl shadow transition">
+                            <i class="fa-solid fa-user-tie mr-2"></i> Register as Warden
+                        </button>
+                    </div>
                 </div>
             </div>
-        </aside>
 
-        <!-- MAIN CONTENT PANELS -->
-        <main class="flex-1 min-w-0">
-
-            <!-- TAB 1: NEW STUDENT REGISTRATION & ONBOARDING -->
-            <section id="view-register" class="space-y-6">
-                <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200/80">
-                    <div class="border-b border-slate-100 pb-5 mb-6">
-                        <div class="flex items-center space-x-3">
-                            <div class="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl">
-                                <i class="fa-solid fa-id-card-clip text-xl"></i>
-                            </div>
-                            <div>
-                                <h2 class="text-xl font-bold text-slate-800">Student Hostel Registration Form</h2>
-                                <p class="text-xs text-slate-500 mt-0.5">Register for Boys or Girls Hostel under Om Sai or Comfort World Management PG.</p>
-                            </div>
-                        </div>
+            <!-- HOSTEL HELP & EMERGENCY CONTACTS -->
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Hostel Help & Emergency Directory</h3>
+                        <p class="text-slate-500 text-xs">Direct technical support and emergency assistance</p>
                     </div>
-
-                    <form id="registrationForm" onsubmit="handleStudentRegistration(event)" class="space-y-6">
-
-                        <!-- SECTION 1: Personal & Sex Details -->
-                        <div>
-                            <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-3 flex items-center">
-                                <i class="fa-solid fa-user-gear mr-1.5"></i> 1. Personal Identity & Demographic
-                            </h3>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Full Student Name <span class="text-rose-500">*</span></label>
-                                    <input type="text" id="regFullName" required placeholder="e.g. Ananya Sharma" class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                                </div>
-
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Sex / Gender <span class="text-rose-500">*</span></label>
-                                    <select id="regSex" required onchange="updateHostelTypeDisplay()" class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white">
-                                        <option value="Female">Female (Girls Hostel)</option>
-                                        <option value="Male">Male (Boys Hostel)</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Age (Years) <span class="text-rose-500">*</span></label>
-                                    <input type="number" id="regAge" min="15" max="40" required placeholder="e.g. 20" class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- SECTION 2: Photo Upload -->
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                            <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-2 flex items-center">
-                                <i class="fa-solid fa-camera mr-1.5"></i> 2. Student Profile Picture Upload
-                            </h3>
-                            <div class="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4">
-                                <div class="relative">
-                                    <img id="regPhotoPreview" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150" class="w-20 h-20 rounded-2xl object-cover border-2 border-indigo-500 shadow-sm">
-                                </div>
-                                <div class="flex-1 text-xs">
-                                    <input type="file" id="regPhotoInput" accept="image/*" onchange="previewStudentPhoto(event)" class="text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer">
-                                    <p class="text-[11px] text-slate-400 mt-1">Upload JPEG/PNG profile picture for hostel smart pass generation.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- SECTION 3: Hostel Management PG & Block Selection -->
-                        <div>
-                            <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-3 flex items-center">
-                                <i class="fa-solid fa-building-circle-check mr-1.5"></i> 3. Hostel Management PG & Block Allotment
-                            </h3>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Hostel Management PG <span class="text-rose-500">*</span></label>
-                                    <select id="regMgmtGroup" required onchange="updateBlockOptions()" class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white">
-                                        <option value="Om Sai Management">Om Sai Management</option>
-                                        <option value="Comfort World Management">Comfort World Management</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Allotted Block <span class="text-rose-500">*</span></label>
-                                    <select id="regBlock" required class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white">
-                                        <!-- Dynamically loaded based on management -->
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Room # & Seater Type <span class="text-rose-500">*</span></label>
-                                    <div class="flex space-x-2">
-                                        <input type="text" id="regRoomNo" required placeholder="Room 204" class="w-1/2 border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500">
-                                        <select id="regSeaterType" required class="w-1/2 border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500 bg-white">
-                                            <option value="Double Seater">Double Seater</option>
-                                            <option value="Single Seater">Single Seater</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- SECTION 4: Contact & Parent Details -->
-                        <div>
-                            <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-3 flex items-center">
-                                <i class="fa-solid fa-address-book mr-1.5"></i> 4. Student Contact & Family Background
-                            </h3>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Student Contact Mobile <span class="text-rose-500">*</span></label>
-                                    <input type="tel" id="regPhone" required placeholder="+91 98765 43210" class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500">
-                                </div>
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Student Email Address <span class="text-rose-500">*</span></label>
-                                    <input type="email" id="regEmail" required placeholder="student@campus.edu" class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500">
-                                </div>
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Father's Name <span class="text-rose-500">*</span></label>
-                                    <input type="text" id="regFatherName" required placeholder="Father Name" class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500">
-                                </div>
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Mother's Name <span class="text-rose-500">*</span></label>
-                                    <input type="text" id="regMotherName" required placeholder="Mother Name" class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500">
-                                </div>
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Parents Contact Phone (SMS/Alerts) <span class="text-rose-500">*</span></label>
-                                    <input type="tel" id="regParentsPhone" required placeholder="+91 98111 22334" class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500">
-                                </div>
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Parents Email ID <span class="text-rose-500">*</span></label>
-                                    <input type="email" id="regParentsEmail" required placeholder="parents@gmail.com" class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500">
-                                </div>
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Local Guardian Name & Relation</label>
-                                    <input type="text" id="regGuardianName" placeholder="e.g. Ramesh uncle (Local Guardian)" class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500">
-                                </div>
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Local Guardian Mobile</label>
-                                    <input type="tel" id="regGuardianPhone" placeholder="+91 98990 11223" class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500">
-                                </div>
-                            </div>
-                            <div class="mt-4 text-xs">
-                                <label class="block font-semibold text-slate-700 mb-1">Permanent Address <span class="text-rose-500">*</span></label>
-                                <textarea id="regAddress" rows="2" required placeholder="Full residential permanent address with pincode..." class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500"></textarea>
-                            </div>
-                        </div>
-
-                        <!-- SUBMIT BUTTON -->
-                        <div class="pt-2 flex justify-end">
-                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3 rounded-xl text-xs shadow-lg transition flex items-center">
-                                <i class="fa-solid fa-user-check mr-2"></i> Complete Student Registration
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </section>
-
-            <!-- TAB 2: COMPLAINT / GRIEVANCE DESK -->
-            <section id="view-complaints" class="space-y-6 hidden">
-                <div class="bg-gradient-to-r from-indigo-700 via-indigo-800 to-slate-900 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
-                    <div class="relative z-10">
-                        <span class="bg-rose-500/30 text-rose-200 border border-rose-400/40 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Fast Warden Response</span>
-                        <h2 class="text-2xl font-bold mt-2">Hostel Issue & Complaint Desk</h2>
-                        <p class="text-indigo-200 text-xs mt-1 max-w-xl">Report food issues, electricity faults, ragging, room cleaning, plumbing or facility repairs.</p>
-                        <button onclick="openNewComplaintModal()" class="mt-4 bg-white text-indigo-900 hover:bg-indigo-50 px-4 py-2.5 rounded-xl text-xs font-bold shadow-md inline-flex items-center transition">
-                            <i class="fa-solid fa-circle-plus mr-2 text-indigo-600"></i> Report New Issue
-                        </button>
-                    </div>
-                    <i class="fa-solid fa-headset absolute -right-4 -bottom-6 text-9xl text-white/10 pointer-events-none"></i>
+                    <span class="px-3 py-1 bg-red-100 text-red-700 font-bold text-xs rounded-full flex items-center">
+                        <i class="fa-solid fa-phone-flip mr-1.5 animate-pulse"></i> 24/7 Helpline Active
+                    </span>
                 </div>
 
-                <!-- Complaint Filters -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row gap-3 justify-between items-center text-xs">
-                    <div class="flex items-center space-x-2 w-full sm:w-auto">
-                        <span class="font-bold text-slate-500 uppercase">Category:</span>
-                        <select id="complaintCatFilter" onchange="filterComplaints()" class="bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-indigo-500">
-                            <option value="ALL">All Categories</option>
-                            <option value="Food Problem">Food Problem</option>
-                            <option value="Ragging / Harassment">Ragging / Harassment (Urgent)</option>
-                            <option value="Electricity Problem">Electricity Problem</option>
-                            <option value="Room Cleaning">Room Cleaning</option>
-                            <option value="Plumber Problem">Plumber Problem</option>
-                            <option value="Hostel Facility">Hostel Facility</option>
-                        </select>
-                    </div>
-
-                    <div class="flex items-center space-x-2 w-full sm:w-auto">
-                        <span class="font-bold text-slate-500 uppercase">Status:</span>
-                        <select id="complaintStatusFilter" onchange="filterComplaints()" class="bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-indigo-500">
-                            <option value="ALL">All Status</option>
-                            <option value="Pending">Pending</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Resolved">Resolved</option>
-                        </select>
-                    </div>
+                <div id="emergency-contacts-grid" class="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- Dynamic Contact Cards Rendered Here -->
                 </div>
 
-                <!-- Complaints List Container -->
-                <div id="complaintsListContainer" class="grid grid-cols-1 gap-4">
-                    <!-- Populated by JS -->
-                </div>
-            </section>
-
-            <!-- TAB 3: ROOMS & DOUBLE SEATER PROFILES -->
-            <section id="view-rooms" class="space-y-6 hidden">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
-                        <div>
-                            <h2 class="text-xl font-bold text-slate-800">Rooms Allocation & Double Seater Co-Occupants</h2>
-                            <p class="text-xs text-slate-500 mt-0.5">Explore Om Sai & Comfort World room occupant profiles.</p>
-                        </div>
-                        <input type="text" id="roomSearchInput" onkeyup="renderRooms()" placeholder="Search room # or student name..." class="text-xs border border-slate-300 rounded-xl px-3.5 py-2 w-60 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    </div>
-
-                    <div id="roomsGridContainer" class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <!-- Populated by JS -->
+                <div class="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 flex items-start space-x-3">
+                    <i class="fa-solid fa-triangle-exclamation text-amber-600 text-base mt-0.5"></i>
+                    <div>
+                        <span class="font-bold">Emergency Notice:</span> For immediate life-threatening medical or fire safety emergencies, please dial local national emergency services (112/108) immediately alongside calling hostel warden staff.
                     </div>
                 </div>
-            </section>
+            </div>
+        </div>
 
-            <!-- TAB 4: STUDENT DIRECTORY (FULL DETAILS) -->
-            <section id="view-students" class="space-y-6 hidden">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
-                        <div>
-                            <h2 class="text-xl font-bold text-slate-800">Student Profiles Register</h2>
-                            <p class="text-xs text-slate-500">Comprehensive directory containing age, sex, PG block, room type, parents & guardian numbers.</p>
-                        </div>
-                        <button onclick="switchTab('register')" class="bg-indigo-600 text-white px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-indigo-700 transition">
-                            <i class="fa-solid fa-user-plus mr-1"></i> Register Student
-                        </button>
-                    </div>
-
-                    <div class="mb-4">
-                        <input type="text" id="studentSearchInput" onkeyup="renderStudentsDirectory()" placeholder="Filter by Student Name, Management PG, Block or Room..." class="w-full text-xs border border-slate-300 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    </div>
-
-                    <div class="overflow-x-auto rounded-xl border border-slate-200">
-                        <table class="w-full text-left text-xs">
-                            <thead class="bg-slate-100 text-slate-600 font-semibold uppercase tracking-wider border-b border-slate-200">
-                                <tr>
-                                    <th class="p-3">Student Photo & Name</th>
-                                    <th class="p-3">PG Block & Room</th>
-                                    <th class="p-3">Sex / Age</th>
-                                    <th class="p-3">Parents Contact</th>
-                                    <th class="p-3">Local Guardian</th>
-                                    <th class="p-3 text-right">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="studentTableBody" class="divide-y divide-slate-200">
-                                <!-- Populated dynamically -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TAB 5: WARDEN NIGHT ATTENDANCE (WITH PARENT SMS / EMAIL ALERT) -->
-            <section id="view-attendance" class="space-y-6 hidden">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80">
-                    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-4 border-b border-slate-100">
-                        <div>
-                            <div class="flex items-center space-x-2">
-                                <h2 class="text-xl font-bold text-slate-800">Warden Night Attendance</h2>
-                                <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Live Roll Call</span>
-                            </div>
-                            <p class="text-xs text-slate-500 mt-1">
-                                Marking student <span class="text-rose-600 font-bold">ABSENT</span> triggers instant automated alerts to Parents' Email & Phone Number.
-                            </p>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <label class="text-xs font-bold text-slate-500">Date:</label>
-                            <input type="date" id="attendanceDate" class="text-xs border border-slate-300 rounded-lg px-2.5 py-1.5 focus:ring-2 focus:ring-indigo-500">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-3 gap-4 my-4 text-xs">
-                        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-center">
-                            <p class="text-emerald-600 font-medium">Present</p>
-                            <p id="countPresent" class="text-xl font-extrabold text-emerald-700">0</p>
-                        </div>
-                        <div class="bg-rose-50 border border-rose-200 p-3 rounded-xl text-center">
-                            <p class="text-rose-600 font-medium">Absent (Parents Notified)</p>
-                            <p id="countAbsent" class="text-xl font-extrabold text-rose-700">0</p>
-                        </div>
-                        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl text-center">
-                            <p class="text-slate-500 font-medium">Total Registered</p>
-                            <p id="countTotal" class="text-xl font-extrabold text-slate-700">0</p>
-                        </div>
-                    </div>
-
-                    <div class="overflow-x-auto rounded-xl border border-slate-200">
-                        <table class="w-full text-left text-xs">
-                            <thead class="bg-slate-100 text-slate-600 font-semibold uppercase tracking-wider border-b border-slate-200">
-                                <tr>
-                                    <th class="p-3">Student Name</th>
-                                    <th class="p-3">PG Block / Room</th>
-                                    <th class="p-3">Parent Phone & Email</th>
-                                    <th class="p-3">Attendance Status</th>
-                                    <th class="p-3 text-right">Warden Roll Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="attendanceTableBody" class="divide-y divide-slate-200">
-                                <!-- Populated dynamically -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TAB 6: GATE LOG / IN-OUT PASS REGISTER -->
-            <section id="view-gatelog" class="space-y-6 hidden">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80">
-                    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-4 border-b border-slate-100">
-                        <div>
-                            <h2 class="text-xl font-bold text-slate-800">In / Out Movement & Gate Register</h2>
-                            <p class="text-xs text-slate-500">Track student movements outside hostel premises with timestamp control.</p>
-                        </div>
-                        <button onclick="openNewGatePassModal()" class="bg-indigo-600 text-white px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-indigo-700 transition">
-                            <i class="fa-solid fa-right-from-bracket mr-1"></i> Issue Gate Pass
-                        </button>
-                    </div>
-
-                    <div class="mt-4 overflow-x-auto rounded-xl border border-slate-200">
-                        <table class="w-full text-left text-xs">
-                            <thead class="bg-slate-100 text-slate-600 font-semibold uppercase tracking-wider border-b border-slate-200">
-                                <tr>
-                                    <th class="p-3">Student & PG Block</th>
-                                    <th class="p-3">Time Out</th>
-                                    <th class="p-3">Expected Return</th>
-                                    <th class="p-3">Purpose</th>
-                                    <th class="p-3">Status</th>
-                                    <th class="p-3 text-right">In-Out Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="gateLogTableBody" class="divide-y divide-slate-200">
-                                <!-- Populated dynamically -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TAB 7: HOSTEL FACILITIES -->
-            <section id="view-facilities" class="space-y-6 hidden">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80">
-                    <h2 class="text-xl font-bold text-slate-800 mb-1">Hostel Facilities & Service Status</h2>
-                    <p class="text-xs text-slate-500 mb-6">Amenity health dashboard across Om Sai & Comfort World management blocks.</p>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 text-xs">
-                        <div class="p-4 rounded-xl border border-emerald-200 bg-emerald-50/50 flex items-start justify-between">
-                            <div>
-                                <span class="bg-emerald-100 text-emerald-800 font-bold text-[10px] px-2 py-0.5 rounded">Active</span>
-                                <h3 class="font-bold text-slate-800 mt-2">High-Speed Wi-Fi</h3>
-                                <p class="text-slate-500 mt-1">Fiber active across all Om Sai & Comfort blocks.</p>
-                            </div>
-                            <i class="fa-solid fa-wifi text-emerald-600 text-2xl"></i>
-                        </div>
-
-                        <div class="p-4 rounded-xl border border-emerald-200 bg-emerald-50/50 flex items-start justify-between">
-                            <div>
-                                <span class="bg-emerald-100 text-emerald-800 font-bold text-[10px] px-2 py-0.5 rounded">Active</span>
-                                <h3 class="font-bold text-slate-800 mt-2">RO Drinking Water</h3>
-                                <p class="text-slate-500 mt-1">Water purifiers serviced on 1st of month.</p>
-                            </div>
-                            <i class="fa-solid fa-glass-water text-emerald-600 text-2xl"></i>
-                        </div>
-
-                        <div class="p-4 rounded-xl border border-amber-200 bg-amber-50/50 flex items-start justify-between">
-                            <div>
-                                <span class="bg-amber-100 text-amber-800 font-bold text-[10px] px-2 py-0.5 rounded">Maintenance</span>
-                                <h3 class="font-bold text-slate-800 mt-2">Comfort World Laundry</h3>
-                                <p class="text-slate-500 mt-1">Washing Machine #2 under repair in Block C.</p>
-                            </div>
-                            <i class="fa-solid fa-shirt text-amber-600 text-2xl"></i>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- MODAL 1: NEW COMPLAINT FORM -->
-    <div id="modalNewComplaint" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative border border-slate-100 max-h-[90vh] overflow-y-auto">
-            <button onclick="closeModal('modalNewComplaint')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-                <i class="fa-solid fa-xmark text-xl"></i>
+        <!-- ========================================== -->
+        <!-- 2. STUDENT REGISTRATION VIEW -->
+        <!-- ========================================== -->
+        <div id="view-student-reg" class="hidden max-w-3xl mx-auto">
+            <button onclick="app.showHome()" class="mb-6 text-indigo-600 hover:text-indigo-800 text-sm font-semibold flex items-center space-x-2">
+                <i class="fa-solid fa-arrow-left"></i> <span>Back to Homepage</span>
             </button>
 
-            <h3 class="text-lg font-bold text-slate-800 mb-1 flex items-center">
-                <i class="fa-solid fa-triangle-exclamation text-indigo-600 mr-2"></i> Submit Issue / Problem Report
-            </h3>
-            <p class="text-xs text-slate-500 mb-4">Directly alerts Warden Office for speedy action.</p>
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+                <div class="bg-indigo-600 px-8 py-6 text-white">
+                    <h2 class="text-2xl font-bold">Student Hostel Registration Form</h2>
+                    <p class="text-indigo-100 text-xs mt-1">Register under Om Sai or Comfort World Hostel Management.</p>
+                </div>
 
-            <form id="complaintForm" onsubmit="handleNewComplaint(event)" class="space-y-4 text-xs">
+                <form id="student-reg-form" onsubmit="app.handleStudentReg(event)" class="p-8 space-y-6">
+                    <!-- Academic & Personal -->
+                    <div class="space-y-4">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-indigo-600 border-b pb-1">1. Academic & Personal Identity</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Academic Year *</label>
+                                <select id="sreg-year" required class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
+                                    <option value="1st Year">1st Year</option>
+                                    <option value="2nd Year">2nd Year</option>
+                                    <option value="3rd Year">3rd Year</option>
+                                    <option value="4th Year">4th Year</option>
+                                </select>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Full Student Name *</label>
+                                <input type="text" id="sreg-name" required placeholder="e.g. Ananya Sharma" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">College USN / Reg No *</label>
+                                <input type="text" id="sreg-usn" required placeholder="e.g. 1MS23CS045" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 uppercase">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Gender / Sex *</label>
+                                <select id="sreg-gender" required class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
+                                    <option value="Female">Female (Girls Hostel)</option>
+                                    <option value="Male">Male (Boys Hostel)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Age / Blood Group *</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <input type="number" id="sreg-age" min="15" max="35" required placeholder="Age" class="w-full px-2 py-2 border rounded-lg text-sm">
+                                    <select id="sreg-blood" required class="w-full px-2 py-2 border rounded-lg text-sm">
+                                        <option value="O+">O+</option>
+                                        <option value="A+">A+</option>
+                                        <option value="B+">B+</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="O-">O-</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B-">B-</option>
+                                        <option value="AB-">AB-</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Profile Picture Upload -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Profile Photo Upload *</label>
+                            <div class="flex items-center space-x-4">
+                                <div id="sreg-preview-container" class="w-16 h-16 rounded-xl bg-slate-100 border border-slate-300 flex items-center justify-center overflow-hidden">
+                                    <i class="fa-solid fa-user text-slate-400 text-2xl"></i>
+                                </div>
+                                <input type="file" id="sreg-photo" accept="image/*" required onchange="app.handlePhotoPreview(this, 'sreg-preview-container')" class="text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hostel & Block Allotment -->
+                    <div class="space-y-4">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-indigo-600 border-b pb-1">2. Hostel Management & Block Allocation</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Hostel Management PG *</label>
+                                <select id="sreg-hostel" required onchange="app.updateBlockDropdown(this.value, 'sreg-block')" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
+                                    <option value="Om Sai Hostel">Om Sai Hostel Management</option>
+                                    <option value="Comfort World Hostel">Comfort World Hostel Management</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Allotted Block *</label>
+                                <select id="sreg-block" required class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
+                                    <!-- Dynamic Blocks Populated by JS -->
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Room No & Capacity *</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <input type="text" id="sreg-room" required placeholder="Room 204" class="w-full px-2 py-2 border rounded-lg text-sm">
+                                    <select id="sreg-sharing" class="w-full px-2 py-2 border rounded-lg text-sm">
+                                        <option value="Double Seater">Double</option>
+                                        <option value="Single Seater">Single</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact & Family Background -->
+                    <div class="space-y-4">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-indigo-600 border-b pb-1">3. Student Contact & Family Background</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Student Phone Number *</label>
+                                <input type="tel" id="sreg-phone" required placeholder="+91 98765 43210" class="w-full px-3 py-2 border rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Student Email Address *</label>
+                                <input type="email" id="sreg-email" required placeholder="student@college.edu" class="w-full px-3 py-2 border rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Father's Name & Phone *</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <input type="text" id="sreg-fname" required placeholder="Father Name" class="w-full px-2 py-2 border rounded-lg text-sm">
+                                    <input type="tel" id="sreg-fphone" required placeholder="Father Phone" class="w-full px-2 py-2 border rounded-lg text-sm">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Mother's Name *</label>
+                                <input type="text" id="sreg-mname" required placeholder="Mother Name" class="w-full px-3 py-2 border rounded-lg text-sm">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Local Guardian Name & Phone</label>
+                                <div class="grid md:grid-cols-2 gap-2">
+                                    <input type="text" id="sreg-gname" placeholder="Guardian Name" class="w-full px-3 py-2 border rounded-lg text-sm">
+                                    <input type="tel" id="sreg-gphone" placeholder="Guardian Phone" class="w-full px-3 py-2 border rounded-lg text-sm">
+                                </div>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Permanent Residential Address *</label>
+                                <textarea id="sreg-address" required rows="2" placeholder="Full permanent address with pincode..." class="w-full px-3 py-2 border rounded-lg text-sm"></textarea>
+                            </div>
+                            <div class="md:col-span-2 grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Password *</label>
+                                    <input type="password" id="sreg-pass" required placeholder="••••••••" class="w-full px-3 py-2 border rounded-lg text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Confirm Password *</label>
+                                    <input type="password" id="sreg-pass2" required placeholder="••••••••" class="w-full px-3 py-2 border rounded-lg text-sm">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 flex justify-end space-x-3">
+                        <button type="button" onclick="app.showHome()" class="px-5 py-2.5 border rounded-xl text-slate-600 font-semibold text-sm hover:bg-slate-50">Cancel</button>
+                        <button type="submit" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold text-sm shadow-md">Submit Registration Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 3. WARDEN REGISTRATION VIEW -->
+        <!-- ========================================== -->
+        <div id="view-warden-reg" class="hidden max-w-2xl mx-auto">
+            <button onclick="app.showHome()" class="mb-6 text-purple-600 hover:text-purple-800 text-sm font-semibold flex items-center space-x-2">
+                <i class="fa-solid fa-arrow-left"></i> <span>Back to Homepage</span>
+            </button>
+
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+                <div class="bg-purple-700 px-8 py-6 text-white">
+                    <h2 class="text-2xl font-bold">Warden Registration / Replacement Portal</h2>
+                    <p class="text-purple-200 text-xs mt-1">Submit official staff credentials for management approval.</p>
+                </div>
+
+                <form id="warden-reg-form" onsubmit="app.handleWardenReg(event)" class="p-8 space-y-6">
+                    <div class="space-y-4">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Full Staff Name *</label>
+                                <input type="text" id="wreg-name" required placeholder="Dr. K. V. Raman" class="w-full px-3 py-2 border rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Employee / Staff ID *</label>
+                                <input type="text" id="wreg-empid" required placeholder="EMP-8802" class="w-full px-3 py-2 border rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Assigned Hostel Management *</label>
+                                <select id="wreg-hostel" required onchange="app.updateBlockDropdown(this.value, 'wreg-block')" class="w-full px-3 py-2 border rounded-lg text-sm">
+                                    <option value="Om Sai Hostel">Om Sai Hostel Management</option>
+                                    <option value="Comfort World Hostel">Comfort World Hostel Management</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Assigned Block Coverage *</label>
+                                <select id="wreg-block" required class="w-full px-3 py-2 border rounded-lg text-sm">
+                                    <!-- Populated by JS -->
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Official Email Address *</label>
+                                <input type="email" id="wreg-email" required placeholder="warden@campushaven.edu" class="w-full px-3 py-2 border rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Contact Phone Number *</label>
+                                <input type="tel" id="wreg-phone" required placeholder="+91 99000 11223" class="w-full px-3 py-2 border rounded-lg text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Staff Photo Upload *</label>
+                            <div class="flex items-center space-x-4">
+                                <div id="wreg-preview-container" class="w-14 h-14 rounded-xl bg-slate-100 border flex items-center justify-center overflow-hidden">
+                                    <i class="fa-solid fa-user-tie text-slate-400 text-xl"></i>
+                                </div>
+                                <input type="file" id="wreg-photo" accept="image/*" required onchange="app.handlePhotoPreview(this, 'wreg-preview-container')" class="text-xs text-slate-500">
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Account Password *</label>
+                                <input type="password" id="wreg-pass" required placeholder="••••••••" class="w-full px-3 py-2 border rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Confirm Password *</label>
+                                <input type="password" id="wreg-pass2" required placeholder="••••••••" class="w-full px-3 py-2 border rounded-lg text-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800">
+                        <i class="fa-solid fa-shield-halved mr-1"></i> <strong>Warden Replacement Safeguard:</strong> Submitting this request creates a pending warden application. Once approved by active management, full administrative privileges will be transferred safely while revoking outgoing warden access.
+                    </div>
+
+                    <div class="pt-2 flex justify-end space-x-3">
+                        <button type="button" onclick="app.showHome()" class="px-5 py-2.5 border rounded-xl text-slate-600 font-semibold text-sm">Cancel</button>
+                        <button type="submit" class="px-6 py-2.5 bg-purple-700 hover:bg-purple-800 text-white rounded-xl font-semibold text-sm shadow-md">Request Warden Authorization</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 4. STUDENT DASHBOARD (ONLY 3 MAIN FUNCTIONS) -->
+        <!-- ========================================== -->
+        <div id="view-student-dash" class="hidden space-y-8">
+            <!-- Student Header Banner -->
+            <div class="bg-indigo-900 text-white rounded-2xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center space-x-4">
+                    <img id="sdash-img" src="" alt="Student Profile" class="w-16 h-16 rounded-2xl object-cover border-2 border-indigo-300">
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h2 id="sdash-name" class="text-2xl font-bold">Student Name</h2>
+                            <span id="sdash-status-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500 text-white">Approved</span>
+                        </div>
+                        <p id="sdash-sub" class="text-xs text-indigo-200 mt-1">USN: - | Block: - | Room: -</p>
+                    </div>
+                </div>
+                <!-- Verification status warning if pending -->
+                <div id="sdash-pending-alert" class="hidden bg-amber-500 text-slate-900 px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2">
+                    <i class="fa-solid fa-clock"></i> <span>Account Pending Warden Approval</span>
+                </div>
+            </div>
+
+            <!-- Dashboard Navigation Tabs (3 Main Functions) -->
+            <div class="flex border-b border-slate-200 space-x-8">
+                <button id="stab-btn-profile" onclick="app.switchStudentTab('profile')" class="pb-3 border-b-2 border-indigo-600 font-bold text-indigo-600 text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-user-gear"></i> <span>1. Register / Complete Profile</span>
+                </button>
+                <button id="stab-btn-complaint" onclick="app.switchStudentTab('complaint')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-indigo-600 text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i> <span>2. File a Complaint</span>
+                </button>
+                <button id="stab-btn-leave" onclick="app.switchStudentTab('leave')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-indigo-600 text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-passport"></i> <span>3. Apply for Leave</span>
+                </button>
+            </div>
+
+            <!-- FUNCTION 1: PROFILE & ROOMMATE INFO -->
+            <div id="stab-content-profile" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Profile Card -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-900 border-b pb-2 flex items-center justify-between">
+                            <span>Personal Profile Details</span>
+                            <span class="text-xs text-indigo-600 font-normal">Editable Fields Allowed</span>
+                        </h3>
+                        <div class="grid grid-cols-2 gap-4 text-xs">
+                            <div><span class="text-slate-400 block">Academic Year</span><strong id="sprof-year" class="text-slate-800 text-sm">-</strong></div>
+                            <div><span class="text-slate-400 block">Blood Group</span><strong id="sprof-blood" class="text-slate-800 text-sm">-</strong></div>
+                            <div><span class="text-slate-400 block">Student Phone</span><strong id="sprof-phone" class="text-slate-800 text-sm">-</strong></div>
+                            <div><span class="text-slate-400 block">Student Email</span><strong id="sprof-email" class="text-slate-800 text-sm">-</strong></div>
+                            <div><span class="text-slate-400 block">Father Name</span><strong id="sprof-fname" class="text-slate-800 text-sm">-</strong></div>
+                            <div><span class="text-slate-400 block">Parent Contact</span><strong id="sprof-fphone" class="text-slate-800 text-sm">-</strong></div>
+                            <div class="col-span-2"><span class="text-slate-400 block">Permanent Address</span><p id="sprof-address" class="text-slate-800 font-medium">-</p></div>
+                        </div>
+                    </div>
+
+                    <!-- Roommate Card (For Double Seater Rooms) -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-900 border-b pb-2 flex items-center justify-between">
+                            <span>Double-Seater Co-Occupant / Roommate</span>
+                            <i class="fa-solid fa-user-group text-indigo-500"></i>
+                        </h3>
+                        <div id="roommate-container" class="pt-2">
+                            <!-- Dynamic Roommate Info Rendered Here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FUNCTION 2: FILE A COMPLAINT -->
+            <div id="stab-content-complaint" class="hidden space-y-6">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Complaint Submission Form -->
+                    <div class="md:col-span-1 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-900 border-b pb-2">Log New Grievance</h3>
+                        <form onsubmit="app.handleComplaintSubmit(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Issue Category *</label>
+                                <select id="cmp-cat" required class="w-full px-3 py-2 border rounded-lg text-sm">
+                                    <option value="Food/Mess Problem">Food / Mess Quality Problem</option>
+                                    <option value="Ragging/Harassment">Confidential Ragging / Harassment</option>
+                                    <option value="Electricity Problem">Electricity / Appliance Fault</option>
+                                    <option value="Plumbing Problem">Plumbing / Water Supply</option>
+                                    <option value="Room Cleaning">Room Cleaning / Hygiene</option>
+                                    <option value="Missing Facilities">Missing Hostel Facilities</option>
+                                    <option value="Other Issues">Other Issues</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Title / Subject *</label>
+                                <input type="text" id="cmp-title" required placeholder="e.g. Geyser leaking room 204" class="w-full px-3 py-2 border rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Detailed Description *</label>
+                                <textarea id="cmp-desc" required rows="3" placeholder="Explain the problem clearly..." class="w-full px-3 py-2 border rounded-lg text-sm"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Optional Incident Photo Evidence</label>
+                                <input type="file" id="cmp-photo" accept="image/*" class="text-xs text-slate-500">
+                            </div>
+                            <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow">Submit Grievance</button>
+                        </form>
+                    </div>
+
+                    <!-- My Submitted Complaints List -->
+                    <div class="md:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-900 border-b pb-2">My Filed Complaints History</h3>
+                        <div id="my-complaints-list" class="space-y-3 max-h-96 overflow-y-auto pr-1">
+                            <!-- Dynamic Complaints -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FUNCTION 3: APPLY FOR LEAVE & DIGITAL PASS -->
+            <div id="stab-content-leave" class="hidden space-y-6">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Leave Application Form -->
+                    <div class="md:col-span-1 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-900 border-b pb-2">Apply for Outstation Leave</h3>
+                        <form onsubmit="app.handleLeaveSubmit(event)" class="space-y-4">
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Start Date *</label>
+                                    <input type="date" id="leave-sdate" required class="w-full px-2 py-1.5 border rounded-lg text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Start Time *</label>
+                                    <input type="time" id="leave-stime" required class="w-full px-2 py-1.5 border rounded-lg text-xs">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Return Date *</label>
+                                    <input type="date" id="leave-edate" required class="w-full px-2 py-1.5 border rounded-lg text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Return Time *</label>
+                                    <input type="time" id="leave-etime" required class="w-full px-2 py-1.5 border rounded-lg text-xs">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Reason for Leave *</label>
+                                <textarea id="leave-reason" required rows="2" placeholder="e.g. Visiting home for festival..." class="w-full px-3 py-2 border rounded-lg text-sm"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Destination Address *</label>
+                                <input type="text" id="leave-dest" required placeholder="e.g. Home Address, Mysore" class="w-full px-3 py-2 border rounded-lg text-sm">
+                            </div>
+                            <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow">Submit Leave Request</button>
+                        </form>
+                    </div>
+
+                    <!-- My Leave Applications & Passes -->
+                    <div class="md:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-900 border-b pb-2">Leave Passes & Status Tracker</h3>
+                        <div id="my-leave-list" class="space-y-4 max-h-[500px] overflow-y-auto pr-1">
+                            <!-- Dynamic Leave Cards -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 5. WARDEN DASHBOARD (PROTECTED) -->
+        <!-- ========================================== -->
+        <div id="view-warden-dash" class="hidden space-y-8">
+            <!-- Warden Header Bar -->
+            <div class="bg-purple-900 text-white rounded-2xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center space-x-4">
+                    <img id="wdash-img" src="" alt="Warden Staff" class="w-16 h-16 rounded-2xl object-cover border-2 border-purple-300">
+                    <div>
+                        <h2 id="wdash-name" class="text-2xl font-bold">Warden Staff</h2>
+                        <p id="wdash-sub" class="text-xs text-purple-200 mt-1">Emp ID: - | Assigned: -</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="app.showManageContactsModal()" class="px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white rounded-xl font-semibold text-xs transition">
+                        <i class="fa-solid fa-address-book mr-1.5"></i> Manage Emergency Contacts
+                    </button>
+                </div>
+            </div>
+
+            <!-- Warden Navigation Tabs -->
+            <div class="flex border-b border-slate-200 space-x-6 overflow-x-auto pb-1">
+                <button id="wtab-btn-attendance" onclick="app.switchWardenTab('attendance')" class="pb-3 border-b-2 border-purple-600 font-bold text-purple-600 text-sm whitespace-nowrap">
+                    <i class="fa-solid fa-clipboard-user mr-1.5"></i> Night Roll Call
+                </button>
+                <button id="wtab-btn-approvals" onclick="app.switchWardenTab('approvals')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
+                    <i class="fa-solid fa-user-check mr-1.5"></i> Student Approvals <span id="badge-pending-reg" class="ml-1 px-1.5 py-0.5 text-xs bg-red-500 text-white rounded-full">0</span>
+                </button>
+                <button id="wtab-btn-leaves" onclick="app.switchWardenTab('leaves')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
+                    <i class="fa-solid fa-plane-departure mr-1.5"></i> Leave Requests <span id="badge-pending-leave" class="ml-1 px-1.5 py-0.5 text-xs bg-amber-500 text-white rounded-full">0</span>
+                </button>
+                <button id="wtab-btn-grievances" onclick="app.switchWardenTab('grievances')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
+                    <i class="fa-solid fa-headset mr-1.5"></i> Grievances & Anti-Ragging
+                </button>
+                <button id="wtab-btn-replacement" onclick="app.switchWardenTab('replacement')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
+                    <i class="fa-solid fa-users-gear mr-1.5"></i> Warden Replacement & Audit
+                </button>
+            </div>
+
+            <!-- TAB 1: NIGHT ATTENDANCE -->
+            <div id="wtab-content-attendance" class="space-y-6">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg">Warden Night Roll Call & Parent Alerts</h3>
+                            <p class="text-slate-500 text-xs">Confirming an absence triggers immediate SMS/Email alert triggers to Parents.</p>
+                        </div>
+                        <input type="date" id="attendance-date" value="2026-10-29" class="px-3 py-1.5 border rounded-xl text-xs font-bold">
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-slate-600">
+                            <thead class="bg-slate-50 text-slate-700 uppercase font-bold text-[10px] tracking-wider">
+                                <tr>
+                                    <th class="p-3">Student Name / USN</th>
+                                    <th class="p-3">Block / Room</th>
+                                    <th class="p-3">Parent Contacts</th>
+                                    <th class="p-3">Attendance Status</th>
+                                    <th class="p-3 text-right">Confirm Absence Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendance-table-body" class="divide-y divide-slate-100">
+                                <!-- Dynamic Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: PENDING REGISTRATIONS -->
+            <div id="wtab-content-approvals" class="hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-900 text-lg">Pending Student Hostel Registrations</h3>
+                    <div id="pending-students-list" class="space-y-4">
+                        <!-- Dynamic Student Cards -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: LEAVE REQUESTS & APPROVALS -->
+            <div id="wtab-content-leaves" class="hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-900 text-lg">Leave Applications Approval Panel</h3>
+                    <div id="warden-leave-list" class="space-y-4">
+                        <!-- Dynamic Leave Requests -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: GRIEVANCES & ANTI-RAGGING -->
+            <div id="wtab-content-grievances" class="hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-900 text-lg">Grievances Desk & Confidential Ragging Logs</h3>
+                    <div id="warden-grievance-list" class="space-y-4">
+                        <!-- Dynamic Complaints -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: WARDEN REPLACEMENT & AUDIT LOGS -->
+            <div id="wtab-content-replacement" class="hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6">
+                    <div class="border-b pb-4">
+                        <h3 class="font-bold text-slate-900 text-lg">Pending Warden Appointments</h3>
+                        <p class="text-xs text-slate-500">Approve incoming warden applications to transfer hostel administrative access securely.</p>
+                        <div id="pending-wardens-list" class="mt-4 space-y-3">
+                            <!-- Dynamic Pending Wardens -->
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-3">System Replacement Audit History</h3>
+                        <div id="audit-logs-list" class="space-y-2 text-xs font-mono text-slate-600">
+                            <!-- Audit Logs -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- ========================================== -->
+    <!-- MODALS (LOGINS, PASS PRINT, CONTACTS) -->
+    <!-- ========================================== -->
+
+    <!-- STUDENT LOGIN MODAL -->
+    <div id="student-login-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="font-bold text-slate-900 text-lg">Student Portal Authentication</h3>
+                <button onclick="app.hideModal('student-login-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form onsubmit="app.handleStudentLogin(event)" class="space-y-4">
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Issue Category <span class="text-rose-500">*</span></label>
-                    <select id="cCategory" required class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500 bg-white">
-                        <option value="Food Problem">Food Problem</option>
-                        <option value="Ragging / Harassment">Ragging / Harassment (High Priority Urgent)</option>
-                        <option value="Electricity Problem">Electricity Problem</option>
-                        <option value="Room Cleaning">Room Cleaning Problem</option>
-                        <option value="Plumber Problem">Plumber Problem</option>
-                        <option value="Hostel Facility">Hostel Facility Problem</option>
-                        <option value="Other">Other Problem</option>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Academic Year *</label>
+                    <select id="slogin-year" class="w-full px-3 py-2 border rounded-lg text-sm">
+                        <option value="1st Year">1st Year</option>
+                        <option value="2nd Year">2nd Year</option>
+                        <option value="3rd Year">3rd Year</option>
+                        <option value="4th Year">4th Year</option>
                     </select>
                 </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">PG Block & Room #</label>
-                        <input type="text" id="cRoom" required placeholder="Om Sai Block 2 - Room 204" class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500">
-                    </div>
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Priority</label>
-                        <select id="cPriority" required class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500 bg-white">
-                            <option value="Low">Low Priority</option>
-                            <option value="Medium" selected>Medium Priority</option>
-                            <option value="High">High Priority</option>
-                            <option value="Urgent">Urgent / Ragging Alert</option>
-                        </select>
-                    </div>
-                </div>
-
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Issue Title</label>
-                    <input type="text" id="cTitle" required placeholder="e.g. Bathroom tap leaking or Food raw in dinner" class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">College USN / Reg No *</label>
+                    <input type="text" id="slogin-usn" required placeholder="e.g. 1MS23CS045" class="w-full px-3 py-2 border rounded-lg text-sm uppercase">
                 </div>
-
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Problem Description</label>
-                    <textarea id="cDescription" rows="3" required placeholder="Provide concise details..." class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500"></textarea>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Password *</label>
+                    <input type="password" id="slogin-pass" required placeholder="••••••••" class="w-full px-3 py-2 border rounded-lg text-sm">
                 </div>
-
-                <div class="flex justify-end space-x-3 pt-2">
-                    <button type="button" onclick="closeModal('modalNewComplaint')" class="px-4 py-2 rounded-xl text-slate-600 bg-slate-100 font-semibold">Cancel</button>
-                    <button type="submit" class="px-5 py-2 rounded-xl text-white bg-indigo-600 font-bold shadow-md">Submit Report</button>
-                </div>
+                <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow">Login to Student Dashboard</button>
             </form>
         </div>
     </div>
 
-    <!-- MODAL 2: PARENT ABSENCE ALERT MODAL (SIMULATED SMS / EMAIL) -->
-    <div id="modalParentAlert" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-rose-200 relative">
-            <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
-                <i class="fa-solid fa-paper-plane animate-bounce"></i>
+    <!-- WARDEN LOGIN MODAL -->
+    <div id="warden-login-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="font-bold text-slate-900 text-lg">Warden Portal Authentication</h3>
+                <button onclick="app.hideModal('warden-login-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
-            <h3 class="text-center text-lg font-extrabold text-slate-800">Automated Parent Absence Notification</h3>
-            <p class="text-center text-xs text-slate-500 mt-1">Student marked <span class="text-rose-600 font-bold">ABSENT</span> during night roll call.</p>
-
-            <div class="my-4 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs space-y-2">
-                <p><strong>Parents Phone (SMS):</strong> <span id="alertParentPhone" class="text-indigo-600 font-mono"></span></p>
-                <p><strong>Parents Email ID:</strong> <span id="alertParentEmail" class="text-indigo-600 font-mono"></span></p>
-                <div class="border-t border-slate-200 pt-2 mt-2">
-                    <p class="font-bold text-slate-700 mb-1">Dispatched Message Content:</p>
-                    <p id="alertMessageText" class="italic text-slate-600 bg-white p-2.5 rounded border border-slate-200 text-[11px] leading-relaxed"></p>
-                </div>
-            </div>
-
-            <button onclick="closeModal('modalParentAlert')" class="w-full py-2.5 bg-rose-600 text-white rounded-xl text-xs font-bold hover:bg-rose-700 transition">
-                Acknowledge Alert
-            </button>
-        </div>
-    </div>
-
-    <!-- MODAL 3: FULL STUDENT PROFILE POPUP -->
-    <div id="modalStudentDetail" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl relative border border-slate-100 max-h-[90vh] overflow-y-auto">
-            <button onclick="closeModal('modalStudentDetail')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-            <div id="studentDetailBody"></div>
-        </div>
-    </div>
-
-    <!-- MODAL 4: NEW GATE PASS PASS -->
-    <div id="modalGatePass" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative border border-slate-100">
-            <button onclick="closeModal('modalGatePass')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-
-            <h3 class="text-lg font-bold text-slate-800 mb-1">Issue In/Out Gate Pass</h3>
-            <p class="text-xs text-slate-500 mb-4">Log student exit from hostel campus.</p>
-
-            <form id="gatePassForm" onsubmit="handleNewGatePass(event)" class="space-y-3 text-xs">
+            <form onsubmit="app.handleWardenLogin(event)" class="space-y-4">
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Select Student</label>
-                    <select id="gpStudentId" required class="w-full border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500 bg-white"></select>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Employee / Staff ID *</label>
+                    <input type="text" id="wlogin-empid" required placeholder="e.g. EMP-8802" class="w-full px-3 py-2 border rounded-lg text-sm">
                 </div>
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Outing Reason / Destination</label>
-                    <input type="text" id="gpPurpose" required placeholder="e.g. Library / Market / Medical Visit" class="w-full border border-slate-300 rounded-xl p-2.5">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Password *</label>
+                    <input type="password" id="wlogin-pass" required placeholder="••••••••" class="w-full px-3 py-2 border rounded-lg text-sm">
                 </div>
-                <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Expected Return Time</label>
-                    <input type="datetime-local" id="gpExpectedReturn" required class="w-full border border-slate-300 rounded-xl p-2.5">
-                </div>
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeModal('modalGatePass')" class="px-4 py-2 rounded-xl text-slate-600 bg-slate-100">Cancel</button>
-                    <button type="submit" class="px-5 py-2 rounded-xl text-white bg-indigo-600 font-bold">Log Pass Exit</button>
-                </div>
+                <button type="submit" class="w-full py-3 bg-purple-700 hover:bg-purple-800 text-white rounded-xl font-bold text-sm shadow">Login to Warden Dashboard</button>
             </form>
         </div>
     </div>
 
-    <!-- TOAST NOTIFICATIONS CONTAINER -->
-    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+    <!-- PRINTABLE DIGITAL LEAVE PASS MODAL -->
+    <div id="leave-pass-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-8 shadow-2xl border border-slate-200 space-y-6">
+            <div class="text-center border-b pb-4">
+                <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full uppercase">Official Digital Leave Pass</span>
+                <h2 class="text-2xl font-black text-slate-900 mt-2">Campus Haven Hostel Pass</h2>
+                <p id="pass-number" class="text-xs font-mono text-indigo-600 font-bold mt-1">Pass No: LP-2026-X892A</p>
+            </div>
 
-    <!-- MAIN JAVASCRIPT LOGIC -->
+            <div class="flex items-center space-x-4 bg-slate-50 p-4 rounded-xl border">
+                <img id="pass-photo" src="" alt="Student" class="w-20 h-20 rounded-xl object-cover border">
+                <div class="text-xs space-y-1">
+                    <h3 id="pass-student-name" class="font-bold text-sm text-slate-900">Student Name</h3>
+                    <p id="pass-usn" class="text-slate-600">USN: -</p>
+                    <p id="pass-hostel" class="text-slate-600">Hostel: -</p>
+                    <p id="pass-room" class="text-slate-600">Block & Room: -</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 text-xs bg-indigo-50 p-4 rounded-xl">
+                <div>
+                    <span class="text-slate-500 block">Departure Date & Time</span>
+                    <strong id="pass-dept" class="text-indigo-900 text-sm">-</strong>
+                </div>
+                <div>
+                    <span class="text-slate-500 block">Expected Return Date</span>
+                    <strong id="pass-ret" class="text-indigo-900 text-sm">-</strong>
+                </div>
+            </div>
+
+            <div class="text-xs text-slate-500 space-y-1 border-t pt-3">
+                <p><strong>Approved By Warden:</strong> <span id="pass-approver">-</span></p>
+                <p><strong>Approval Stamp:</strong> <span id="pass-timestamp">-</span></p>
+            </div>
+
+            <div class="flex space-x-3 no-print">
+                <button onclick="window.print()" class="flex-1 py-2.5 bg-slate-800 text-white rounded-xl font-bold text-sm shadow">
+                    <i class="fa-solid fa-print mr-2"></i> Print Leave Pass
+                </button>
+                <button onclick="app.hideModal('leave-pass-modal')" class="px-5 py-2.5 border rounded-xl text-slate-600 font-semibold text-sm">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MANAGING EMERGENCY CONTACTS MODAL -->
+    <div id="manage-contacts-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="font-bold text-slate-900 text-lg">Add Emergency Service Contact</h3>
+                <button onclick="app.hideModal('manage-contacts-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form onsubmit="app.handleAddContact(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Service Designation *</label>
+                    <input type="text" id="mcontact-title" required placeholder="e.g. Campus Electrician Block 1-5" class="w-full px-3 py-2 border rounded-lg text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Contact Person Name *</label>
+                    <input type="text" id="mcontact-name" required placeholder="e.g. Mr. Ramesh Kumar" class="w-full px-3 py-2 border rounded-lg text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Phone Number *</label>
+                    <input type="tel" id="mcontact-phone" required placeholder="+91 98111 00022" class="w-full px-3 py-2 border rounded-lg text-sm">
+                </div>
+                <button type="submit" class="w-full py-2.5 bg-purple-700 hover:bg-purple-800 text-white rounded-xl font-bold text-sm shadow">Add to Emergency Directory</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- APPLICATION ENGINE JAVASCRIPT -->
     <script>
-        // ==================== STATE MANAGEMENT ====================
-        let currentRole = 'student';
-        let currentActiveView = 'register';
-        let uploadedPhotoBase64 = null;
-
-        // Management PG Blocks definition
-        const blockOptionsData = {
-            'Om Sai Management': [
-                'Block 1', 'Block 2', 'Block 3', 'Block 4', 'Block 5',
-                'Block 6', 'Block 7', 'Block 8', 'Block 9', 'Block 10'
+        // Global Application Database State (Initialized with Mock Data & LocalStorage)
+        const AppState = {
+            currentUser: null, // { role: 'student' | 'warden', data: ... }
+            students: JSON.parse(localStorage.getItem('ch_students')) || [
+                {
+                    usn: '1MS23CS01',
+                    name: 'Ananya Sharma',
+                    year: '2nd Year',
+                    gender: 'Female',
+                    age: 20,
+                    blood: 'O+',
+                    phone: '+91 98111 22334',
+                    email: 'ananya@campus.edu',
+                    hostel: 'Om Sai Hostel',
+                    block: 'Block 2',
+                    room: 'Room 204',
+                    sharing: 'Double Seater',
+                    fname: 'Ramesh Sharma',
+                    fphone: '+91 98111 99999',
+                    mname: 'Sunita Sharma',
+                    gname: 'Suresh Sharma',
+                    gphone: '+91 98111 88888',
+                    address: '124 Park Avenue, Indiranagar, Bengaluru',
+                    password: '123',
+                    status: 'Approved',
+                    photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150'
+                },
+                {
+                    usn: '1MS23CS02',
+                    name: 'Priya Patel',
+                    year: '2nd Year',
+                    gender: 'Female',
+                    age: 20,
+                    blood: 'A+',
+                    phone: '+91 98222 33445',
+                    email: 'priya@campus.edu',
+                    hostel: 'Om Sai Hostel',
+                    block: 'Block 2',
+                    room: 'Room 204',
+                    sharing: 'Double Seater',
+                    fname: 'Kirit Patel',
+                    fphone: '+91 98222 77777',
+                    mname: 'Asha Patel',
+                    gname: '',
+                    gphone: '',
+                    address: '56 Race Course Road, Ahmedabad',
+                    password: '123',
+                    status: 'Approved',
+                    photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'
+                }
             ],
-            'Comfort World Management': [
-                'Block A', 'Block B', 'Block C', 'Block D', 'Block E', 'Block F', 'Block F1'
+            wardens: JSON.parse(localStorage.getItem('ch_wardens')) || [
+                {
+                    empid: 'EMP-8802',
+                    name: 'Dr. K. V. Raman',
+                    hostel: 'Om Sai Hostel',
+                    block: 'Block 2',
+                    email: 'raman@campus.edu',
+                    phone: '+91 99000 11223',
+                    password: 'admin',
+                    status: 'Approved',
+                    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150'
+                }
+            ],
+            complaints: JSON.parse(localStorage.getItem('ch_complaints')) || [],
+            leaves: JSON.parse(localStorage.getItem('ch_leaves')) || [],
+            attendance: JSON.parse(localStorage.getItem('ch_attendance')) || {},
+            contacts: JSON.parse(localStorage.getItem('ch_contacts')) || [
+                { title: 'Chief Hostel Warden', name: 'Dr. K. V. Raman', phone: '+91 99000 11223' },
+                { title: 'Campus Plumber Services', name: 'Mr. Shivu', phone: '+91 98450 12345' },
+                { title: 'Emergency Electrician', name: 'Mr. Mohan', phone: '+91 98450 54321' },
+                { title: 'Hostel Resident Doctor', name: 'Dr. Anjali Rao', phone: '+91 98450 99900' }
+            ],
+            auditLogs: JSON.parse(localStorage.getItem('ch_audits')) || [
+                'System Initialized on 2026-10-29'
             ]
         };
 
-        // Initial Registered Students Register
-        let studentsData = [
-            {
-                id: 'STU101',
-                name: 'Ananya Sharma',
-                sex: 'Female',
-                age: 20,
-                hostelType: 'Girls Hostel',
-                mgmtGroup: 'Om Sai Management',
-                block: 'Block 2',
-                room: '204',
-                seaterType: 'Double Seater',
-                email: 'ananya.sharma@campus.edu',
-                contact: '+91 98765 43210',
-                permanentAddress: 'Flat 402, Green Valley, Sector 62, Noida, UP',
-                fatherName: 'Ramesh Sharma',
-                motherName: 'Sunita Sharma',
-                parentsPhone: '+91 98111 22334',
-                parentsEmail: 'ramesh.sharma@gmail.com',
-                localGuardianName: 'Vikram Sharma (Uncle)',
-                localGuardianPhone: '+91 98990 11223',
-                avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300'
+        // App Controller
+        const app = {
+            init() {
+                this.renderUserStatusBar();
+                this.renderContacts();
+                this.updateBlockDropdown('Om Sai Hostel', 'sreg-block');
+                this.updateBlockDropdown('Om Sai Hostel', 'wreg-block');
+                this.saveState();
             },
-            {
-                id: 'STU102',
-                name: 'Priya Patel',
-                sex: 'Female',
-                age: 21,
-                hostelType: 'Girls Hostel',
-                mgmtGroup: 'Om Sai Management',
-                block: 'Block 2',
-                room: '204',
-                seaterType: 'Double Seater',
-                email: 'priya.patel@campus.edu',
-                contact: '+91 97654 32109',
-                permanentAddress: '12, Sunrise Residency, SG Highway, Ahmedabad, Gujarat',
-                fatherName: 'Kirit Patel',
-                motherName: 'Bhavna Patel',
-                parentsPhone: '+91 98222 33445',
-                parentsEmail: 'kirit.patel@yahoo.com',
-                localGuardianName: 'Mehta uncle',
-                localGuardianPhone: '+91 98777 66554',
-                avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=300'
-            },
-            {
-                id: 'STU103',
-                name: 'Rohan Verma',
-                sex: 'Male',
-                age: 22,
-                hostelType: 'Boys Hostel',
-                mgmtGroup: 'Comfort World Management',
-                block: 'Block A',
-                room: '102',
-                seaterType: 'Double Seater',
-                email: 'rohan.verma@campus.edu',
-                contact: '+91 91234 56789',
-                permanentAddress: 'H-45, Model Town, Jaipur, Rajasthan',
-                fatherName: 'Suresh Verma',
-                motherName: 'Anita Verma',
-                parentsPhone: '+91 94140 12345',
-                parentsEmail: 'suresh.verma@gmail.com',
-                localGuardianName: 'Rajesh Verma (Cousin)',
-                localGuardianPhone: '+91 94140 99999',
-                avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=300'
-            },
-            {
-                id: 'STU104',
-                name: 'Kabir Das',
-                sex: 'Male',
-                age: 21,
-                hostelType: 'Boys Hostel',
-                mgmtGroup: 'Comfort World Management',
-                block: 'Block A',
-                room: '102',
-                seaterType: 'Double Seater',
-                email: 'kabir.das@campus.edu',
-                contact: '+91 99887 76655',
-                permanentAddress: '88, Park Street, Kolkata, WB',
-                fatherName: 'Amitabh Das',
-                motherName: 'Srabani Das',
-                parentsPhone: '+91 98300 44556',
-                parentsEmail: 'amitabh.das@gmail.com',
-                localGuardianName: 'Dr. S. K. Roy',
-                localGuardianPhone: '+91 98311 00112',
-                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300'
-            }
-        ];
 
-        // Complaints Database
-        let complaintsData = [
-            {
-                id: 'CMP-2026-01',
-                studentName: 'Ananya Sharma',
-                room: 'Om Sai Block 2 - Room 204',
-                category: 'Food Problem',
-                priority: 'High',
-                title: 'Undercooked food served in mess dinner',
-                description: 'The chapati was undercooked and water quality in mess dining was poor.',
-                date: '2026-10-27',
-                status: 'In Progress',
-                wardenRemark: 'Mess contractor cautioned.'
+            saveState() {
+                localStorage.setItem('ch_students', JSON.stringify(AppState.students));
+                localStorage.setItem('ch_wardens', JSON.stringify(AppState.wardens));
+                localStorage.setItem('ch_complaints', JSON.stringify(AppState.complaints));
+                localStorage.setItem('ch_leaves', JSON.stringify(AppState.leaves));
+                localStorage.setItem('ch_attendance', JSON.stringify(AppState.attendance));
+                localStorage.setItem('ch_contacts', JSON.stringify(AppState.contacts));
+                localStorage.setItem('ch_audits', JSON.stringify(AppState.auditLogs));
             },
-            {
-                id: 'CMP-2026-02',
-                studentName: 'Rohan Verma',
-                room: 'Comfort World Block A - Room 102',
-                category: 'Electricity Problem',
-                priority: 'Urgent',
-                title: 'Sparking in main study plug point',
-                description: 'Laptop charger causing electrical sparks in bedside switchboard.',
-                date: '2026-10-28',
-                status: 'Pending',
-                wardenRemark: ''
-            }
-        ];
 
-        // Attendance Record
-        let attendanceData = {};
-        function initAttendance() {
-            let today = new Date().toISOString().split('T')[0];
-            document.getElementById('attendanceDate').value = today;
-            studentsData.forEach(s => {
-                if(!attendanceData[s.id]) {
-                    attendanceData[s.id] = 'Present';
+            toast(msg, type = 'success') {
+                const toastEl = document.getElementById('toast');
+                const contentEl = document.getElementById('toast-content');
+                const msgEl = document.getElementById('toast-msg');
+
+                msgEl.innerText = msg;
+                contentEl.className = `flex items-center space-x-3 px-5 py-3.5 rounded-xl shadow-2xl text-white text-sm font-medium ${type === 'success' ? 'bg-emerald-600' : 'bg-red-600'}`;
+                
+                toastEl.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    toastEl.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+                }, 3000);
+            },
+
+            showHome() {
+                this.hideAllViews();
+                document.getElementById('view-home').classList.remove('hidden');
+            },
+
+            showStudentRegForm() {
+                this.hideAllViews();
+                document.getElementById('view-student-reg').classList.remove('hidden');
+            },
+
+            showWardenRegForm() {
+                this.hideAllViews();
+                document.getElementById('view-warden-reg').classList.remove('hidden');
+            },
+
+            hideAllViews() {
+                ['view-home', 'view-student-reg', 'view-warden-reg', 'view-student-dash', 'view-warden-dash'].forEach(id => {
+                    document.getElementById(id).classList.add('hidden');
+                });
+            },
+
+            showModal(id) { document.getElementById(id).classList.remove('hidden'); },
+            hideModal(id) { document.getElementById(id).classList.add('hidden'); },
+
+            updateBlockDropdown(hostelName, targetSelectId) {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '';
+                let blocks = [];
+                if (hostelName === 'Om Sai Hostel') {
+                    for (let i = 1; i <= 10; i++) blocks.push(`Block ${i}`);
+                } else {
+                    blocks = ['Block A', 'Block B', 'Block C', 'Block D', 'Block E', 'Block F', 'Block F1'];
                 }
-            });
-        }
+                blocks.forEach(b => {
+                    const opt = document.createElement('option');
+                    opt.value = b;
+                    opt.innerText = b;
+                    select.appendChild(opt);
+                });
+            },
 
-        // Gate Logs Data
-        let gateLogsData = [
-            {
-                id: 'GP-101',
-                studentId: 'STU101',
-                studentName: 'Ananya Sharma',
-                room: 'Om Sai Block 2 (#204)',
-                timeOut: '2026-10-28 16:30',
-                expectedReturn: '2026-10-28 20:00',
-                actualReturn: '',
-                purpose: 'Library / City Market',
-                status: 'OUT'
-            }
-        ];
-
-        // Navigation Configs
-        const studentNav = [
-            { id: 'register', label: 'Hostel Registration Form', icon: 'fa-id-card-clip' },
-            { id: 'complaints', label: 'Report Problem / Grievance', icon: 'fa-triangle-exclamation' },
-            { id: 'rooms', label: 'My Room & Roommates', icon: 'fa-bed' },
-            { id: 'students', label: 'Student Directory', icon: 'fa-address-book' },
-            { id: 'gatelog', label: 'Gate Pass Status', icon: 'fa-door-open' },
-            { id: 'facilities', label: 'Hostel Facilities', icon: 'fa-sliders' }
-        ];
-
-        const wardenNav = [
-            { id: 'attendance', label: 'Warden Night Attendance', icon: 'fa-clipboard-user' },
-            { id: 'complaints', label: 'All Grievances Desk', icon: 'fa-headset' },
-            { id: 'students', label: 'Students & Parent Info', icon: 'fa-users' },
-            { id: 'rooms', label: 'Room Occupancy View', icon: 'fa-door-closed' },
-            { id: 'gatelog', label: 'Gate Movement Log', icon: 'fa-right-from-bracket' },
-            { id: 'register', label: 'Register New Student', icon: 'fa-user-plus' }
-        ];
-
-        // ==================== NAVIGATION & ROLE SWITCH ====================
-        function switchRole(role) {
-            currentRole = role;
-            const btnStudent = document.getElementById('roleBtnStudent');
-            const btnWarden = document.getElementById('roleBtnWarden');
-            const mobStudent = document.getElementById('mobRoleStudent');
-            const mobWarden = document.getElementById('mobRoleWarden');
-            const roleLabel = document.getElementById('sidebarRoleLabel');
-
-            if (role === 'student') {
-                btnStudent.className = "px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow";
-                btnWarden.className = "px-3 py-1 rounded-lg text-xs font-bold text-indigo-200 hover:text-white";
-                mobStudent.className = "px-2.5 py-1 text-xs rounded bg-indigo-600 font-bold text-white";
-                mobWarden.className = "px-2.5 py-1 text-xs rounded text-indigo-300 font-bold";
-                roleLabel.innerText = "Student Menu";
-
-                document.getElementById('currentUserName').innerText = "Ananya Sharma";
-                document.getElementById('currentUserMeta').innerText = "Girls Hostel • Om Sai Block 2 (#204)";
-                document.getElementById('currentUserAvatar').src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150";
-            } else {
-                btnWarden.className = "px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow";
-                btnStudent.className = "px-3 py-1 rounded-lg text-xs font-bold text-indigo-200 hover:text-white";
-                mobWarden.className = "px-2.5 py-1 text-xs rounded bg-indigo-600 font-bold text-white";
-                mobStudent.className = "px-2.5 py-1 text-xs rounded text-indigo-300 font-bold";
-                roleLabel.innerText = "Warden Control";
-
-                document.getElementById('currentUserName').innerText = "Dr. K. V. Raman (Warden)";
-                document.getElementById('currentUserMeta').innerText = "Chief Hostel Warden";
-                document.getElementById('currentUserAvatar').src = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150";
-            }
-
-            renderSidebar();
-            switchTab(role === 'student' ? 'register' : 'attendance');
-            showToast(`Switched to ${role.toUpperCase()} View`, 'info');
-        }
-
-        function renderSidebar() {
-            const menuContainer = document.getElementById('sidebarMenu');
-            const navItems = currentRole === 'student' ? studentNav : wardenNav;
-
-            menuContainer.innerHTML = navItems.map(item => `
-                <button onclick="switchTab('${item.id}')" id="nav-btn-${item.id}" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-3 transition-colors ${currentActiveView === item.id ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}">
-                    <i class="fa-solid ${item.icon} text-sm w-5 text-center ${currentActiveView === item.id ? 'text-indigo-600' : 'text-slate-400'}"></i>
-                    <span>${item.label}</span>
-                </button>
-            `).join('');
-        }
-
-        function switchTab(tabId) {
-            currentActiveView = tabId;
-            const views = ['register', 'complaints', 'rooms', 'students', 'attendance', 'gatelog', 'facilities'];
-            views.forEach(v => {
-                const el = document.getElementById(`view-${v}`);
-                if (el) {
-                    if (v === tabId) el.classList.remove('hidden');
-                    else el.classList.add('hidden');
+            handlePhotoPreview(input, containerId) {
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById(containerId).innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover rounded-xl">`;
+                    }
+                    reader.readAsDataURL(input.files[0]);
                 }
-            });
+            },
 
-            renderSidebar();
+            renderUserStatusBar() {
+                const container = document.getElementById('user-status-bar');
+                if (!AppState.currentUser) {
+                    container.innerHTML = `
+                        <button onclick="app.showModal('student-login-modal')" class="text-xs font-semibold px-3 py-2 rounded-lg bg-indigo-700 hover:bg-indigo-600 transition">Student Login</button>
+                        <button onclick="app.showModal('warden-login-modal')" class="text-xs font-semibold px-3 py-2 rounded-lg bg-purple-700 hover:bg-purple-600 transition">Warden Login</button>
+                    `;
+                } else {
+                    const u = AppState.currentUser.data;
+                    container.innerHTML = `
+                        <div class="flex items-center space-x-3">
+                            <img src="${u.photo || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100'}" class="w-9 h-9 rounded-full border border-white/40 object-cover">
+                            <div class="text-left text-xs">
+                                <p class="font-bold text-white">${u.name}</p>
+                                <p class="text-indigo-200 capitalize">${AppState.currentUser.role} Portal</p>
+                            </div>
+                            <button onclick="app.logout()" class="ml-2 text-xs bg-red-500/80 hover:bg-red-600 px-2.5 py-1.5 rounded-lg text-white font-semibold transition">Logout</button>
+                        </div>
+                    `;
+                }
+            },
 
-            if (tabId === 'register') updateBlockOptions();
-            if (tabId === 'complaints') filterComplaints();
-            if (tabId === 'rooms') renderRooms();
-            if (tabId === 'students') renderStudentsDirectory();
-            if (tabId === 'attendance') renderAttendanceTable();
-            if (tabId === 'gatelog') renderGateLogs();
-        }
+            logout() {
+                AppState.currentUser = null;
+                this.renderUserStatusBar();
+                this.showHome();
+                this.toast('Logged out successfully');
+            },
 
-        // ==================== REGISTRATION FORM LOGIC ====================
-        function updateHostelTypeDisplay() {
-            const sex = document.getElementById('regSex').value;
-            const badge = document.getElementById('hostelTypeBadge');
-            if (sex === 'Female') {
-                badge.innerText = "Girls Hostel";
-                badge.className = "bg-pink-100 text-pink-700 font-bold text-[10px] px-2 py-0.5 rounded-full";
-            } else if (sex === 'Male') {
-                badge.innerText = "Boys Hostel";
-                badge.className = "bg-blue-100 text-blue-700 font-bold text-[10px] px-2 py-0.5 rounded-full";
-            } else {
-                badge.innerText = "Hostel Allotment";
-                badge.className = "bg-purple-100 text-purple-700 font-bold text-[10px] px-2 py-0.5 rounded-full";
-            }
-        }
+            // ---------------- STUDENT REGISTRATION ----------------
+            handleStudentReg(e) {
+                e.preventDefault();
+                const usn = document.getElementById('sreg-usn').value.trim().toUpperCase();
+                
+                if (AppState.students.some(s => s.usn === usn)) {
+                    this.toast('College USN already registered!', 'error');
+                    return;
+                }
 
-        function updateBlockOptions() {
-            const mgmt = document.getElementById('regMgmtGroup').value;
-            const blockSelect = document.getElementById('regBlock');
-            const blocks = blockOptionsData[mgmt] || [];
+                const pass1 = document.getElementById('sreg-pass').value;
+                const pass2 = document.getElementById('sreg-pass2').value;
+                if (pass1 !== pass2) {
+                    this.toast('Passwords do not match!', 'error');
+                    return;
+                }
 
-            blockSelect.innerHTML = blocks.map(b => `<option value="${b}">${b}</option>`).join('');
-        }
+                const photoImg = document.querySelector('#sreg-preview-container img');
 
-        function previewStudentPhoto(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    uploadedPhotoBase64 = e.target.result;
-                    document.getElementById('regPhotoPreview').src = e.target.result;
+                const newStudent = {
+                    usn: usn,
+                    name: document.getElementById('sreg-name').value,
+                    year: document.getElementById('sreg-year').value,
+                    gender: document.getElementById('sreg-gender').value,
+                    age: document.getElementById('sreg-age').value,
+                    blood: document.getElementById('sreg-blood').value,
+                    phone: document.getElementById('sreg-phone').value,
+                    email: document.getElementById('sreg-email').value,
+                    hostel: document.getElementById('sreg-hostel').value,
+                    block: document.getElementById('sreg-block').value,
+                    room: document.getElementById('sreg-room').value,
+                    sharing: document.getElementById('sreg-sharing').value,
+                    fname: document.getElementById('sreg-fname').value,
+                    fphone: document.getElementById('sreg-fphone').value,
+                    mname: document.getElementById('sreg-mname').value,
+                    gname: document.getElementById('sreg-gname').value,
+                    gphone: document.getElementById('sreg-gphone').value,
+                    address: document.getElementById('sreg-address').value,
+                    password: pass1,
+                    status: 'Pending Verification',
+                    photo: photoImg ? photoImg.src : 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
                 };
-                reader.readAsDataURL(file);
-            }
-        }
 
-        function handleStudentRegistration(e) {
-            e.preventDefault();
+                AppState.students.push(newStudent);
+                this.saveState();
+                this.toast('Registration submitted! Pending Warden Verification.');
+                this.showHome();
+            },
 
-            const sex = document.getElementById('regSex').value;
-            const hostelType = sex === 'Female' ? 'Girls Hostel' : 'Boys Hostel';
-            const name = document.getElementById('regFullName').value;
-            const age = document.getElementById('regAge').value;
-            const mgmtGroup = document.getElementById('regMgmtGroup').value;
-            const block = document.getElementById('regBlock').value;
-            const roomNo = document.getElementById('regRoomNo').value;
-            const seaterType = document.getElementById('regSeaterType').value;
+            // ---------------- WARDEN REGISTRATION ----------------
+            handleWardenReg(e) {
+                e.preventDefault();
+                const empid = document.getElementById('wreg-empid').value.trim();
+                
+                const pass1 = document.getElementById('wreg-pass').value;
+                const pass2 = document.getElementById('wreg-pass2').value;
+                if (pass1 !== pass2) {
+                    this.toast('Passwords do not match!', 'error');
+                    return;
+                }
 
-            const phone = document.getElementById('regPhone').value;
-            const email = document.getElementById('regEmail').value;
-            const fatherName = document.getElementById('regFatherName').value;
-            const motherName = document.getElementById('regMotherName').value;
-            const parentsPhone = document.getElementById('regParentsPhone').value;
-            const parentsEmail = document.getElementById('regParentsEmail').value;
-            const guardianName = document.getElementById('regGuardianName').value || 'N/A';
-            const guardianPhone = document.getElementById('regGuardianPhone').value || 'N/A';
-            const address = document.getElementById('regAddress').value;
+                const photoImg = document.querySelector('#wreg-preview-container img');
 
-            const defaultAvatar = sex === 'Female' 
-                ? 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=300'
-                : 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=300';
+                const newWarden = {
+                    empid: empid,
+                    name: document.getElementById('wreg-name').value,
+                    hostel: document.getElementById('wreg-hostel').value,
+                    block: document.getElementById('wreg-block').value,
+                    email: document.getElementById('wreg-email').value,
+                    phone: document.getElementById('wreg-phone').value,
+                    password: pass1,
+                    status: 'Pending Approval',
+                    photo: photoImg ? photoImg.src : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150'
+                };
 
-            const newStudent = {
-                id: 'STU' + Math.floor(100 + Math.random() * 900),
-                name: name,
-                sex: sex,
-                age: age,
-                hostelType: hostelType,
-                mgmtGroup: mgmtGroup,
-                block: block,
-                room: roomNo,
-                seaterType: seaterType,
-                email: email,
-                contact: phone,
-                permanentAddress: address,
-                fatherName: fatherName,
-                motherName: motherName,
-                parentsPhone: parentsPhone,
-                parentsEmail: parentsEmail,
-                localGuardianName: guardianName,
-                localGuardianPhone: guardianPhone,
-                avatar: uploadedPhotoBase64 || defaultAvatar
-            };
+                AppState.wardens.push(newWarden);
+                this.saveState();
+                this.toast('Warden appointment request submitted!');
+                this.showHome();
+            },
 
-            studentsData.unshift(newStudent);
-            document.getElementById('registrationForm').reset();
-            uploadedPhotoBase64 = null;
-            document.getElementById('regPhotoPreview').src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150";
+            // ---------------- LOGINS ----------------
+            handleStudentLogin(e) {
+                e.preventDefault();
+                const usn = document.getElementById('slogin-usn').value.trim().toUpperCase();
+                const pass = document.getElementById('slogin-pass').value;
 
-            showToast(`Registration Successful! Assigned to ${mgmtGroup} (${block})`, 'success');
-            switchTab('rooms');
-        }
+                const student = AppState.students.find(s => s.usn === usn && s.password === pass);
+                if (!student) {
+                    this.toast('Invalid USN or Password!', 'error');
+                    return;
+                }
 
-        // ==================== COMPLAINT LOGIC ====================
-        function filterComplaints() {
-            const catFilter = document.getElementById('complaintCatFilter').value;
-            const statusFilter = document.getElementById('complaintStatusFilter').value;
+                AppState.currentUser = { role: 'student', data: student };
+                this.hideModal('student-login-modal');
+                this.renderUserStatusBar();
+                this.renderStudentDashboard();
+            },
 
-            let filtered = complaintsData.filter(c => {
-                const matchCat = (catFilter === 'ALL' || c.category === catFilter);
-                const matchStatus = (statusFilter === 'ALL' || c.status === statusFilter);
-                return matchCat && matchStatus;
-            });
+            handleWardenLogin(e) {
+                e.preventDefault();
+                const empid = document.getElementById('wlogin-empid').value.trim();
+                const pass = document.getElementById('wlogin-pass').value;
 
-            renderComplaintsList(filtered);
-        }
+                const warden = AppState.wardens.find(w => w.empid === empid && w.password === pass && w.status === 'Approved');
+                if (!warden) {
+                    this.toast('Invalid Staff Credentials or Account Pending Approval!', 'error');
+                    return;
+                }
 
-        function renderComplaintsList(items) {
-            const container = document.getElementById('complaintsListContainer');
-            if (items.length === 0) {
-                container.innerHTML = `
-                    <div class="bg-white p-8 rounded-2xl text-center border border-slate-200 text-xs text-slate-500">
-                        <i class="fa-solid fa-clipboard-check text-4xl text-slate-300 mb-2"></i>
-                        <p>No complaints reported matching filters.</p>
-                    </div>`;
-                return;
-            }
+                AppState.currentUser = { role: 'warden', data: warden };
+                this.hideModal('warden-login-modal');
+                this.renderUserStatusBar();
+                this.renderWardenDashboard();
+            },
 
-            container.innerHTML = items.map(item => {
-                let priorityClass = "bg-slate-100 text-slate-700";
-                if(item.priority === 'High') priorityClass = "bg-amber-100 text-amber-800 font-bold";
-                if(item.priority === 'Urgent') priorityClass = "bg-rose-100 text-rose-800 font-bold animate-pulse";
+            // ---------------- STUDENT DASHBOARD RENDER ----------------
+            renderStudentDashboard() {
+                this.hideAllViews();
+                document.getElementById('view-student-dash').classList.remove('hidden');
 
-                let statusClass = "bg-amber-100 text-amber-800";
-                if(item.status === 'In Progress') statusClass = "bg-blue-100 text-blue-800";
-                if(item.status === 'Resolved') statusClass = "bg-emerald-100 text-emerald-800";
+                const s = AppState.currentUser.data;
+                document.getElementById('sdash-img').src = s.photo;
+                document.getElementById('sdash-name').innerText = s.name;
+                document.getElementById('sdash-sub').innerText = `USN: ${s.usn} | ${s.hostel} (${s.block}) | ${s.room}`;
+                
+                const badge = document.getElementById('sdash-status-badge');
+                const pendingAlert = document.getElementById('sdash-pending-alert');
 
-                return `
-                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 hover:shadow-md transition">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100">
-                            <div class="flex items-center space-x-2">
-                                <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded ${priorityClass}">${item.priority} Priority</span>
-                                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-50 text-indigo-700">${item.category}</span>
-                                <span class="text-xs text-slate-400">#${item.id}</span>
-                            </div>
-                            <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full ${statusClass}">${item.status}</span>
-                        </div>
+                if (s.status === 'Approved') {
+                    badge.innerText = 'Approved Access';
+                    badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500 text-white';
+                    pendingAlert.classList.add('hidden');
+                } else {
+                    badge.innerText = 'Pending Review';
+                    badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-slate-900';
+                    pendingAlert.classList.remove('hidden');
+                }
 
-                        <div class="py-3 text-xs">
-                            <h3 class="font-bold text-slate-800 text-sm">${item.title}</h3>
-                            <p class="text-slate-600 mt-1 leading-relaxed">${item.description}</p>
-                        </div>
+                // Render Profile Details
+                document.getElementById('sprof-year').innerText = s.year;
+                document.getElementById('sprof-blood').innerText = s.blood;
+                document.getElementById('sprof-phone').innerText = s.phone;
+                document.getElementById('sprof-email').innerText = s.email;
+                document.getElementById('sprof-fname').innerText = s.fname;
+                document.getElementById('sprof-fphone').innerText = s.fphone;
+                document.getElementById('sprof-address').innerText = s.address;
 
-                        <div class="bg-slate-50 p-3 rounded-xl flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs gap-2">
-                            <div>
-                                <span class="text-slate-500">Reported by:</span>
-                                <span class="font-bold text-slate-700">${item.studentName} (${item.room})</span>
-                                <span class="text-slate-400 text-[11px] ml-2"><i class="fa-regular fa-clock mr-1"></i>${item.date}</span>
-                            </div>
-
-                            ${currentRole === 'warden' ? `
-                                <div class="flex items-center space-x-2 w-full sm:w-auto mt-2 sm:mt-0">
-                                    <select onchange="updateComplaintStatus('${item.id}', this.value)" class="text-xs border border-slate-300 rounded-lg px-2 py-1 bg-white font-bold">
-                                        <option value="Pending" ${item.status==='Pending'?'selected':''}>Pending</option>
-                                        <option value="In Progress" ${item.status==='In Progress'?'selected':''}>In Progress</option>
-                                        <option value="Resolved" ${item.status==='Resolved'?'selected':''}>Resolved</option>
-                                    </select>
+                // Render Roommate (Double Seater matching)
+                const roommateContainer = document.getElementById('roommate-container');
+                if (s.sharing !== 'Double Seater') {
+                    roommateContainer.innerHTML = `<p class="text-xs text-slate-500">Single Seater Room - No Roommate assigned.</p>`;
+                } else {
+                    const roommate = AppState.students.find(other => other.usn !== s.usn && other.hostel === s.hostel && other.block === s.block && other.room === s.room);
+                    if (roommate) {
+                        roommateContainer.innerHTML = `
+                            <div class="flex items-center space-x-4 bg-slate-50 p-3 rounded-xl border">
+                                <img src="${roommate.photo}" class="w-14 h-14 rounded-xl object-cover border">
+                                <div class="text-xs space-y-1">
+                                    <h4 class="font-bold text-slate-900">${roommate.name}</h4>
+                                    <p class="text-slate-500">Academic Year: ${roommate.year}</p>
+                                    <p class="text-indigo-600 font-semibold">USN: ${roommate.usn}</p>
                                 </div>
-                            ` : ''}
-                        </div>
-
-                        ${item.wardenRemark ? `
-                            <div class="mt-2 text-xs bg-indigo-50/70 border border-indigo-100 p-2.5 rounded-xl text-indigo-900">
-                                <span class="font-bold"><i class="fa-solid fa-comment-dots mr-1"></i>Warden Note:</span> ${item.wardenRemark}
                             </div>
+                        `;
+                    } else {
+                        roommateContainer.innerHTML = `<p class="text-xs text-slate-500">Double Seater Room - Roommate slot currently vacant.</p>`;
+                    }
+                }
+
+                this.renderMyComplaints();
+                this.renderMyLeaves();
+            },
+
+            switchStudentTab(tab) {
+                ['profile', 'complaint', 'leave'].forEach(t => {
+                    document.getElementById(`stab-content-${t}`).classList.add('hidden');
+                    const btn = document.getElementById(`stab-btn-${t}`);
+                    btn.className = "pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-indigo-600 text-sm flex items-center space-x-2";
+                });
+
+                document.getElementById(`stab-content-${tab}`).classList.remove('hidden');
+                document.getElementById(`stab-btn-${tab}`).className = "pb-3 border-b-2 border-indigo-600 font-bold text-indigo-600 text-sm flex items-center space-x-2";
+            },
+
+            // ---------------- COMPLAINTS HANDLING ----------------
+            handleComplaintSubmit(e) {
+                e.preventDefault();
+                const cat = document.getElementById('cmp-cat').value;
+                const title = document.getElementById('cmp-title').value;
+                const desc = document.getElementById('cmp-desc').value;
+
+                const newCmp = {
+                    id: 'CMP-' + Date.now().toString().slice(-5),
+                    studentUsn: AppState.currentUser.data.usn,
+                    studentName: AppState.currentUser.data.name,
+                    category: cat,
+                    title: title,
+                    desc: desc,
+                    date: new Date().toLocaleDateString(),
+                    status: 'Pending',
+                    reply: ''
+                };
+
+                AppState.complaints.push(newCmp);
+                this.saveState();
+                this.toast('Grievance logged successfully!');
+                document.getElementById('cmp-title').value = '';
+                document.getElementById('cmp-desc').value = '';
+                this.renderMyComplaints();
+            },
+
+            renderMyComplaints() {
+                const list = document.getElementById('my-complaints-list');
+                const myCmps = AppState.complaints.filter(c => c.studentUsn === AppState.currentUser.data.usn);
+
+                if (myCmps.length === 0) {
+                    list.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No grievances logged yet.</p>`;
+                    return;
+                }
+
+                list.innerHTML = myCmps.map(c => `
+                    <div class="p-4 rounded-xl border ${c.category.includes('Ragging') ? 'bg-red-50 border-red-200' : 'bg-slate-50 border-slate-200'} space-y-2">
+                        <div class="flex justify-between items-start">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${c.category.includes('Ragging') ? 'bg-red-600 text-white' : 'bg-indigo-100 text-indigo-800'}">${c.category}</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${c.status === 'Resolved' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${c.status}</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-900">${c.title}</h4>
+                        <p class="text-xs text-slate-600">${c.desc}</p>
+                        ${c.reply ? `<div class="p-2 bg-white rounded border text-xs text-slate-700"><strong>Warden Remark:</strong> ${c.reply}</div>` : ''}
+                    </div>
+                `).join('');
+            },
+
+            // ---------------- LEAVE HANDLING ----------------
+            handleLeaveSubmit(e) {
+                e.preventDefault();
+                const sdate = document.getElementById('leave-sdate').value;
+                const stime = document.getElementById('leave-stime').value;
+                const edate = document.getElementById('leave-edate').value;
+                const etime = document.getElementById('leave-etime').value;
+                const reason = document.getElementById('leave-reason').value;
+                const dest = document.getElementById('leave-dest').value;
+
+                const passNo = 'LP-' + new Date().getFullYear() + '-' + Math.random().toString(36).substring(2, 7).toUpperCase();
+
+                const newLeave = {
+                    id: passNo,
+                    studentUsn: AppState.currentUser.data.usn,
+                    studentName: AppState.currentUser.data.name,
+                    hostel: AppState.currentUser.data.hostel,
+                    block: AppState.currentUser.data.block,
+                    room: AppState.currentUser.data.room,
+                    photo: AppState.currentUser.data.photo,
+                    dept: `${sdate} ${stime}`,
+                    ret: `${edate} ${etime}`,
+                    reason: reason,
+                    dest: dest,
+                    status: 'Pending',
+                    approver: '',
+                    timestamp: ''
+                };
+
+                AppState.leaves.push(newLeave);
+                this.saveState();
+                this.toast('Leave application submitted to Warden!');
+                this.renderMyLeaves();
+            },
+
+            renderMyLeaves() {
+                const list = document.getElementById('my-leave-list');
+                const myLeaves = AppState.leaves.filter(l => l.studentUsn === AppState.currentUser.data.usn);
+
+                if (myLeaves.length === 0) {
+                    list.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No leave requests submitted yet.</p>`;
+                    return;
+                }
+
+                list.innerHTML = myLeaves.map(l => `
+                    <div class="p-4 rounded-xl border bg-slate-50 border-slate-200 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono text-xs font-bold text-indigo-600">${l.id}</span>
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${l.status === 'Approved' ? 'bg-emerald-100 text-emerald-800' : (l.status === 'Rejected' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800')}">${l.status}</span>
+                        </div>
+                        <div class="text-xs text-slate-600 grid grid-cols-2 gap-2">
+                            <div><span class="text-slate-400 block">Departure</span><strong>${l.dept}</strong></div>
+                            <div><span class="text-slate-400 block">Return</span><strong>${l.ret}</strong></div>
+                        </div>
+                        ${l.status === 'Approved' ? `
+                            <button onclick="app.viewLeavePass('${l.id}')" class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg shadow transition">
+                                <i class="fa-solid fa-ticket mr-1"></i> View & Print Digital Gate Pass
+                            </button>
                         ` : ''}
                     </div>
-                `;
-            }).join('');
-        }
+                `).join('');
+            },
 
-        function openNewComplaintModal() {
-            document.getElementById('modalNewComplaint').classList.remove('hidden');
-        }
+            viewLeavePass(passId) {
+                const l = AppState.leaves.find(x => x.id === passId);
+                if (!l) return;
 
-        function handleNewComplaint(e) {
-            e.preventDefault();
-            const category = document.getElementById('cCategory').value;
-            const room = document.getElementById('cRoom').value;
-            const priority = document.getElementById('cPriority').value;
-            const title = document.getElementById('cTitle').value;
-            const description = document.getElementById('cDescription').value;
+                document.getElementById('pass-number').innerText = 'Pass No: ' + l.id;
+                document.getElementById('pass-student-name').innerText = l.studentName;
+                document.getElementById('pass-usn').innerText = 'USN: ' + l.studentUsn;
+                document.getElementById('pass-hostel').innerText = 'Hostel: ' + l.hostel;
+                document.getElementById('pass-room').innerText = 'Block & Room: ' + l.block + ' - ' + l.room;
+                document.getElementById('pass-dept').innerText = l.dept;
+                document.getElementById('pass-ret').innerText = l.ret;
+                document.getElementById('pass-photo').src = l.photo;
+                document.getElementById('pass-approver').innerText = l.approver;
+                document.getElementById('pass-timestamp').innerText = l.timestamp;
 
-            const newObj = {
-                id: 'CMP-' + Math.floor(1000 + Math.random() * 9000),
-                studentName: 'Ananya Sharma',
-                room: room,
-                category: category,
-                priority: priority,
-                title: title,
-                description: description,
-                date: new Date().toISOString().split('T')[0],
-                status: 'Pending',
-                wardenRemark: ''
-            };
+                this.showModal('leave-pass-modal');
+            },
 
-            complaintsData.unshift(newObj);
-            closeModal('modalNewComplaint');
-            filterComplaints();
-            document.getElementById('complaintForm').reset();
-            showToast('Complaint filed with Warden office!', 'success');
-        }
+            // ---------------- WARDEN DASHBOARD RENDER ----------------
+            renderWardenDashboard() {
+                this.hideAllViews();
+                document.getElementById('view-warden-dash').classList.remove('hidden');
 
-        function updateComplaintStatus(id, newStatus) {
-            const comp = complaintsData.find(c => c.id === id);
-            if (comp) {
-                comp.status = newStatus;
-                let remark = prompt("Add Warden action remark for student:", comp.wardenRemark);
-                if (remark !== null) comp.wardenRemark = remark;
-                filterComplaints();
-                showToast(`Complaint status updated to ${newStatus}`, 'success');
-            }
-        }
+                const w = AppState.currentUser.data;
+                document.getElementById('wdash-img').src = w.photo;
+                document.getElementById('wdash-name').innerText = w.name;
+                document.getElementById('wdash-sub').innerText = `Emp ID: ${w.empid} | Assigned: ${w.hostel} (${w.block})`;
 
-        // ==================== ROOM & DOUBLE SEATER DISPLAY ====================
-        function renderRooms() {
-            const query = document.getElementById('roomSearchInput').value.toLowerCase();
-            const container = document.getElementById('roomsGridContainer');
+                this.renderAttendanceTable();
+                this.renderPendingStudents();
+                this.renderWardenLeaves();
+                this.renderWardenGrievances();
+                this.renderWardenReplacements();
+            },
 
-            // Group by Room & Block
-            let roomMap = {};
-            studentsData.forEach(st => {
-                let roomKey = `${st.mgmtGroup} - ${st.block} - Room ${st.room}`;
-                if(!roomMap[roomKey]) {
-                    roomMap[roomKey] = {
-                        title: roomKey,
-                        mgmtGroup: st.mgmtGroup,
-                        block: st.block,
-                        roomNo: st.room,
-                        seaterType: st.seaterType,
-                        occupants: []
-                    };
-                }
-                roomMap[roomKey].occupants.push(st);
-            });
+            switchWardenTab(tab) {
+                ['attendance', 'approvals', 'leaves', 'grievances', 'replacement'].forEach(t => {
+                    document.getElementById(`wtab-content-${t}`).classList.add('hidden');
+                    const btn = document.getElementById(`wtab-btn-${t}`);
+                    btn.className = "pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap";
+                });
 
-            let filteredRooms = Object.values(roomMap).filter(r => {
-                let matchTitle = r.title.toLowerCase().includes(query);
-                let matchOccupant = r.occupants.some(o => o.name.toLowerCase().includes(query));
-                return matchTitle || matchOccupant;
-            });
+                document.getElementById(`wtab-content-${tab}`).classList.remove('hidden');
+                document.getElementById(`wtab-btn-${tab}`).className = "pb-3 border-b-2 border-purple-600 font-bold text-purple-600 text-sm whitespace-nowrap";
+            },
 
-            if (filteredRooms.length === 0) {
-                container.innerHTML = `<p class="col-span-2 text-center text-xs text-slate-500 py-8">No room allocations match query.</p>`;
-                return;
-            }
+            renderAttendanceTable() {
+                const body = document.getElementById('attendance-table-body');
+                const dateVal = document.getElementById('attendance-date').value;
 
-            container.innerHTML = filteredRooms.map(r => `
-                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
-                        <div>
-                            <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-wider">${r.mgmtGroup} (${r.block})</span>
-                            <h3 class="font-extrabold text-slate-800 text-sm">Room #${r.roomNo}</h3>
-                        </div>
-                        <span class="text-[10px] font-bold px-2.5 py-1 rounded-full ${r.seaterType.includes('Double') ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}">
-                            ${r.seaterType} (${r.occupants.length} Occupants)
-                        </span>
-                    </div>
-
-                    <!-- Double Seater Side-by-side profile layout -->
-                    <div class="grid grid-cols-1 sm:grid-cols-${r.occupants.length} gap-3">
-                        ${r.occupants.map(stu => `
-                            <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center text-center">
-                                <img src="${stu.avatar}" class="w-16 h-16 rounded-full object-cover border-2 border-indigo-500 shadow-sm mb-2">
-                                <h4 class="font-bold text-xs text-slate-800">${stu.name}</h4>
-                                <span class="text-[10px] px-2 py-0.5 rounded ${stu.sex === 'Female' ? 'bg-pink-50 text-pink-700' : 'bg-blue-50 text-blue-700'} font-bold mb-2">${stu.sex}, ${stu.age} yrs</span>
-
-                                <div class="w-full text-left bg-slate-50 p-2 rounded-lg text-[11px] space-y-1 text-slate-600 border border-slate-100">
-                                    <p class="truncate"><i class="fa-solid fa-envelope mr-1 text-slate-400"></i>${stu.email}</p>
-                                    <p><i class="fa-solid fa-phone mr-1 text-slate-400"></i>${stu.contact}</p>
-                                    <p><i class="fa-solid fa-user-shield mr-1 text-slate-400"></i>Parents: ${stu.parentsPhone}</p>
-                                </div>
-
-                                <button onclick="openStudentDetailModal('${stu.id}')" class="mt-3 w-full py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-lg text-[11px] font-bold transition">
-                                    Full Profile
+                body.innerHTML = AppState.students.filter(s => s.status === 'Approved').map(s => {
+                    const isAbsent = AppState.attendance[`${dateVal}_${s.usn}`] === 'Absent';
+                    return `
+                        <tr>
+                            <td class="p-3 font-bold text-slate-900">${s.name} <span class="block font-mono text-[10px] font-normal text-slate-500">${s.usn}</span></td>
+                            <td class="p-3">${s.block} - ${s.room}</td>
+                            <td class="p-3">${s.fphone} <span class="block text-[10px] text-slate-400">${s.email}</span></td>
+                            <td class="p-3">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isAbsent ? 'bg-red-100 text-red-800' : 'bg-emerald-100 text-emerald-800'}">
+                                    ${isAbsent ? 'CONFIRMED ABSENT' : 'Present'}
+                                </span>
+                            </td>
+                            <td class="p-3 text-right">
+                                <button onclick="app.toggleAbsence('${s.usn}')" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white font-bold rounded text-[10px]">
+                                    ${isAbsent ? 'Mark Present' : 'Confirm Absence & Trigger Alert'}
                                 </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            },
+
+            toggleAbsence(usn) {
+                const dateVal = document.getElementById('attendance-date').value;
+                const key = `${dateVal}_${usn}`;
+                if (AppState.attendance[key] === 'Absent') {
+                    delete AppState.attendance[key];
+                    this.toast('Attendance restored to Present');
+                } else {
+                    AppState.attendance[key] = 'Absent';
+                    const s = AppState.students.find(x => x.usn === usn);
+                    AppState.auditLogs.push(`[ABSENCE ALERT TRIGGERED] Parent alert dispatched for ${s.name} to ${s.fphone}`);
+                    this.toast(`Absence confirmed! Alert dispatched to Parent (${s.fphone})`);
+                }
+                this.saveState();
+                this.renderAttendanceTable();
+            },
+
+            renderPendingStudents() {
+                const container = document.getElementById('pending-students-list');
+                const pendings = AppState.students.filter(s => s.status === 'Pending Verification');
+
+                document.getElementById('badge-pending-reg').innerText = pendings.length;
+
+                if (pendings.length === 0) {
+                    container.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No pending student registration requests.</p>`;
+                    return;
+                }
+
+                container.innerHTML = pendings.map(s => `
+                    <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <img src="${s.photo}" class="w-12 h-12 rounded-xl object-cover">
+                            <div class="text-xs">
+                                <h4 class="font-bold text-slate-900">${s.name} (${s.usn})</h4>
+                                <p class="text-slate-500">${s.hostel} | ${s.block} - ${s.room}</p>
                             </div>
-                        `).join('')}
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="app.approveStudent('${s.usn}')" class="px-3 py-1.5 bg-emerald-600 text-white rounded-lg font-bold text-xs">Approve</button>
+                        </div>
                     </div>
-                </div>
-            `).join('');
-        }
+                `).join('');
+            },
 
-        // ==================== STUDENT DIRECTORY ====================
-        function renderStudentsDirectory() {
-            const query = document.getElementById('studentSearchInput').value.toLowerCase();
-            const tbody = document.getElementById('studentTableBody');
+            approveStudent(usn) {
+                const s = AppState.students.find(x => x.usn === usn);
+                if (s) {
+                    s.status = 'Approved';
+                    AppState.auditLogs.push(`Student ${s.name} (${s.usn}) verified by ${AppState.currentUser.data.name}`);
+                    this.saveState();
+                    this.toast('Student registration approved!');
+                    this.renderPendingStudents();
+                }
+            },
 
-            let filtered = studentsData.filter(s => {
-                return s.name.toLowerCase().includes(query) ||
-                       s.mgmtGroup.toLowerCase().includes(query) ||
-                       s.block.toLowerCase().includes(query) ||
-                       s.room.toLowerCase().includes(query);
-            });
+            renderWardenLeaves() {
+                const container = document.getElementById('warden-leave-list');
+                const pendingLeaves = AppState.leaves.filter(l => l.status === 'Pending');
 
-            if(filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-500">No student records found.</td></tr>`;
-                return;
-            }
+                document.getElementById('badge-pending-leave').innerText = pendingLeaves.length;
 
-            tbody.innerHTML = filtered.map(s => `
-                <tr class="hover:bg-slate-50">
-                    <td class="p-3">
-                        <div class="flex items-center space-x-2.5">
-                            <img src="${s.avatar}" class="w-9 h-9 rounded-full object-cover border border-slate-300">
+                if (pendingLeaves.length === 0) {
+                    container.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No pending leave applications.</p>`;
+                    return;
+                }
+
+                container.innerHTML = pendingLeaves.map(l => `
+                    <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-slate-900">${l.studentName} (${l.studentUsn})</span>
+                            <span class="text-slate-500">${l.block} - ${l.room}</span>
+                        </div>
+                        <p class="text-xs text-slate-600"><strong>Reason:</strong> ${l.reason}</p>
+                        <div class="flex space-x-2">
+                            <button onclick="app.decideLeave('${l.id}', 'Approved')" class="px-4 py-1.5 bg-emerald-600 text-white rounded-lg font-bold text-xs">Approve & Issue Gate Pass</button>
+                            <button onclick="app.decideLeave('${l.id}', 'Rejected')" class="px-4 py-1.5 bg-red-600 text-white rounded-lg font-bold text-xs">Reject</button>
+                        </div>
+                    </div>
+                `).join('');
+            },
+
+            decideLeave(id, decision) {
+                const l = AppState.leaves.find(x => x.id === id);
+                if (l) {
+                    l.status = decision;
+                    l.approver = AppState.currentUser.data.name;
+                    l.timestamp = new Date().toLocaleString();
+                    this.saveState();
+                    this.toast(`Leave request ${decision.toLowerCase()}!`);
+                    this.renderWardenLeaves();
+                }
+            },
+
+            renderWardenGrievances() {
+                const container = document.getElementById('warden-grievance-list');
+                container.innerHTML = AppState.complaints.map(c => `
+                    <div class="p-4 rounded-xl border ${c.category.includes('Ragging') ? 'bg-red-50 border-red-300' : 'bg-slate-50 border-slate-200'} space-y-2">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold ${c.category.includes('Ragging') ? 'text-red-700' : 'text-slate-900'}">${c.category} - ${c.title}</span>
+                            <span class="text-slate-500">By: ${c.studentName} (${c.studentUsn})</span>
+                        </div>
+                        <p class="text-xs text-slate-600">${c.desc}</p>
+                        ${c.status === 'Pending' ? `
+                            <button onclick="app.resolveGrievance('${c.id}')" class="px-3 py-1 bg-indigo-600 text-white font-bold text-xs rounded-lg">Mark Resolved</button>
+                        ` : `<span class="text-xs text-emerald-600 font-bold">Resolved</span>`}
+                    </div>
+                `).join('');
+            },
+
+            resolveGrievance(id) {
+                const c = AppState.complaints.find(x => x.id === id);
+                if (c) {
+                    c.status = 'Resolved';
+                    c.reply = 'Inspected and resolved by Warden ' + AppState.currentUser.data.name;
+                    this.saveState();
+                    this.toast('Grievance marked as resolved!');
+                    this.renderWardenGrievances();
+                }
+            },
+
+            renderWardenReplacements() {
+                const pContainer = document.getElementById('pending-wardens-list');
+                const pendingWardens = AppState.wardens.filter(w => w.status === 'Pending Approval');
+
+                if (pendingWardens.length === 0) {
+                    pContainer.innerHTML = `<p class="text-xs text-slate-400 py-2">No pending warden replacement requests.</p>`;
+                } else {
+                    pContainer.innerHTML = pendingWardens.map(w => `
+                        <div class="p-3 bg-slate-50 rounded-xl border flex justify-between items-center text-xs">
                             <div>
-                                <p class="font-bold text-slate-800">${s.name}</p>
-                                <p class="text-[10px] text-slate-500">${s.id} • ${s.contact}</p>
+                                <strong class="text-slate-900 block">${w.name} (${w.empid})</strong>
+                                <span class="text-slate-500">${w.hostel} - ${w.block}</span>
                             </div>
+                            <button onclick="app.approveWarden('${w.empid}')" class="px-3 py-1 bg-purple-700 text-white font-bold rounded">Approve Appointment</button>
                         </div>
-                    </td>
-                    <td class="p-3">
-                        <p class="font-bold text-indigo-700">${s.mgmtGroup}</p>
-                        <p class="text-[11px] text-slate-600">${s.block} • Room ${s.room}</p>
-                    </td>
-                    <td class="p-3">
-                        <span class="font-semibold text-slate-700">${s.sex}</span>
-                        <p class="text-[11px] text-slate-500">${s.age} Years</p>
-                    </td>
-                    <td class="p-3 space-y-0.5">
-                        <p class="font-medium text-slate-700">${s.fatherName} / ${s.motherName}</p>
-                        <p class="text-[11px] text-emerald-700 font-bold"><i class="fa-solid fa-phone mr-1"></i>${s.parentsPhone}</p>
-                    </td>
-                    <td class="p-3 space-y-0.5">
-                        <p class="font-medium text-slate-700">${s.localGuardianName}</p>
-                        <p class="text-[11px] text-slate-500">${s.localGuardianPhone}</p>
-                    </td>
-                    <td class="p-3 text-right">
-                        <button onclick="openStudentDetailModal('${s.id}')" class="px-2.5 py-1 bg-indigo-600 text-white rounded-lg text-[11px] font-bold">
-                            View
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
+                    `).join('');
+                }
 
-        function openStudentDetailModal(id) {
-            const s = studentsData.find(item => item.id === id);
-            if (!s) return;
+                const auditContainer = document.getElementById('audit-logs-list');
+                auditContainer.innerHTML = AppState.auditLogs.map(log => `
+                    <div class="p-2 bg-slate-100 rounded border text-slate-700">> ${log}</div>
+                `).join('');
+            },
 
-            let roommate = studentsData.find(item => item.mgmtGroup === s.mgmtGroup && item.block === s.block && item.room === s.room && item.id !== s.id);
+            approveWarden(empid) {
+                const w = AppState.wardens.find(x => x.empid === empid);
+                if (w) {
+                    w.status = 'Approved';
+                    AppState.auditLogs.push(`[WARDEN REPLACEMENT] ${w.name} (${w.empid}) authorized as Warden by ${AppState.currentUser.data.name}`);
+                    this.saveState();
+                    this.toast('Warden appointment approved!');
+                    this.renderWardenReplacements();
+                }
+            },
 
-            const modalBody = document.getElementById('studentDetailBody');
-            modalBody.innerHTML = `
-                <div class="flex items-start space-x-4 pb-4 border-b border-slate-200">
-                    <img src="${s.avatar}" class="w-20 h-20 rounded-2xl object-cover border-2 border-indigo-600 shadow-md">
-                    <div>
-                        <span class="bg-indigo-100 text-indigo-800 text-[10px] font-bold px-2 py-0.5 rounded">${s.hostelType} • ${s.sex} (${s.age} yrs)</span>
-                        <h3 class="text-xl font-bold text-slate-800 mt-1">${s.name}</h3>
-                        <p class="text-xs text-slate-500">${s.mgmtGroup} | ${s.block} | Room ${s.room} (${s.seaterType})</p>
-                        <p class="text-xs text-slate-700 font-bold mt-1"><i class="fa-solid fa-phone mr-1 text-slate-400"></i>${s.contact}</p>
+            // ---------------- EMERGENCY CONTACTS ----------------
+            renderContacts() {
+                const grid = document.getElementById('emergency-contacts-grid');
+                grid.innerHTML = AppState.contacts.map(c => `
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                        <span class="text-[10px] font-bold uppercase text-indigo-600 tracking-wider">${c.title}</span>
+                        <h4 class="font-bold text-sm text-slate-900">${c.name}</h4>
+                        <a href="tel:${c.phone}" class="inline-flex items-center text-xs font-bold text-emerald-600 hover:text-emerald-700">
+                            <i class="fa-solid fa-phone mr-1.5"></i> ${c.phone}
+                        </a>
                     </div>
-                </div>
+                `).join('');
+            },
 
-                <div class="py-4 space-y-3 text-xs">
-                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                        <h4 class="font-bold text-slate-700 mb-1 uppercase text-[10px] tracking-wider"><i class="fa-solid fa-house-user mr-1 text-indigo-600"></i> Permanent Residential Address</h4>
-                        <p class="text-slate-600 leading-relaxed">${s.permanentAddress}</p>
-                    </div>
+            showManageContactsModal() { this.showModal('manage-contacts-modal'); },
 
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                            <h4 class="font-bold text-slate-700 mb-1 uppercase text-[10px] tracking-wider"><i class="fa-solid fa-users mr-1 text-indigo-600"></i> Parents Information</h4>
-                            <p class="text-slate-700"><strong>Father:</strong> ${s.fatherName}</p>
-                            <p class="text-slate-700"><strong>Mother:</strong> ${s.motherName}</p>
-                            <p class="text-emerald-700 font-bold mt-1"><i class="fa-solid fa-phone mr-1"></i>${s.parentsPhone}</p>
-                            <p class="text-slate-500 truncate"><i class="fa-solid fa-envelope mr-1"></i>${s.parentsEmail}</p>
-                        </div>
+            handleAddContact(e) {
+                e.preventDefault();
+                const title = document.getElementById('mcontact-title').value;
+                const name = document.getElementById('mcontact-name').value;
+                const phone = document.getElementById('mcontact-phone').value;
 
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                            <h4 class="font-bold text-slate-700 mb-1 uppercase text-[10px] tracking-wider"><i class="fa-solid fa-shield-halved mr-1 text-indigo-600"></i> Local Guardian</h4>
-                            <p class="text-slate-700"><strong>Name:</strong> ${s.localGuardianName}</p>
-                            <p class="text-emerald-700 font-bold mt-1"><i class="fa-solid fa-phone mr-1"></i>${s.localGuardianPhone}</p>
-                        </div>
-                    </div>
-
-                    ${s.seaterType.includes('Double') ? `
-                        <div class="bg-indigo-50/70 p-3 rounded-xl border border-indigo-200">
-                            <h4 class="font-bold text-indigo-900 mb-2 uppercase text-[10px] tracking-wider"><i class="fa-solid fa-user-group mr-1"></i> Double Seater Roommate Profile</h4>
-                            ${roommate ? `
-                                <div class="flex items-center space-x-3 bg-white p-2.5 rounded-lg border border-indigo-100">
-                                    <img src="${roommate.avatar}" class="w-10 h-10 rounded-full object-cover border border-indigo-400">
-                                    <div class="flex-1 min-w-0 text-[11px]">
-                                        <p class="font-bold text-slate-800 truncate">${roommate.name}</p>
-                                        <p class="text-slate-500">${roommate.contact}</p>
-                                    </div>
-                                    <button onclick="openStudentDetailModal('${roommate.id}')" class="px-2 py-1 bg-indigo-600 text-white rounded text-[10px] font-bold">Inspect Roommate</button>
-                                </div>
-                            ` : '<p class="text-slate-500 italic">No roommate assigned yet to 2nd bed.</p>'}
-                        </div>
-                    ` : ''}
-                </div>
-            `;
-
-            document.getElementById('modalStudentDetail').classList.remove('hidden');
-        }
-
-        // ==================== WARDEN ATTENDANCE & PARENT ALERT ====================
-        function renderAttendanceTable() {
-            initAttendance();
-            const tbody = document.getElementById('attendanceTableBody');
-
-            let presentCount = 0;
-            let absentCount = 0;
-
-            tbody.innerHTML = studentsData.map(s => {
-                const status = attendanceData[s.id] || 'Present';
-                if(status === 'Present') presentCount++;
-                else absentCount++;
-
-                return `
-                    <tr class="hover:bg-slate-50">
-                        <td class="p-3 flex items-center space-x-2">
-                            <img src="${s.avatar}" class="w-8 h-8 rounded-full object-cover">
-                            <div>
-                                <p class="font-bold text-slate-800">${s.name}</p>
-                                <p class="text-[10px] text-slate-500">${s.id}</p>
-                            </div>
-                        </td>
-                        <td class="p-3 font-semibold text-slate-700">${s.mgmtGroup} (${s.block}) - Room ${s.room}</td>
-                        <td class="p-3">
-                            <p class="font-mono text-slate-700">${s.parentsPhone}</p>
-                            <p class="text-[10px] text-slate-400 truncate">${s.parentsEmail}</p>
-                        </td>
-                        <td class="p-3">
-                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold ${status === 'Present' ? 'bg-emerald-100 text-emerald-800':'bg-rose-100 text-rose-800'}">
-                                ${status}
-                            </span>
-                        </td>
-                        <td class="p-3 text-right">
-                            ${currentRole === 'warden' ? `
-                                <div class="inline-flex rounded-lg shadow-sm border border-slate-200">
-                                    <button onclick="markAttendance('${s.id}', 'Present')" class="px-2.5 py-1 text-[11px] font-bold rounded-l-lg ${status === 'Present' ? 'bg-emerald-600 text-white':'bg-white text-slate-600 hover:bg-slate-50'}">
-                                        Present
-                                    </button>
-                                    <button onclick="markAttendance('${s.id}', 'Absent')" class="px-2.5 py-1 text-[11px] font-bold rounded-r-lg ${status === 'Absent' ? 'bg-rose-600 text-white':'bg-white text-slate-600 hover:bg-slate-50'}">
-                                        Absent
-                                    </button>
-                                </div>
-                            ` : `<span class="text-slate-400 text-[11px]">Read Only</span>`}
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-
-            document.getElementById('countPresent').innerText = presentCount;
-            document.getElementById('countAbsent').innerText = absentCount;
-            document.getElementById('countTotal').innerText = studentsData.length;
-        }
-
-        function markAttendance(studentId, newStatus) {
-            const previousStatus = attendanceData[studentId];
-            attendanceData[studentId] = newStatus;
-            renderAttendanceTable();
-
-            if (newStatus === 'Absent' && previousStatus !== 'Absent') {
-                triggerParentAbsenceAlert(studentId);
+                AppState.contacts.push({ title, name, phone });
+                this.saveState();
+                this.toast('Contact added to emergency directory!');
+                this.hideModal('manage-contacts-modal');
+                this.renderContacts();
             }
-        }
-
-        function triggerParentAbsenceAlert(studentId) {
-            const s = studentsData.find(item => item.id === studentId);
-            if(!s) return;
-
-            document.getElementById('alertParentPhone').innerText = s.parentsPhone;
-            document.getElementById('alertParentEmail').innerText = s.parentsEmail;
-            
-            const message = `[HOSTEL URGENT ALERT] Dear Parent (${s.fatherName}), your ward ${s.name} (${s.mgmtGroup}, ${s.block}, Room ${s.room}) was marked ABSENT during tonight's roll call. Please contact Warden Office immediately at +91-98000-11122.`;
-            document.getElementById('alertMessageText').innerText = message;
-
-            document.getElementById('modalParentAlert').classList.remove('hidden');
-        }
-
-        // ==================== GATE PASS LOGS ====================
-        function renderGateLogs() {
-            const tbody = document.getElementById('gateLogTableBody');
-
-            tbody.innerHTML = gateLogsData.map(log => `
-                <tr class="hover:bg-slate-50">
-                    <td class="p-3">
-                        <p class="font-bold text-slate-800">${log.studentName}</p>
-                        <p class="text-[10px] text-slate-500">${log.room}</p>
-                    </td>
-                    <td class="p-3 font-mono text-slate-600">${log.timeOut}</td>
-                    <td class="p-3 font-mono text-slate-600">${log.expectedReturn}</td>
-                    <td class="p-3 text-slate-700">${log.purpose}</td>
-                    <td class="p-3">
-                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${log.status === 'OUT' ? 'bg-amber-100 text-amber-800 animate-pulse':'bg-emerald-100 text-emerald-800'}">
-                            ${log.status === 'OUT' ? 'OUTSIDE CAMPUS' : 'RETURNED'}
-                        </span>
-                    </td>
-                    <td class="p-3 text-right">
-                        ${log.status === 'OUT' && currentRole === 'warden' ? `
-                            <button onclick="markGateReturn('${log.id}')" class="px-2.5 py-1 bg-emerald-600 text-white rounded text-[11px] font-bold hover:bg-emerald-700">
-                                Mark In / Returned
-                            </button>
-                        ` : log.actualReturn ? `<span class="text-[11px] text-slate-500">In at ${log.actualReturn}</span>` : '-'}
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function openNewGatePassModal() {
-            const select = document.getElementById('gpStudentId');
-            select.innerHTML = studentsData.map(s => `<option value="${s.id}">${s.name} (${s.mgmtGroup} - Room ${s.room})</option>`).join('');
-            document.getElementById('modalGatePass').classList.remove('hidden');
-        }
-
-        function handleNewGatePass(e) {
-            e.preventDefault();
-            const studentId = document.getElementById('gpStudentId').value;
-            const purpose = document.getElementById('gpPurpose').value;
-            const expectedReturn = document.getElementById('gpExpectedReturn').value.replace('T', ' ');
-
-            const student = studentsData.find(s => s.id === studentId);
-
-            const newLog = {
-                id: 'GP-' + Math.floor(100 + Math.random() * 900),
-                studentId: studentId,
-                studentName: student.name,
-                room: `${student.mgmtGroup} ${student.block} (#${student.room})`,
-                timeOut: new Date().toISOString().split('T')[0] + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
-                expectedReturn: expectedReturn,
-                actualReturn: '',
-                purpose: purpose,
-                status: 'OUT'
-            };
-
-            gateLogsData.unshift(newLog);
-            closeModal('modalGatePass');
-            renderGateLogs();
-            document.getElementById('gatePassForm').reset();
-            showToast('Gate Pass issued successfully', 'success');
-        }
-
-        function markGateReturn(logId) {
-            const log = gateLogsData.find(l => l.id === logId);
-            if(log) {
-                log.status = 'RETURNED';
-                log.actualReturn = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                renderGateLogs();
-                showToast(`Marked return for ${log.studentName}`, 'success');
-            }
-        }
-
-        // ==================== UTILITY FUNCTIONS ====================
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-        }
-
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            let bgClass = type === 'success' ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-white';
-
-            toast.className = `pointer-events-auto px-4 py-2.5 rounded-xl shadow-lg text-xs font-bold flex items-center space-x-2 transition-all transform duration-300 ${bgClass}`;
-            toast.innerHTML = `<i class="fa-solid fa-circle-info"></i><span>${message}</span>`;
-
-            container.appendChild(toast);
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-2');
-                setTimeout(() => toast.remove(), 300);
-            }, 3500);
-        }
-
-        window.onload = function() {
-            renderSidebar();
-            updateBlockOptions();
-            filterComplaints();
-            initAttendance();
         };
+
+        // Initialize application on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
     </script>
 </body>
 </html>
