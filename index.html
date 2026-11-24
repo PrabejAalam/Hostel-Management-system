@@ -431,9 +431,9 @@
         </div>
 
         <!-- ========================================== -->
-        <!-- 4. STUDENT DASHBOARD (ONLY 3 MAIN FUNCTIONS) -->
+        <!-- 4. STUDENT DASHBOARD -->
         <!-- ========================================== -->
-        <div id="view-student-dash" class="hidden space-y-8">
+        <div id="view-student-dash" class="hidden space-y-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <!-- Student Header Banner -->
             <div class="bg-indigo-900 text-white rounded-2xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="flex items-center space-x-4">
@@ -452,8 +452,8 @@
                 </div>
             </div>
 
-            <!-- Dashboard Navigation Tabs (3 Main Functions) -->
-            <div class="flex border-b border-slate-200 space-x-8">
+            <!-- Dashboard Navigation Tabs -->
+            <div class="flex flex-wrap border-b border-slate-200 gap-6 sm:space-x-8">
                 <button id="stab-btn-profile" onclick="app.switchStudentTab('profile')" class="pb-3 border-b-2 border-indigo-600 font-bold text-indigo-600 text-sm flex items-center space-x-2">
                     <i class="fa-solid fa-user-gear"></i> <span>1. Register / Complete Profile</span>
                 </button>
@@ -462,6 +462,9 @@
                 </button>
                 <button id="stab-btn-leave" onclick="app.switchStudentTab('leave')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-indigo-600 text-sm flex items-center space-x-2">
                     <i class="fa-solid fa-passport"></i> <span>3. Apply for Leave</span>
+                </button>
+                <button id="stab-btn-services" onclick="app.switchStudentTab('services')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-indigo-600 text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> <span>4. Nearby Service Provider</span>
                 </button>
             </div>
 
@@ -592,12 +595,25 @@
                 </div>
             </div>
 
+            <!-- FUNCTION 4: NEARBY SERVICE PROVIDER (STUDENT) -->
+            <div id="stab-content-services" class="hidden space-y-6">
+                <div class="bg-slate-900 text-white rounded-2xl p-6 border border-slate-800 shadow-xl space-y-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Nearby Service Provider</h3>
+                        <p class="text-xs text-slate-300">Direct contact details for hostel maintenance and support (Block 1–10)</p>
+                    </div>
+                    <div id="student-service-providers-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-slate-800">
+                        <!-- Dynamic Service Provider Cards Rendered Here -->
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- ========================================== -->
         <!-- 5. WARDEN DASHBOARD (PROTECTED) -->
         <!-- ========================================== -->
-        <div id="view-warden-dash" class="hidden space-y-8">
+        <div id="view-warden-dash" class="hidden space-y-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <!-- Warden Header Bar -->
             <div class="bg-purple-900 text-white rounded-2xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="flex items-center space-x-4">
@@ -645,6 +661,9 @@
                 </button>
                 <button id="wtab-btn-replacement" onclick="app.switchWardenTab('replacement')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
                     <i class="fa-solid fa-users-gear mr-1.5"></i> Replacement & Audit
+                </button>
+                <button id="wtab-btn-services" onclick="app.switchWardenTab('services')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
+                    <i class="fa-solid fa-screwdriver-wrench mr-1.5"></i> Nearby Service Provider
                 </button>
             </div>
 
@@ -798,6 +817,19 @@
                 </div>
             </div>
 
+            <!-- TAB 9: NEARBY SERVICE PROVIDER (WARDEN) -->
+            <div id="wtab-content-services" class="hidden space-y-6">
+                <div class="bg-slate-900 text-white rounded-2xl p-6 border border-slate-800 shadow-xl space-y-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Nearby Service Provider</h3>
+                        <p class="text-xs text-slate-300">Direct contact details for hostel maintenance and support (Block 1–10)</p>
+                    </div>
+                    <div id="warden-service-providers-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-slate-800">
+                        <!-- Dynamic Service Provider Cards Rendered Here -->
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </main>
@@ -935,7 +967,7 @@
             </div>
             <form onsubmit="app.saveStudentEdit(event)" class="space-y-4 text-xs">
                 <input type="hidden" id="edit-usn-original">
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold mb-1">Student Name</label>
                         <input type="text" id="edit-name" required class="w-full p-2 border rounded-lg">
@@ -979,7 +1011,7 @@
                         <input type="text" id="edit-fname" required class="w-full p-2 border rounded-lg">
                     </div>
                     <div>
-                        <label class="block font-bold mb-1">Father Phone</label>
+                        <label class="block font-bold mb-1">Parent Phone</label>
                         <input type="text" id="edit-fphone" required class="w-full p-2 border rounded-lg">
                     </div>
                     <div>
@@ -988,8 +1020,8 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block font-bold mb-1">Address</label>
-                    <textarea id="edit-address" rows="2" class="w-full p-2 border rounded-lg"></textarea>
+                    <label class="block font-bold mb-1">Permanent Address</label>
+                    <textarea id="edit-address" rows="2" required class="w-full p-2 border rounded-lg"></textarea>
                 </div>
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="app.hideModal('edit-student-modal')" class="px-4 py-2 border rounded-lg">Cancel</button>
@@ -1101,7 +1133,7 @@
             <form onsubmit="app.saveSmsSettings(event)" class="space-y-4 text-xs">
                 <div>
                     <label class="block font-bold text-slate-700 mb-1">SMS Service Provider Gateway</label>
-                    <select id="sms-provider" class="w-full p-2 border rounded-lg">
+                    <select id="sms-provider-alt" class="w-full p-2 border rounded-lg">
                         <option value="simulated">Local Browser Simulator (Demo Mode)</option>
                         <option value="twilio">Twilio SMS Gateway API</option>
                         <option value="fast2sms">Fast2SMS / MSG91 India Gateway</option>
@@ -1109,7 +1141,7 @@
                 </div>
                 <div>
                     <label class="block font-bold text-slate-700 mb-1">API Key / Auth Token</label>
-                    <input type="password" id="sms-api-key" placeholder="e.g. twilio_auth_token_xyz..." class="w-full p-2 border rounded-lg font-mono">
+                    <input type="password" id="sms-api-key-alt" placeholder="e.g. twilio_auth_token_xyz..." class="w-full p-2 border rounded-lg font-mono">
                 </div>
                 <div>
                     <label class="block font-bold text-slate-700 mb-1">Sender ID / From Number</label>
@@ -1270,6 +1302,13 @@
                 { title: 'Emergency Electrician', name: 'Mr. Mohan', phone: '+91 98450 54321' },
                 { title: 'Hostel Resident Doctor', name: 'Dr. Anjali Rao', phone: '+91 98450 99900' }
             ],
+            serviceProviders: [
+                { title: 'ELECTRICIAN BLOCK 1-10', name: 'ramesh kumar', phone: '9811100222' },
+                { title: 'PLUMBER BLOCK 1-10', name: 'rajesh kumar', phone: '9811100223' },
+                { title: 'ROOM CLEANER BLOCK 1-10', name: 'kaamti', phone: '9811100224' },
+                { title: 'DOCTOR CLEANER BLOCK 1-10', name: 'Aayushman kumar', phone: '9811100225' },
+                { title: 'RAGGING AWARE BLOCK 1-10', name: 'Ekbal siddiqi', phone: '9811100226' }
+            ],
             auditLogs: JSON.parse(localStorage.getItem('ch_audits')) || [
                 'System Initialized on 2026-10-29'
             ]
@@ -1279,6 +1318,7 @@
             init() {
                 this.renderUserStatusBar();
                 this.renderContacts();
+                this.renderServiceProviders();
                 this.updateBlockDropdown('Om Sai Hostel', 'sreg-block');
                 this.updateBlockDropdown('Om Sai Hostel', 'wreg-block');
                 const dateEl = document.getElementById('attendance-date');
@@ -1377,7 +1417,7 @@
 
             logout() { AppState.currentUser = null; this.renderUserStatusBar(); this.showHome(); this.toast('Logged out successfully'); },
 
-            async handleStudentReg(e) {
+            handleStudentReg(e) {
                 e.preventDefault();
                 const usn = document.getElementById('sreg-usn').value.trim().toUpperCase();
                 if (AppState.students.some(s => s.usn === usn)) { this.toast('College USN already registered!', 'error'); return; }
@@ -1398,30 +1438,14 @@
                     photo: photoImg ? photoImg.src : 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
                 };
 
-                try {
-                    const res = await fetch('/api/register-student', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(newStudent)
-                    });
-                    const data = await res.json();
-                    if (!res.ok || !data.success) {
-                        this.toast(data.error || 'Database registration failed!', 'error');
-                        return;
-                    }
-                } catch (err) {
-                    this.toast('Server error while saving to database!', 'error');
-                    return;
-                }
-
                 AppState.students.push(newStudent);
                 this.logActivity(usn, 'Submitted Student Hostel Registration');
                 this.saveState();
-                this.toast('Registration submitted & saved to MongoDB Atlas!');
+                this.toast('Registration submitted! Pending Warden Verification.');
                 this.showHome();
             },
 
-            async handleWardenReg(e) {
+            handleWardenReg(e) {
                 e.preventDefault();
                 const empid = document.getElementById('wreg-empid').value.trim();
                 const pass1 = document.getElementById('wreg-pass').value;
@@ -1435,34 +1459,9 @@
                     photo: photoImg ? photoImg.src : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150'
                 };
 
-                try {
-                    const res = await fetch('/api/register-warden', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            name: newWarden.name,
-                            employeeId: newWarden.empid,
-                            hostel: newWarden.hostel,
-                            block: newWarden.block,
-                            email: newWarden.email,
-                            phone: newWarden.phone,
-                            password: newWarden.password,
-                            status: newWarden.status
-                        })
-                    });
-                    const data = await res.json();
-                    if (!res.ok || !data.success) {
-                        this.toast(data.error || 'Warden registration failed!', 'error');
-                        return;
-                    }
-                } catch (err) {
-                    this.toast('Server error while saving warden to database!', 'error');
-                    return;
-                }
-
                 AppState.wardens.push(newWarden);
                 this.saveState();
-                this.toast('Warden appointment request submitted & saved!');
+                this.toast('Warden appointment request submitted!');
                 this.showHome();
             },
 
@@ -1551,10 +1550,11 @@
 
                 this.renderMyComplaints();
                 this.renderMyLeaves();
+                this.renderServiceProviders();
             },
 
             switchStudentTab(tab) {
-                ['profile', 'complaint', 'leave'].forEach(t => {
+                ['profile', 'complaint', 'leave', 'services'].forEach(t => {
                     const cEl = document.getElementById(`stab-content-${t}`);
                     if (cEl) cEl.classList.add('hidden');
                     const bEl = document.getElementById(`stab-btn-${t}`);
@@ -1564,6 +1564,7 @@
                 if (actContent) actContent.classList.remove('hidden');
                 const actBtn = document.getElementById(`stab-btn-${tab}`);
                 if (actBtn) actBtn.className = "pb-3 border-b-2 border-indigo-600 font-bold text-indigo-600 text-sm flex items-center space-x-2";
+                if (tab === 'services') this.renderServiceProviders();
             },
 
             handleComplaintSubmit(e) {
@@ -1677,15 +1678,17 @@
                 this.renderWardenLeaves();
                 this.renderWardenGrievances();
                 this.renderWardenReplacements();
+                this.renderServiceProviders();
             },
 
             switchWardenTab(tab) {
-                ['attendance', 'directory', 'occupancy', 'gate', 'approvals', 'leaves', 'grievances', 'replacement'].forEach(t => {
+                ['attendance', 'directory', 'occupancy', 'gate', 'approvals', 'leaves', 'grievances', 'replacement', 'services'].forEach(t => {
                     const cEl = document.getElementById(`wtab-content-${t}`); if (cEl) cEl.classList.add('hidden');
                     const bEl = document.getElementById(`wtab-btn-${t}`); if (bEl) bEl.className = "pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap";
                 });
                 const actC = document.getElementById(`wtab-content-${tab}`); if (actC) actC.classList.remove('hidden');
                 const actB = document.getElementById(`wtab-btn-${tab}`); if (actB) actB.className = "pb-3 border-b-2 border-purple-600 font-bold text-purple-600 text-sm whitespace-nowrap";
+                if (tab === 'services') this.renderServiceProviders();
             },
 
             renderAttendanceTable() {
@@ -1761,6 +1764,7 @@
                 e.preventDefault();
                 this.toast('SMS Gateway Settings Saved!');
                 this.hideModal('sms-settings-modal');
+                this.hideModal('sms-config-modal');
             },
 
             submitDailyRollCall() {
@@ -2122,6 +2126,24 @@
                         </a>
                     </div>
                 `).join('');
+            },
+
+            renderServiceProviders() {
+                const cardHtml = AppState.serviceProviders.map(sp => `
+                    <div class="bg-white rounded-2xl p-5 shadow-md border border-slate-100 flex flex-col justify-between space-y-3">
+                        <div class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-700">${sp.title}</div>
+                        <div class="text-lg font-extrabold text-slate-900">${sp.name}</div>
+                        <a href="tel:${sp.phone}" class="inline-flex items-center space-x-2 text-sm font-bold text-emerald-700 hover:text-emerald-800">
+                            <i class="fa-solid fa-phone"></i><span>${sp.phone}</span>
+                        </a>
+                    </div>
+                `).join('');
+
+                const sGrid = document.getElementById('student-service-providers-grid');
+                if (sGrid) sGrid.innerHTML = cardHtml;
+
+                const wGrid = document.getElementById('warden-service-providers-grid');
+                if (wGrid) wGrid.innerHTML = cardHtml;
             },
 
             showManageContactsModal() { this.showModal('manage-contacts-modal'); },
