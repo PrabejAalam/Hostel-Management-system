@@ -1315,7 +1315,8 @@
         };
 
         const app = {
-            init() {
+            async init() {
+                await this.fetchServerData();
                 this.renderUserStatusBar();
                 this.renderContacts();
                 this.renderServiceProviders();
@@ -1324,6 +1325,27 @@
                 const dateEl = document.getElementById('attendance-date');
                 if (dateEl) dateEl.value = new Date().toISOString().split('T')[0];
                 this.saveState();
+            },
+
+            async fetchServerData() {
+                try {
+                    const [sRes, wRes] = await Promise.all([
+                        fetch('/api/students'),
+                        fetch('/api/wardens')
+                    ]);
+                    const sData = await sRes.json();
+                    const wData = await wRes.json();
+
+                    if (sData.success && Array.isArray(sData.students) && sData.students.length > 0) {
+                        AppState.students = sData.students;
+                    }
+                    if (wData.success && Array.isArray(wData.wardens) && wData.wardens.length > 0) {
+                        AppState.wardens = wData.wardens;
+                    }
+                    this.saveState();
+                } catch (err) {
+                    console.error('Server fetch failed:', err);
+                }
             },
 
             saveState() {
@@ -1417,7 +1439,7 @@
 
             logout() { AppState.currentUser = null; this.renderUserStatusBar(); this.showHome(); this.toast('Logged out successfully'); },
 
-            handleStudentReg(e) {
+            async handleStudentReg(e) {
                 e.preventDefault();
                 const usn = document.getElementById('sreg-usn').value.trim().toUpperCase();
                 if (AppState.students.some(s => s.usn === usn)) { this.toast('College USN already registered!', 'error'); return; }
@@ -1438,6 +1460,21 @@
                     photo: photoImg ? photoImg.src : 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
                 };
 
+                try {
+                    const res = await fetch('/api/register-student', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(newStudent)
+                    });
+                    const data = await res.json();
+                    if (!res.ok || !data.success) {
+                        this.toast(data.error || 'Failed to register student on server!', 'error');
+                        return;
+                    }
+                } catch (err) {
+                    console.error('Student registration API error:', err);
+                }
+
                 AppState.students.push(newStudent);
                 this.logActivity(usn, 'Submitted Student Hostel Registration');
                 this.saveState();
@@ -1445,7 +1482,7 @@
                 this.showHome();
             },
 
-            handleWardenReg(e) {
+            async handleWardenReg(e) {
                 e.preventDefault();
                 const empid = document.getElementById('wreg-empid').value.trim();
                 const pass1 = document.getElementById('wreg-pass').value;
@@ -1458,6 +1495,21 @@
                     phone: document.getElementById('wreg-phone').value, password: pass1, status: 'Pending Approval',
                     photo: photoImg ? photoImg.src : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150'
                 };
+
+                try {
+                    const res = await fetch('/api/register-warden', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(newWarden)
+                    });
+                    const data = await res.json();
+                    if (!res.ok || !data.success) {
+                        this.toast(data.error || 'Failed to register warden on server!', 'error');
+                        return;
+                    }
+                } catch (err) {
+                    console.error('Warden registration API error:', err);
+                }
 
                 AppState.wardens.push(newWarden);
                 this.saveState();
@@ -1660,7 +1712,8 @@
             },
 
             // ---------------- WARDEN DASHBOARD ----------------
-            renderWardenDashboard() {
+            async renderWardenDashboard() {
+                await this.fetchServerData();
                 this.hideAllViews();
                 const wDash = document.getElementById('view-warden-dash');
                 if (wDash) wDash.classList.remove('hidden');
@@ -1996,12 +2049,18 @@
                 `).join('');
             },
 
-            approveStudent(usn) {
+            async approveStudent(usn) {
+                try {
+                    await fetch(`/api/students/${encodeURIComponent(usn)}/approve`, { method: 'PATCH' });
+                } catch (err) {
+                    console.error('Approve student API error:', err);
+                }
                 const s = AppState.students.find(x => x.usn === usn);
                 if (s) {
                     s.status = 'Approved';
                     this.logActivity(usn, 'Hostel Registration Approved by Warden');
                     this.saveState();
+                    await this.fetchServerData();
                     this.toast('Student registration approved!');
                     this.renderPendingStudents();
                 }
@@ -2103,12 +2162,18 @@
                 }
             },
 
-            approveWarden(empid) {
+            async approveWarden(empid) {
+                try {
+                    await fetch(`/api/wardens/${encodeURIComponent(empid)}/approve`, { method: 'PATCH' });
+                } catch (err) {
+                    console.error('Approve warden API error:', err);
+                }
                 const w = AppState.wardens.find(x => x.empid === empid);
                 if (w) {
                     w.status = 'Approved';
                     AppState.auditLogs.unshift(`[WARDEN REPLACEMENT] ${w.name} (${w.empid}) authorized by ${AppState.currentUser.data.name}`);
                     this.saveState();
+                    await this.fetchServerData();
                     this.toast('Warden appointment approved!');
                     this.renderWardenReplacements();
                 }
