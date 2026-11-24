@@ -1750,7 +1750,7 @@
                 const dateEl = document.getElementById('attendance-date');
                 const dateVal = dateEl ? dateEl.value : new Date().toISOString().split('T')[0];
 
-                body.innerHTML = AppState.students.filter(s => s.status === 'Approved').map(s => {
+                body.innerHTML = AppState.students.filter(s => String(s.status || '').trim().toLowerCase() === 'approved').map(s => {
                     const isAbsent = AppState.attendance[`${dateVal}_${s.usn}`] === 'Absent';
                     return `
                         <tr>
@@ -1943,7 +1943,7 @@
             renderGateLogs() {
                 const sel = document.getElementById('gate-student-usn');
                 if (sel) {
-                    sel.innerHTML = AppState.students.filter(s => s.status === 'Approved').map(s => `<option value="${s.usn}">${s.name} (${s.usn} - ${s.room})</option>`).join('');
+                    sel.innerHTML = AppState.students.filter(s => String(s.status || '').trim().toLowerCase() === 'approved').map(s => `<option value="${s.usn}">${s.name} (${s.usn} - ${s.room})</option>`).join('');
                 }
 
                 const table = document.getElementById('gate-movement-table');
@@ -2058,12 +2058,16 @@
                 const s = AppState.students.find(x => x.usn === usn);
                 if (s) {
                     s.status = 'Approved';
-                    this.logActivity(usn, 'Hostel Registration Approved by Warden');
-                    this.saveState();
-                    await this.fetchServerData();
-                    this.toast('Student registration approved!');
-                    this.renderPendingStudents();
                 }
+                this.logActivity(usn, 'Hostel Registration Approved by Warden');
+                this.saveState();
+                await this.fetchServerData();
+                this.toast('Student registration approved!');
+                this.renderPendingStudents();
+                this.renderAttendanceTable();
+                this.renderStudentDirectory();
+                this.renderOccupancyMap();
+                this.renderGateLogs();
             },
 
             renderWardenLeaves() {
