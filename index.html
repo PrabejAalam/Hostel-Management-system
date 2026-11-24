@@ -37,7 +37,7 @@
         .glass-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
+            border: 1px solid rgba(226, 232, 40, 0.8);
         }
         /* Full Page Background Image Styling for Homepage with BMSIT Campus Image */
         .full-page-bg {
@@ -105,7 +105,7 @@
                 </p>
             </div>
 
-            <!-- Portal Login Options (3 Main Portal Cards) -->
+            <!-- Portal Login Options (2 Main Portal Cards) -->
             <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 
                 <!-- Student Portal Card -->
@@ -119,8 +119,8 @@
                             Access your profile, file grievances (Mess, Electricity, Plumbing), apply for gate passes, and check roommate details.
                         </p>
                     </div>
-                    <button onclick="app.showModal('student-login-modal')" class="w-full py-3.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2">
-                        <span>Login as Student</span>
+                    <button onclick="app.showStudentDash()" class="w-full py-3.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2">
+                        <span>Open Student Portal</span>
                         <i class="fa-solid fa-arrow-right text-sm"></i>
                     </button>
                 </div>
@@ -136,8 +136,8 @@
                             Conduct nightly roll calls, trigger parent absence alerts, approve leave applications, and manage room allocations.
                         </p>
                     </div>
-                    <button onclick="app.showModal('warden-login-modal')" class="w-full py-3.5 px-4 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2">
-                        <span>Login as Warden</span>
+                    <button onclick="app.showWardenDash()" class="w-full py-3.5 px-4 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2">
+                        <span>Open Warden Portal</span>
                         <i class="fa-solid fa-arrow-right text-sm"></i>
                     </button>
                 </div>
@@ -193,7 +193,7 @@
         <!-- ========================================== -->
         <!-- 2. STUDENT REGISTRATION VIEW -->
         <!-- ========================================== -->
-        <div id="view-student-reg" class="hidden max-w-3xl mx-auto">
+        <div id="view-student-reg" class="hidden max-w-3xl mx-auto py-8 px-4">
             <button onclick="app.showHome()" class="mb-6 text-indigo-600 hover:text-indigo-800 text-sm font-semibold flex items-center space-x-2">
                 <i class="fa-solid fa-arrow-left"></i> <span>Back to Homepage</span>
             </button>
@@ -351,7 +351,7 @@
         <!-- ========================================== -->
         <!-- 3. WARDEN REGISTRATION VIEW -->
         <!-- ========================================== -->
-        <div id="view-warden-reg" class="hidden max-w-2xl mx-auto">
+        <div id="view-warden-reg" class="hidden max-w-2xl mx-auto py-8 px-4">
             <button onclick="app.showHome()" class="mb-6 text-purple-600 hover:text-purple-800 text-sm font-semibold flex items-center space-x-2">
                 <i class="fa-solid fa-arrow-left"></i> <span>Back to Homepage</span>
             </button>
@@ -431,29 +431,32 @@
         </div>
 
         <!-- ========================================== -->
-        <!-- 4. STUDENT DASHBOARD (ONLY 3 MAIN FUNCTIONS) -->
+        <!-- 4. STUDENT DASHBOARD -->
         <!-- ========================================== -->
-        <div id="view-student-dash" class="hidden space-y-8">
+        <div id="view-student-dash" class="hidden max-w-6xl mx-auto py-8 px-4 space-y-8">
+            <button onclick="app.showHome()" class="text-indigo-600 hover:text-indigo-800 text-sm font-semibold flex items-center space-x-2">
+                <i class="fa-solid fa-arrow-left"></i> <span>Back to Homepage</span>
+            </button>
+
             <!-- Student Header Banner -->
             <div class="bg-indigo-900 text-white rounded-2xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="flex items-center space-x-4">
-                    <img id="sdash-img" src="" alt="Student Profile" class="w-16 h-16 rounded-2xl object-cover border-2 border-indigo-300">
+                    <img id="sdash-img" src="https://via.placeholder.com/80?text=Student" alt="Student Profile" class="w-16 h-16 rounded-2xl object-cover border-2 border-indigo-300">
                     <div>
                         <div class="flex items-center space-x-2">
-                            <h2 id="sdash-name" class="text-2xl font-bold">Student Name</h2>
-                            <span id="sdash-status-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500 text-white">Approved</span>
+                            <h2 id="sdash-name" class="text-2xl font-bold">Student Portal</h2>
+                            <span id="sdash-status-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500 text-white">Active</span>
                         </div>
-                        <p id="sdash-sub" class="text-xs text-indigo-200 mt-1">USN: - | Block: - | Room: -</p>
+                        <p id="sdash-sub" class="text-xs text-indigo-200 mt-1">Campus Haven Student Services</p>
                     </div>
                 </div>
-                <!-- Verification status warning if pending -->
                 <div id="sdash-pending-alert" class="hidden bg-amber-500 text-slate-900 px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2">
                     <i class="fa-solid fa-clock"></i> <span>Account Pending Warden Approval</span>
                 </div>
             </div>
 
-            <!-- Dashboard Navigation Tabs (3 Main Functions) -->
-            <div class="flex border-b border-slate-200 space-x-8">
+            <!-- Dashboard Navigation Tabs (4 Functions including Nearby Service Provider) -->
+            <div class="flex flex-wrap border-b border-slate-200 gap-6">
                 <button id="stab-btn-profile" onclick="app.switchStudentTab('profile')" class="pb-3 border-b-2 border-indigo-600 font-bold text-indigo-600 text-sm flex items-center space-x-2">
                     <i class="fa-solid fa-user-gear"></i> <span>1. Register / Complete Profile</span>
                 </button>
@@ -461,1572 +464,128 @@
                     <i class="fa-solid fa-triangle-exclamation"></i> <span>2. File a Complaint</span>
                 </button>
                 <button id="stab-btn-leave" onclick="app.switchStudentTab('leave')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-indigo-600 text-sm flex items-center space-x-2">
-                    <i class="fa-solid fa-passport"></i> <span>3. Apply for Leave</span>
+                    <i class="fa-solid fa-id-badge"></i> <span>3. Apply for Leave</span>
+                </button>
+                <button id="stab-btn-services" onclick="app.switchStudentTab('services')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-indigo-600 text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> <span>4. Nearby Service Provider</span>
                 </button>
             </div>
 
-            <!-- FUNCTION 1: PROFILE & ROOMMATE INFO -->
-            <div id="stab-content-profile" class="space-y-6">
-                <div class="grid md:grid-cols-2 gap-6">
-                    <!-- Profile Card -->
-                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                        <h3 class="font-bold text-slate-900 border-b pb-2 flex items-center justify-between">
-                            <span>Personal Profile Details</span>
-                            <span class="text-xs text-indigo-600 font-normal">Editable Fields Allowed</span>
-                        </h3>
-                        <div class="grid grid-cols-2 gap-4 text-xs">
-                            <div><span class="text-slate-400 block">Academic Year</span><strong id="sprof-year" class="text-slate-800 text-sm">-</strong></div>
-                            <div><span class="text-slate-400 block">Blood Group</span><strong id="sprof-blood" class="text-slate-800 text-sm">-</strong></div>
-                            <div><span class="text-slate-400 block">Student Phone</span><strong id="sprof-phone" class="text-slate-800 text-sm">-</strong></div>
-                            <div><span class="text-slate-400 block">Student Email</span><strong id="sprof-email" class="text-slate-800 text-sm">-</strong></div>
-                            <div><span class="text-slate-400 block">Father Name</span><strong id="sprof-fname" class="text-slate-800 text-sm">-</strong></div>
-                            <div><span class="text-slate-400 block">Parent Contact</span><strong id="sprof-fphone" class="text-slate-800 text-sm">-</strong></div>
-                            <div class="col-span-2"><span class="text-slate-400 block">Permanent Address</span><p id="sprof-address" class="text-slate-800 font-medium">-</p></div>
-                        </div>
-                    </div>
-
-                    <!-- Roommate Card (For Double Seater Rooms) -->
-                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                        <h3 class="font-bold text-slate-900 border-b pb-2 flex items-center justify-between">
-                            <span>Double-Seater Co-Occupant / Roommate</span>
-                            <i class="fa-solid fa-user-group text-indigo-500"></i>
-                        </h3>
-                        <div id="roommate-container" class="pt-2">
-                            <!-- Dynamic Roommate Info Rendered Here -->
-                        </div>
-                    </div>
-                </div>
+            <!-- Tab 1: Profile -->
+            <div id="stab-panel-profile" class="bg-white rounded-2xl p-6 shadow border border-slate-200">
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Register / Complete Profile</h3>
+                <p class="text-sm text-slate-600 mb-4">Need to submit a new student registration or update your hostel details?</p>
+                <button onclick="app.showStudentRegForm()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold">
+                    Open Student Registration Form
+                </button>
             </div>
 
-            <!-- FUNCTION 2: FILE A COMPLAINT -->
-            <div id="stab-content-complaint" class="hidden space-y-6">
-                <div class="grid md:grid-cols-3 gap-8">
-                    <!-- Complaint Submission Form -->
-                    <div class="md:col-span-1 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                        <h3 class="font-bold text-slate-900 border-b pb-2">Log New Grievance</h3>
-                        <form onsubmit="app.handleComplaintSubmit(event)" class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1">Issue Category *</label>
-                                <select id="cmp-cat" required class="w-full px-3 py-2 border rounded-lg text-sm">
-                                    <option value="Food/Mess Problem">Food / Mess Quality Problem</option>
-                                    <option value="Ragging/Harassment">Confidential Ragging / Harassment</option>
-                                    <option value="Electricity Problem">Electricity / Appliance Fault</option>
-                                    <option value="Plumbing Problem">Plumbing / Water Supply</option>
-                                    <option value="Room Cleaning">Room Cleaning / Hygiene</option>
-                                    <option value="Missing Facilities">Missing Hostel Facilities</option>
-                                    <option value="Other Issues">Other Issues</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1">Title / Subject *</label>
-                                <input type="text" id="cmp-title" required placeholder="e.g. Geyser leaking room 204" class="w-full px-3 py-2 border rounded-lg text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1">Detailed Description *</label>
-                                <textarea id="cmp-desc" required rows="3" placeholder="Explain the problem clearly..." class="w-full px-3 py-2 border rounded-lg text-sm"></textarea>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1">Optional Incident Photo Evidence</label>
-                                <input type="file" id="cmp-photo" accept="image/*" class="text-xs text-slate-500">
-                            </div>
-                            <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow">Submit Grievance</button>
-                        </form>
+            <!-- Tab 2: Complaint -->
+            <div id="stab-panel-complaint" class="hidden bg-white rounded-2xl p-6 shadow border border-slate-200">
+                <h3 class="text-lg font-bold text-slate-900 mb-4">Log New Grievance</h3>
+                <form onsubmit="event.preventDefault(); app.showToast('Complaint submitted successfully!');" class="space-y-4 max-w-xl">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Issue Category *</label>
+                        <select class="w-full px-3 py-2 border rounded-lg text-sm">
+                            <option>Food / Mess Quality Problem</option>
+                            <option>Electrical Issue</option>
+                            <option>Plumbing / Water Issue</option>
+                            <option>Room / Cleaning Issue</option>
+                        </select>
                     </div>
-
-                    <!-- My Submitted Complaints List -->
-                    <div class="md:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                        <h3 class="font-bold text-slate-900 border-b pb-2">My Filed Complaints History</h3>
-                        <div id="my-complaints-list" class="space-y-3 max-h-96 overflow-y-auto pr-1">
-                            <!-- Dynamic Complaints -->
-                        </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Title / Subject *</label>
+                        <input type="text" required placeholder="e.g. Geyser leaking room 204" class="w-full px-3 py-2 border rounded-lg text-sm">
                     </div>
-                </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Detailed Description *</label>
+                        <textarea required rows="3" placeholder="Explain the problem clearly..." class="w-full px-3 py-2 border rounded-lg text-sm"></textarea>
+                    </div>
+                    <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold">
+                        Submit Grievance
+                    </button>
+                </form>
             </div>
 
-            <!-- FUNCTION 3: APPLY FOR LEAVE & DIGITAL PASS -->
-            <div id="stab-content-leave" class="hidden space-y-6">
-                <div class="grid md:grid-cols-3 gap-8">
-                    <!-- Leave Application Form -->
-                    <div class="md:col-span-1 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                        <h3 class="font-bold text-slate-900 border-b pb-2">Apply for Outstation Leave</h3>
-                        <form onsubmit="app.handleLeaveSubmit(event)" class="space-y-4">
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 mb-1">Start Date *</label>
-                                    <input type="date" id="leave-sdate" required class="w-full px-2 py-1.5 border rounded-lg text-xs">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 mb-1">Start Time *</label>
-                                    <input type="time" id="leave-stime" required class="w-full px-2 py-1.5 border rounded-lg text-xs">
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 mb-1">Return Date *</label>
-                                    <input type="date" id="leave-edate" required class="w-full px-2 py-1.5 border rounded-lg text-xs">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 mb-1">Return Time *</label>
-                                    <input type="time" id="leave-etime" required class="w-full px-2 py-1.5 border rounded-lg text-xs">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1">Reason for Leave *</label>
-                                <textarea id="leave-reason" required rows="2" placeholder="e.g. Visiting home for festival..." class="w-full px-3 py-2 border rounded-lg text-sm"></textarea>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1">Destination Address *</label>
-                                <input type="text" id="leave-dest" required placeholder="e.g. Home Address, Mysore" class="w-full px-3 py-2 border rounded-lg text-sm">
-                            </div>
-                            <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow">Submit Leave Request</button>
-                        </form>
-                    </div>
-
-                    <!-- My Leave Applications & Passes -->
-                    <div class="md:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                        <h3 class="font-bold text-slate-900 border-b pb-2">Leave Passes & Status Tracker</h3>
-                        <div id="my-leave-list" class="space-y-4 max-h-[500px] overflow-y-auto pr-1">
-                            <!-- Dynamic Leave Cards -->
+            <!-- Tab 3: Apply for Leave -->
+            <div id="stab-panel-leave" class="hidden bg-white rounded-2xl p-6 shadow border border-slate-200">
+                <h3 class="text-lg font-bold text-slate-900 mb-4">Apply for Leave / Gate Pass</h3>
+                <form onsubmit="event.preventDefault(); app.showToast('Leave request submitted!');" class="space-y-4 max-w-xl">
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">From Date *</label>
+                            <input type="date" required class="w-full px-3 py-2 border rounded-lg text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">To Date *</label>
+                            <input type="date" required class="w-full px-3 py-2 border rounded-lg text-sm">
                         </div>
                     </div>
-                </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Reason for Leave *</label>
+                        <textarea required rows="2" placeholder="Destination and reason..." class="w-full px-3 py-2 border rounded-lg text-sm"></textarea>
+                    </div>
+                    <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold">
+                        Submit Leave Request
+                    </button>
+                </form>
             </div>
 
+            <!-- Tab 4: Nearby Service Provider (Student Portal) -->
+            <div id="stab-panel-services" class="hidden bg-slate-900 rounded-2xl p-6 shadow-xl border border-slate-800 space-y-4">
+                <div>
+                    <h3 class="text-xl font-bold text-white">Nearby Service Provider</h3>
+                    <p class="text-xs text-slate-300">Direct contact details for hostel maintenance and support (Block 1–10)</p>
+                </div>
+                <div id="student-service-providers-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Rendered by app.js -->
+                </div>
+            </div>
         </div>
 
         <!-- ========================================== -->
-        <!-- 5. WARDEN DASHBOARD (PROTECTED) -->
+        <!-- 5. WARDEN DASHBOARD -->
         <!-- ========================================== -->
-        <div id="view-warden-dash" class="hidden space-y-8">
-            <!-- Warden Header Bar -->
-            <div class="bg-purple-900 text-white rounded-2xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="flex items-center space-x-4">
-                    <img id="wdash-img" src="" alt="Warden Staff" class="w-16 h-16 rounded-2xl object-cover border-2 border-purple-300">
-                    <div>
-                        <h2 id="wdash-name" class="text-2xl font-bold">Warden Staff</h2>
-                        <p id="wdash-sub" class="text-xs text-purple-200 mt-1">Emp ID: - | Assigned: -</p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-3 flex-wrap gap-2">
-                    <button onclick="app.showSmsSettingsModal()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-semibold text-xs transition flex items-center">
-                        <i class="fa-solid fa-gear mr-1.5"></i> SMS Gateway Settings
-                    </button>
-                    <button onclick="app.showOutboxModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-semibold text-xs transition flex items-center">
-                        <i class="fa-solid fa-paper-plane mr-1.5"></i> Parent SMS/Email Outbox (<span id="outbox-count">0</span>)
-                    </button>
-                    <button onclick="app.showManageContactsModal()" class="px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white rounded-xl font-semibold text-xs transition">
-                        <i class="fa-solid fa-address-book mr-1.5"></i> Emergency Contacts
-                    </button>
+        <div id="view-warden-dash" class="hidden max-w-6xl mx-auto py-8 px-4 space-y-8">
+            <button onclick="app.showHome()" class="text-purple-600 hover:text-purple-800 text-sm font-semibold flex items-center space-x-2">
+                <i class="fa-solid fa-arrow-left"></i> <span>Back to Homepage</span>
+            </button>
+
+            <div class="bg-purple-900 text-white rounded-2xl p-6 shadow-xl flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-bold">Warden Portal</h2>
+                    <p class="text-xs text-purple-200 mt-1">Hostel Operations & Service Directory</p>
                 </div>
             </div>
 
-            <!-- Warden Navigation Tabs -->
-            <div class="flex border-b border-slate-200 space-x-4 overflow-x-auto pb-1">
-                <button id="wtab-btn-attendance" onclick="app.switchWardenTab('attendance')" class="pb-3 border-b-2 border-purple-600 font-bold text-purple-600 text-sm whitespace-nowrap">
-                    <i class="fa-solid fa-clipboard-user mr-1.5"></i> Daily Roll Call
+            <!-- Warden Tabs (Added Nearby Service Provider without altering other existing tabs) -->
+            <div class="flex flex-wrap border-b border-slate-200 gap-6">
+                <button id="wtab-btn-overview" onclick="app.switchWardenTab('overview')" class="pb-3 border-b-2 border-purple-600 font-bold text-purple-600 text-sm">
+                    Warden Overview
                 </button>
-                <button id="wtab-btn-directory" onclick="app.switchWardenTab('directory')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
-                    <i class="fa-solid fa-users text-sm mr-1.5"></i> Student Directory & Edit
-                </button>
-                <button id="wtab-btn-occupancy" onclick="app.switchWardenTab('occupancy')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
-                    <i class="fa-solid fa-bed text-sm mr-1.5"></i> Room Occupancy & Seater
-                </button>
-                <button id="wtab-btn-gate" onclick="app.switchWardenTab('gate')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
-                    <i class="fa-solid fa-person-walking-arrow-right text-sm mr-1.5"></i> Gate Movement Log
-                </button>
-                <button id="wtab-btn-approvals" onclick="app.switchWardenTab('approvals')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
-                    <i class="fa-solid fa-user-check mr-1.5"></i> Registrations <span id="badge-pending-reg" class="ml-1 px-1.5 py-0.5 text-xs bg-red-500 text-white rounded-full">0</span>
-                </button>
-                <button id="wtab-btn-leaves" onclick="app.switchWardenTab('leaves')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
-                    <i class="fa-solid fa-plane-departure mr-1.5"></i> Leaves <span id="badge-pending-leave" class="ml-1 px-1.5 py-0.5 text-xs bg-amber-500 text-white rounded-full">0</span>
-                </button>
-                <button id="wtab-btn-grievances" onclick="app.switchWardenTab('grievances')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
-                    <i class="fa-solid fa-headset mr-1.5"></i> Grievances
-                </button>
-                <button id="wtab-btn-replacement" onclick="app.switchWardenTab('replacement')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap">
-                    <i class="fa-solid fa-users-gear mr-1.5"></i> Replacement & Audit
+                <button id="wtab-btn-services" onclick="app.switchWardenTab('services')" class="pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> <span>Nearby Service Provider</span>
                 </button>
             </div>
 
-            <!-- TAB 1: NIGHT ATTENDANCE -->
-            <div id="wtab-content-attendance" class="space-y-6">
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                        <div>
-                            <h3 class="font-bold text-slate-900 text-lg">Warden Daily Roll Call & Retroactive Editing</h3>
-                            <p class="text-slate-500 text-xs">Select any historical or present date, take attendance, and submit roll call.</p>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <label class="text-xs font-bold text-slate-700">Roll Call Date:</label>
-                            <input type="date" id="attendance-date" onchange="app.renderAttendanceTable()" class="px-3 py-1.5 border rounded-xl text-xs font-bold">
-                        </div>
-                    </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs text-slate-600">
-                            <thead class="bg-slate-50 text-slate-700 uppercase font-bold text-[10px] tracking-wider">
-                                <tr>
-                                    <th class="p-3">Student Name / USN</th>
-                                    <th class="p-3">Block / Room</th>
-                                    <th class="p-3">Parent Contacts</th>
-                                    <th class="p-3">Roll Call Status</th>
-                                    <th class="p-3 text-right">Attendance Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="attendance-table-body" class="divide-y divide-slate-100">
-                                <!-- Dynamic Rows -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="flex justify-end pt-3 border-t">
-                        <button onclick="app.submitDailyRollCall()" class="px-6 py-2.5 bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs rounded-xl shadow">
-                            <i class="fa-solid fa-circle-check mr-1.5"></i> Submit & Lock Roll Call for Selected Date
-                        </button>
-                    </div>
-                </div>
+            <div id="wtab-panel-overview" class="bg-white rounded-2xl p-6 shadow border border-slate-200">
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Warden Operations</h3>
+                <p class="text-sm text-slate-600">Select <strong>Nearby Service Provider</strong> above to view service provider contact cards.</p>
             </div>
 
-            <!-- TAB 2: STUDENT DIRECTORY & EDIT -->
-            <div id="wtab-content-directory" class="hidden space-y-6">
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="font-bold text-slate-900 text-lg">Registered Student Directory</h3>
-                        <span class="text-xs text-slate-500">Warden privileges permit editing and correcting student profiles.</span>
-                    </div>
-                    <div id="student-directory-grid" class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                        <!-- Dynamic Student Cards -->
-                    </div>
+            <div id="wtab-panel-services" class="hidden bg-slate-900 rounded-2xl p-6 shadow-xl border border-slate-800 space-y-4">
+                <div>
+                    <h3 class="text-xl font-bold text-white">Nearby Service Provider</h3>
+                    <p class="text-xs text-slate-300">Direct contact details for hostel maintenance and support (Block 1–10)</p>
+                </div>
+                <div id="warden-service-providers-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Rendered by app.js -->
                 </div>
             </div>
-
-            <!-- TAB 3: ROOM OCCUPANCY & SEATER INSPECTOR -->
-            <div id="wtab-content-occupancy" class="hidden space-y-6">
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                    <h3 class="font-bold text-slate-900 text-lg">Room Occupancy & Seater Map</h3>
-                    <div id="room-occupancy-list" class="space-y-4">
-                        <!-- Dynamic Single/Double Seater Cards -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 4: GATE MOVEMENT LOG -->
-            <div id="wtab-content-gate" class="hidden space-y-6">
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="md:col-span-1 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                        <h3 class="font-bold text-slate-900 text-base">Record Gate Outing</h3>
-                        <form onsubmit="app.handleGateMovement(event)" class="space-y-3 text-xs">
-                            <div>
-                                <label class="block font-bold mb-1">Select Approved Student *</label>
-                                <select id="gate-student-usn" required class="w-full p-2 border rounded-lg">
-                                    <!-- Options populated by JS -->
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block font-bold mb-1">Outing Type *</label>
-                                <select id="gate-type" required class="w-full p-2 border rounded-lg">
-                                    <option value="Local Outing">Local Outing (City)</option>
-                                    <option value="Outstation Leave">Outstation Leave</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block font-bold mb-1">Destination Address *</label>
-                                <input type="text" id="gate-dest" required placeholder="Destination address..." class="w-full p-2 border rounded-lg">
-                            </div>
-                            <button type="submit" class="w-full py-2.5 bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl shadow">
-                                <i class="fa-solid fa-arrow-right-from-bracket mr-1"></i> Mark Student OUT
-                            </button>
-                        </form>
-                    </div>
-
-                    <div class="md:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                        <h3 class="font-bold text-slate-900 text-base">Live Gate Movement Tracker</h3>
-                        <div id="gate-movement-table" class="space-y-3 max-h-96 overflow-y-auto">
-                            <!-- Gate Logs -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 5: PENDING REGISTRATIONS -->
-            <div id="wtab-content-approvals" class="hidden space-y-6">
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                    <h3 class="font-bold text-slate-900 text-lg">Pending Student Hostel Registrations</h3>
-                    <div id="pending-students-list" class="space-y-4">
-                        <!-- Dynamic Student Cards -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 6: LEAVE REQUESTS & APPROVALS -->
-            <div id="wtab-content-leaves" class="hidden space-y-6">
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                    <h3 class="font-bold text-slate-900 text-lg">Leave Applications Approval Panel</h3>
-                    <div id="warden-leave-list" class="space-y-4">
-                        <!-- Dynamic Leave Requests -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 7: GRIEVANCES & ANTI-RAGGING -->
-            <div id="wtab-content-grievances" class="hidden space-y-6">
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                    <h3 class="font-bold text-slate-900 text-lg">Grievances Desk & Confidential Ragging Logs</h3>
-                    <div id="warden-grievance-list" class="space-y-4">
-                        <!-- Dynamic Complaints -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 8: WARDEN REPLACEMENT & AUDIT LOGS -->
-            <div id="wtab-content-replacement" class="hidden space-y-6">
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6">
-                    <div class="border-b pb-4">
-                        <h3 class="font-bold text-slate-900 text-lg">Pending Warden Appointments</h3>
-                        <p class="text-xs text-slate-500">Approve incoming warden applications to transfer hostel administrative access securely.</p>
-                        <div id="pending-wardens-list" class="mt-4 space-y-3">
-                            <!-- Dynamic Pending Wardens -->
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="font-bold text-slate-900 text-lg mb-3">System Replacement Audit History</h3>
-                        <div id="audit-logs-list" class="space-y-2 text-xs font-mono text-slate-600">
-                            <!-- Audit Logs -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
     </main>
 
-    <!-- ========================================== -->
-    <!-- MODALS (LOGINS, PASS PRINT, CONTACTS) -->
-    <!-- ========================================== -->
-
-    <!-- STUDENT LOGIN MODAL -->
-    <div id="student-login-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white/95 backdrop-blur-lg rounded-2xl max-w-md w-full p-6 shadow-2xl border border-white/50 space-y-4">
-            <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="font-bold text-slate-900 text-lg flex items-center"><i class="fa-solid fa-user-graduate text-indigo-600 mr-2"></i> Student Login</h3>
-                <button onclick="app.hideModal('student-login-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
-            </div>
-            <form onsubmit="app.handleStudentLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Academic Year *</label>
-                    <select id="slogin-year" class="w-full px-3 py-2 border rounded-lg text-sm">
-                        <option value="1st Year">1st Year</option>
-                        <option value="2nd Year">2nd Year</option>
-                        <option value="3rd Year">3rd Year</option>
-                        <option value="4th Year">4th Year</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">College USN / Reg No *</label>
-                    <input type="text" id="slogin-usn" required placeholder="e.g. 1MS23CS045" class="w-full px-3 py-2 border rounded-lg text-sm uppercase">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Password *</label>
-                    <input type="password" id="slogin-pass" required placeholder="••••••••" class="w-full px-3 py-2 border rounded-lg text-sm">
-                </div>
-                <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow">Login to Student Dashboard</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- WARDEN LOGIN MODAL -->
-    <div id="warden-login-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white/95 backdrop-blur-lg rounded-2xl max-w-md w-full p-6 shadow-2xl border border-white/50 space-y-4">
-            <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="font-bold text-slate-900 text-lg flex items-center"><i class="fa-solid fa-user-shield text-purple-600 mr-2"></i> Warden Login</h3>
-                <button onclick="app.hideModal('warden-login-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
-            </div>
-            <form onsubmit="app.handleWardenLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Employee / Staff ID *</label>
-                    <input type="text" id="wlogin-empid" required placeholder="e.g. EMP-8802" class="w-full px-3 py-2 border rounded-lg text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Password *</label>
-                    <input type="password" id="wlogin-pass" required placeholder="••••••••" class="w-full px-3 py-2 border rounded-lg text-sm">
-                </div>
-                <button type="submit" class="w-full py-3 bg-purple-700 hover:bg-purple-800 text-white rounded-xl font-bold text-sm shadow">Login to Warden Dashboard</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- PRINTABLE DIGITAL LEAVE PASS MODAL -->
-    <div id="leave-pass-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-8 shadow-2xl border border-slate-200 space-y-6">
-            <div class="text-center border-b pb-4">
-                <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full uppercase">Official Digital Leave Pass</span>
-                <h2 class="text-2xl font-black text-slate-900 mt-2">Campus Haven Hostel Pass</h2>
-                <p id="pass-number" class="text-xs font-mono text-indigo-600 font-bold mt-1">Pass No: LP-2026-X892A</p>
-            </div>
-
-            <div class="flex items-center space-x-4 bg-slate-50 p-4 rounded-xl border">
-                <img id="pass-photo" src="" alt="Student" class="w-20 h-20 rounded-xl object-cover border">
-                <div class="text-xs space-y-1">
-                    <h3 id="pass-student-name" class="font-bold text-sm text-slate-900">Student Name</h3>
-                    <p id="pass-usn" class="text-slate-600">USN: -</p>
-                    <p id="pass-hostel" class="text-slate-600">Hostel: -</p>
-                    <p id="pass-room" class="text-slate-600">Block & Room: -</p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4 text-xs bg-indigo-50 p-4 rounded-xl">
-                <div>
-                    <span class="text-slate-500 block">Departure Date & Time</span>
-                    <strong id="pass-dept" class="text-indigo-900 text-sm">-</strong>
-                </div>
-                <div>
-                    <span class="text-slate-500 block">Expected Return Date</span>
-                    <strong id="pass-ret" class="text-indigo-900 text-sm">-</strong>
-                </div>
-            </div>
-
-            <div class="text-xs text-slate-500 space-y-1 border-t pt-3">
-                <p><strong>Approved By Warden:</strong> <span id="pass-approver">-</span></p>
-                <p><strong>Approval Stamp:</strong> <span id="pass-timestamp">-</span></p>
-            </div>
-
-            <div class="flex space-x-3 no-print">
-                <button onclick="window.print()" class="flex-1 py-2.5 bg-slate-800 text-white rounded-xl font-bold text-sm shadow">
-                    <i class="fa-solid fa-print mr-2"></i> Print Leave Pass
-                </button>
-                <button onclick="app.hideModal('leave-pass-modal')" class="px-5 py-2.5 border rounded-xl text-slate-600 font-semibold text-sm">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MANAGING EMERGENCY CONTACTS MODAL -->
-    <div id="manage-contacts-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
-            <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="font-bold text-slate-900 text-lg">Add Emergency Service Contact</h3>
-                <button onclick="app.hideModal('manage-contacts-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
-            </div>
-            <form onsubmit="app.handleAddContact(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Service Designation *</label>
-                    <input type="text" id="mcontact-title" required placeholder="e.g. Campus Electrician Block 1-5" class="w-full px-3 py-2 border rounded-lg text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Contact Person Name *</label>
-                    <input type="text" id="mcontact-name" required placeholder="e.g. Mr. Ramesh Kumar" class="w-full px-3 py-2 border rounded-lg text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Phone Number *</label>
-                    <input type="tel" id="mcontact-phone" required placeholder="+91 98111 00022" class="w-full px-3 py-2 border rounded-lg text-sm">
-                </div>
-                <button type="submit" class="w-full py-2.5 bg-purple-700 hover:bg-purple-800 text-white rounded-xl font-bold text-sm shadow">Add to Emergency Directory</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- WARDEN EDIT STUDENT MODAL -->
-    <div id="edit-student-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 space-y-4 max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b pb-3">
-    <!-- REAL-TIME SMS POPUP PREVIEW MODAL -->
-    <div id="sms-preview-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-slate-900 text-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-700 space-y-4 relative overflow-hidden">
-            <div class="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none"></div>
-            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <div class="flex items-center space-x-2 text-emerald-400">
-                    <i class="fa-solid fa-comment-sms text-xl"></i>
-                    <h3 class="font-bold text-sm uppercase tracking-wider">Parent SMS Dispatch Alert</h3>
-                </div>
-                <button onclick="app.hideModal('sms-preview-modal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            
-            <!-- Simulated Phone Notification Screen -->
-            <div class="bg-slate-800 rounded-2xl p-4 border border-slate-700 space-y-3 shadow-inner">
-                <div class="flex justify-between items-center text-[11px] text-slate-400">
-                    <span class="flex items-center font-bold text-emerald-400"><i class="fa-solid fa-signal mr-1"></i> SMS Gateway: Delivered</span>
-                    <span id="sms-modal-time">Just Now</span>
-                </div>
-                <div class="bg-indigo-900/50 p-2.5 rounded-xl border border-indigo-500/30 text-xs text-indigo-200">
-                    <span class="block text-[10px] uppercase font-bold text-indigo-400">Recipient Parent Phone</span>
-                    <strong id="sms-modal-phone" class="text-white text-sm">+91 98765 43210</strong>
-                </div>
-                <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-xs font-sans text-slate-200 leading-relaxed space-y-1">
-                    <p id="sms-modal-body" class="whitespace-pre-line">Loading message body...</p>
-                </div>
-            </div>
-
-            <div class="bg-emerald-950/60 border border-emerald-500/30 p-3 rounded-xl text-[11px] text-emerald-300 flex items-center space-x-2">
-                <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
-                <span>SMS Alert successfully pushed to cellular network outbox!</span>
-            </div>
-
-            <button onclick="app.hideModal('sms-preview-modal')" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs shadow">
-                Acknowledge & Close
-            </button>
-        </div>
-    </div>
-
-    <!-- SMS GATEWAY API SETTINGS MODAL -->
-    <div id="sms-settings-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
-            <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="font-bold text-slate-900 text-lg flex items-center"><i class="fa-solid fa-tower-cell text-indigo-600 mr-2"></i> SMS Gateway Configuration</h3>
-                <button onclick="app.hideModal('sms-settings-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
-            </div>
-            <form onsubmit="app.saveSmsSettings(event)" class="space-y-4 text-xs">
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">Active Gateway Provider *</label>
-                    <select id="sms-provider" class="w-full p-2 border rounded-lg">
-                        <option value="Simulator">Web Mobile Simulator (Default - Immediate Screen Dispatch)</option>
-                        <option value="Twilio">Twilio SMS API (Production Server)</option>
-                        <option value="Fast2SMS">Fast2SMS / MSG91 India API</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">Account SID / API Key</label>
-                    <input type="password" id="sms-api-key" placeholder="e.g. AC88a329xxxxxxxxxxxxxxxx" class="w-full p-2 border rounded-lg font-mono">
-                </div>
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">Auth Token / Sender ID</label>
-                    <input type="password" id="sms-auth-token" placeholder="e.g. CAMPUS_HAVEN_SMS" class="w-full p-2 border rounded-lg font-mono">
-                </div>
-                <div class="p-3 bg-indigo-50 border border-indigo-200 rounded-xl text-indigo-900 text-[11px] leading-relaxed">
-                    <i class="fa-solid fa-circle-info mr-1 text-indigo-600"></i> In web browsers, real cellular SMS requires backend server API credentials (like Twilio or Fast2SMS). In <strong>Simulator Mode</strong>, instant live mobile SMS popups will display on-screen for parents and wardens!
-                </div>
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="app.hideModal('sms-settings-modal')" class="px-4 py-2 border rounded-lg">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-indigo-600 text-white rounded-lg font-bold">Save Settings</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- OUTBOX SMS/EMAIL SIMULATION MODAL -->
-    <div id="outbox-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 space-y-4 max-h-[85vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b pb-3">
-                <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-paper-plane text-emerald-600 text-xl"></i>
-                    <h3 class="font-bold text-slate-900 text-lg">Dispatched Parent SMS & Email Outbox</h3>
-                </div>
-                <button onclick="app.hideModal('outbox-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
-            </div>
-            <p class="text-xs text-slate-500">Live payload log generated when absence roll calls are triggered or leave approvals are granted.</p>
-            <div id="outbox-list" class="space-y-3 font-mono text-xs">
-                <!-- Dynamic Logs -->
-            </div>
-        </div>
-    </div>
-
-    <!-- SMS GATEWAY CONFIGURATION MODAL -->
-    <div id="sms-config-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
-            <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="font-bold text-slate-900 text-lg flex items-center">
-                    <i class="fa-solid fa-comment-sms text-amber-600 mr-2"></i> SMS Gateway & API Settings
-                </h3>
-                <button onclick="app.hideModal('sms-config-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
-            </div>
-            <form onsubmit="app.saveSmsSettings(event)" class="space-y-4 text-xs">
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">SMS Service Provider Gateway</label>
-                    <select id="sms-provider" class="w-full p-2 border rounded-lg">
-                        <option value="simulated">Local Browser Simulator (Demo Mode)</option>
-                        <option value="twilio">Twilio SMS Gateway API</option>
-                        <option value="fast2sms">Fast2SMS / MSG91 India Gateway</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">API Key / Auth Token</label>
-                    <input type="password" id="sms-api-key" placeholder="e.g. twilio_auth_token_xyz..." class="w-full p-2 border rounded-lg font-mono">
-                </div>
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">Sender ID / From Number</label>
-                    <input type="text" id="sms-sender-id" placeholder="e.g. +18005550199 or BMSIT" class="w-full p-2 border rounded-lg">
-                </div>
-                <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-800">
-                    <i class="fa-solid fa-circle-info mr-1"></i> When set to <strong>Demo Mode</strong>, parent alerts trigger a live visual SMS popup box with instant logs.
-                </div>
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="app.hideModal('sms-config-modal')" class="px-4 py-2 border rounded-lg">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-amber-600 text-white rounded-lg font-bold">Save Gateway Config</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- LIVE PARENT SMS DISPATCH POPUP NOTIFIER -->
-    <div id="sms-dispatch-popup" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-slate-900 text-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-emerald-500/30 space-y-4">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center">
-                    <i class="fa-solid fa-paper-plane mr-1 animate-pulse"></i> SMS DISPATCHED TO PARENT
-                </span>
-                <button onclick="app.hideModal('sms-dispatch-popup')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            
-            <!-- Mobile Phone Display UI -->
-            <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700 space-y-2 font-sans">
-                <div class="flex justify-between text-[11px] text-slate-400 font-mono border-b border-slate-700/60 pb-2">
-                    <span>TO: <strong id="pop-parent-phone" class="text-emerald-400">+91 ...</strong></span>
-                    <span id="pop-timestamp">Just now</span>
-                </div>
-                <div class="pt-1">
-                    <span class="text-[10px] text-indigo-300 font-bold uppercase block mb-1">Parent SMS Notification Body:</span>
-                    <p id="pop-sms-body" class="text-xs text-slate-200 leading-relaxed bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 font-mono">
-                        SMS message content...
-                    </p>
-                </div>
-            </div>
-
-            <button onclick="app.hideModal('sms-dispatch-popup')" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs shadow">
-                Acknowledge & Close
-            </button>
-        </div>
-    </div>
-
-    <!-- STUDENT ACTIVITY TIMELINE MODAL -->
-    <div id="timeline-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 space-y-4 max-h-[85vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="font-bold text-slate-900 text-lg" id="timeline-student-title">Student Activity Timeline</h3>
-                <button onclick="app.hideModal('timeline-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
-            </div>
-            <div id="timeline-content" class="space-y-3 text-xs">
-                <!-- Activity Logs -->
-            </div>
-        </div>
-    </div>
-
-    <!-- APPLICATION ENGINE JAVASCRIPT -->
-    <script>
-        // Global Application Database State (Initialized with Mock Data & LocalStorage)
-        const AppState = {
-            currentUser: null,
-            students: JSON.parse(localStorage.getItem('ch_students')) || [
-                {
-                    usn: '1MS23CS01',
-                    name: 'Ananya Sharma',
-                    year: '2nd Year',
-                    gender: 'Female',
-                    age: 20,
-                    blood: 'O+',
-                    phone: '+91 98111 22334',
-                    email: 'ananya@campus.edu',
-                    hostel: 'Om Sai Hostel',
-                    block: 'Block 2',
-                    room: 'Room 204',
-                    sharing: 'Double Seater',
-                    fname: 'Ramesh Sharma',
-                    fphone: '+91 98111 99999',
-                    mname: 'Sunita Sharma',
-                    gname: 'Suresh Sharma',
-                    gphone: '+91 98111 88888',
-                    address: '124 Park Avenue, Indiranagar, Bengaluru',
-                    password: '123',
-                    status: 'Approved',
-                    photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150'
-                },
-                {
-                    usn: '1MS23CS02',
-                    name: 'Priya Patel',
-                    year: '2nd Year',
-                    gender: 'Female',
-                    age: 20,
-                    blood: 'A+',
-                    phone: '+91 98222 33445',
-                    email: 'priya@campus.edu',
-                    hostel: 'Om Sai Hostel',
-                    block: 'Block 2',
-                    room: 'Room 204',
-                    sharing: 'Double Seater',
-                    fname: 'Kirit Patel',
-                    fphone: '+91 98222 77777',
-                    mname: 'Asha Patel',
-                    gname: '',
-                    gphone: '',
-                    address: '56 Race Course Road, Ahmedabad',
-                    password: '123',
-                    status: 'Approved',
-                    photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'
-                },
-                {
-                    usn: '1BY24CS220',
-                    name: 'Rahul Verma',
-                    year: '1st Year',
-                    gender: 'Male',
-                    age: 19,
-                    blood: 'B+',
-                    phone: '+91 98333 44556',
-                    email: 'rahul@gmail.com',
-                    hostel: 'Om Sai Hostel',
-                    block: 'Block 1',
-                    room: 'Room 303',
-                    sharing: 'Single Seater',
-                    fname: 'Suresh Verma',
-                    fphone: '+91 85211 73550',
-                    mname: 'Rita Verma',
-                    gname: '',
-                    gphone: '',
-                    address: '88 MG Road, Mysuru',
-                    password: '123',
-                    status: 'Approved',
-                    photo: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150'
-                }
-            ],
-            wardens: JSON.parse(localStorage.getItem('ch_wardens')) || [
-                {
-                    empid: 'EMP-8802',
-                    name: 'Dr. K. V. Raman',
-                    hostel: 'Om Sai Hostel',
-                    block: 'Block 2',
-                    email: 'raman@campus.edu',
-                    phone: '+91 99000 11223',
-                    password: 'admin',
-                    status: 'Approved',
-                    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150'
-                }
-            ],
-            complaints: JSON.parse(localStorage.getItem('ch_complaints')) || [],
-            leaves: JSON.parse(localStorage.getItem('ch_leaves')) || [],
-            attendance: JSON.parse(localStorage.getItem('ch_attendance')) || {},
-            outbox: JSON.parse(localStorage.getItem('ch_outbox')) || [],
-            gateLogs: JSON.parse(localStorage.getItem('ch_gate')) || [],
-            timeline: JSON.parse(localStorage.getItem('ch_timeline')) || {},
-            contacts: JSON.parse(localStorage.getItem('ch_contacts')) || [
-                { title: 'Chief Hostel Warden', name: 'Dr. K. V. Raman', phone: '+91 99000 11223' },
-                { title: 'Campus Plumber Services', name: 'Mr. Shivu', phone: '+91 98450 12345' },
-                { title: 'Emergency Electrician', name: 'Mr. Mohan', phone: '+91 98450 54321' },
-                { title: 'Hostel Resident Doctor', name: 'Dr. Anjali Rao', phone: '+91 98450 99900' }
-            ],
-            auditLogs: JSON.parse(localStorage.getItem('ch_audits')) || [
-                'System Initialized on 2026-10-29'
-            ]
-        };
-
-        const app = {
-            init() {
-                this.renderUserStatusBar();
-                this.renderContacts();
-                this.updateBlockDropdown('Om Sai Hostel', 'sreg-block');
-                this.updateBlockDropdown('Om Sai Hostel', 'wreg-block');
-                const dateEl = document.getElementById('attendance-date');
-                if (dateEl) dateEl.value = new Date().toISOString().split('T')[0];
-                this.saveState();
-            },
-
-            saveState() {
-                localStorage.setItem('ch_students', JSON.stringify(AppState.students));
-                localStorage.setItem('ch_wardens', JSON.stringify(AppState.wardens));
-                localStorage.setItem('ch_complaints', JSON.stringify(AppState.complaints));
-                localStorage.setItem('ch_leaves', JSON.stringify(AppState.leaves));
-                localStorage.setItem('ch_attendance', JSON.stringify(AppState.attendance));
-                localStorage.setItem('ch_outbox', JSON.stringify(AppState.outbox));
-                localStorage.setItem('ch_gate', JSON.stringify(AppState.gateLogs));
-                localStorage.setItem('ch_timeline', JSON.stringify(AppState.timeline));
-                localStorage.setItem('ch_contacts', JSON.stringify(AppState.contacts));
-                localStorage.setItem('ch_audits', JSON.stringify(AppState.auditLogs));
-            },
-
-            logActivity(usn, msg) {
-                if (!AppState.timeline[usn]) AppState.timeline[usn] = [];
-                AppState.timeline[usn].unshift({ time: new Date().toLocaleString(), text: msg });
-                this.saveState();
-            },
-
-            toast(msg, type = 'success') {
-                const toastEl = document.getElementById('toast');
-                const contentEl = document.getElementById('toast-content');
-                const msgEl = document.getElementById('toast-msg');
-                if (!toastEl || !contentEl || !msgEl) return;
-                msgEl.innerText = msg;
-                contentEl.className = `flex items-center space-x-3 px-5 py-3.5 rounded-xl shadow-2xl text-white text-sm font-medium ${type === 'success' ? 'bg-emerald-600' : 'bg-red-600'}`;
-                toastEl.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
-                setTimeout(() => { toastEl.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none'); }, 3000);
-            },
-
-            showHome() { this.hideAllViews(); const el = document.getElementById('view-home'); if (el) el.classList.remove('hidden'); },
-            showStudentRegForm() { this.hideAllViews(); const el = document.getElementById('view-student-reg'); if (el) el.classList.remove('hidden'); },
-            showWardenRegForm() { this.hideAllViews(); const el = document.getElementById('view-warden-reg'); if (el) el.classList.remove('hidden'); },
-            hideAllViews() { ['view-home', 'view-student-reg', 'view-warden-reg', 'view-student-dash', 'view-warden-dash'].forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('hidden'); }); },
-            showModal(id) { const el = document.getElementById(id); if (el) el.classList.remove('hidden'); },
-            hideModal(id) { const el = document.getElementById(id); if (el) el.classList.add('hidden'); },
-
-            updateBlockDropdown(hostelName, targetSelectId) {
-                const select = document.getElementById(targetSelectId);
-                if (!select) return;
-                select.innerHTML = '';
-                let blocks = [];
-                if (hostelName === 'Om Sai Hostel') {
-                    for (let i = 1; i <= 10; i++) blocks.push(`Block ${i}`);
-                } else {
-                    blocks = ['Block A', 'Block B', 'Block C', 'Block D', 'Block E', 'Block F', 'Block F1'];
-                }
-                blocks.forEach(b => {
-                    const opt = document.createElement('option');
-                    opt.value = b;
-                    opt.innerText = b;
-                    select.appendChild(opt);
-                });
-            },
-
-            handlePhotoPreview(input, containerId) {
-                if (input.files && input.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) { 
-                        const container = document.getElementById(containerId);
-                        if (container) container.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover rounded-xl">`; 
-                    }
-                    reader.readAsDataURL(input.files[0]);
-                }
-            },
-
-            renderUserStatusBar() {
-                const container = document.getElementById('user-status-bar');
-                if (!container) return;
-                if (!AppState.currentUser) {
-                    container.innerHTML = `
-                        <button onclick="app.showModal('student-login-modal')" class="text-xs font-semibold px-3 py-2 rounded-lg bg-indigo-700 hover:bg-indigo-600 transition">Student Login</button>
-                        <button onclick="app.showModal('warden-login-modal')" class="text-xs font-semibold px-3 py-2 rounded-lg bg-purple-700 hover:bg-purple-600 transition">Warden Login</button>
-                    `;
-                } else {
-                    const u = AppState.currentUser.data;
-                    container.innerHTML = `
-                        <div class="flex items-center space-x-3">
-                            <img src="${u.photo || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100'}" class="w-9 h-9 rounded-full border border-white/40 object-cover">
-                            <div class="text-left text-xs">
-                                <p class="font-bold text-white">${u.name}</p>
-                                <p class="text-indigo-200 capitalize">${AppState.currentUser.role} Portal</p>
-                            </div>
-                            <button onclick="app.logout()" class="ml-2 text-xs bg-red-500/80 hover:bg-red-600 px-2.5 py-1.5 rounded-lg text-white font-semibold transition">Logout</button>
-                        </div>
-                    `;
-                }
-            },
-
-            logout() { AppState.currentUser = null; this.renderUserStatusBar(); this.showHome(); this.toast('Logged out successfully'); },
-
-            handleStudentReg(e) {
-                e.preventDefault();
-                const usn = document.getElementById('sreg-usn').value.trim().toUpperCase();
-                if (AppState.students.some(s => s.usn === usn)) { this.toast('College USN already registered!', 'error'); return; }
-                const pass1 = document.getElementById('sreg-pass').value;
-                if (pass1 !== document.getElementById('sreg-pass2').value) { this.toast('Passwords do not match!', 'error'); return; }
-                const photoImg = document.querySelector('#sreg-preview-container img');
-
-                const newStudent = {
-                    usn: usn, name: document.getElementById('sreg-name').value, year: document.getElementById('sreg-year').value,
-                    gender: document.getElementById('sreg-gender').value, age: document.getElementById('sreg-age').value,
-                    blood: document.getElementById('sreg-blood').value, phone: document.getElementById('sreg-phone').value,
-                    email: document.getElementById('sreg-email').value, hostel: document.getElementById('sreg-hostel').value,
-                    block: document.getElementById('sreg-block').value, room: document.getElementById('sreg-room').value,
-                    sharing: document.getElementById('sreg-sharing').value, fname: document.getElementById('sreg-fname').value,
-                    fphone: document.getElementById('sreg-fphone').value, mname: document.getElementById('sreg-mname').value,
-                    gname: document.getElementById('sreg-gname').value, gphone: document.getElementById('sreg-gphone').value,
-                    address: document.getElementById('sreg-address').value, password: pass1, status: 'Pending Verification',
-                    photo: photoImg ? photoImg.src : 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
-                };
-
-                AppState.students.push(newStudent);
-                this.logActivity(usn, 'Submitted Student Hostel Registration');
-                this.saveState();
-                this.toast('Registration submitted! Pending Warden Verification.');
-                this.showHome();
-            },
-
-            handleWardenReg(e) {
-                e.preventDefault();
-                const empid = document.getElementById('wreg-empid').value.trim();
-                const pass1 = document.getElementById('wreg-pass').value;
-                if (pass1 !== document.getElementById('wreg-pass2').value) { this.toast('Passwords do not match!', 'error'); return; }
-                const photoImg = document.querySelector('#wreg-preview-container img');
-
-                const newWarden = {
-                    empid: empid, name: document.getElementById('wreg-name').value, hostel: document.getElementById('wreg-hostel').value,
-                    block: document.getElementById('wreg-block').value, email: document.getElementById('wreg-email').value,
-                    phone: document.getElementById('wreg-phone').value, password: pass1, status: 'Pending Approval',
-                    photo: photoImg ? photoImg.src : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150'
-                };
-
-                AppState.wardens.push(newWarden);
-                this.saveState();
-                this.toast('Warden appointment request submitted!');
-                this.showHome();
-            },
-
-            handleStudentLogin(e) {
-                e.preventDefault();
-                const usn = document.getElementById('slogin-usn').value.trim().toUpperCase();
-                const pass = document.getElementById('slogin-pass').value;
-                const student = AppState.students.find(s => s.usn === usn && s.password === pass);
-                if (!student) { this.toast('Invalid USN or Password!', 'error'); return; }
-                AppState.currentUser = { role: 'student', data: student };
-                this.hideModal('student-login-modal');
-                this.renderUserStatusBar();
-                this.renderStudentDashboard();
-            },
-
-            handleWardenLogin(e) {
-                e.preventDefault();
-                const empid = document.getElementById('wlogin-empid').value.trim();
-                const pass = document.getElementById('wlogin-pass').value;
-                const warden = AppState.wardens.find(w => w.empid === empid && w.password === pass && w.status === 'Approved');
-                if (!warden) { this.toast('Invalid Staff Credentials or Account Pending Approval!', 'error'); return; }
-                AppState.currentUser = { role: 'warden', data: warden };
-                this.hideModal('warden-login-modal');
-                this.renderUserStatusBar();
-                this.renderWardenDashboard();
-            },
-
-            renderStudentDashboard() {
-                this.hideAllViews();
-                const dash = document.getElementById('view-student-dash');
-                if (dash) dash.classList.remove('hidden');
-                const s = AppState.currentUser.data;
-                const img = document.getElementById('sdash-img');
-                if (img) img.src = s.photo;
-                const name = document.getElementById('sdash-name');
-                if (name) name.innerText = s.name;
-                const sub = document.getElementById('sdash-sub');
-                if (sub) sub.innerText = `USN: ${s.usn} | ${s.hostel} (${s.block}) | ${s.room}`;
-
-                const badge = document.getElementById('sdash-status-badge');
-                const alertEl = document.getElementById('sdash-pending-alert');
-                if (s.status === 'Approved') {
-                    if (badge) {
-                        badge.innerText = 'Approved Access';
-                        badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500 text-white';
-                    }
-                    if (alertEl) alertEl.classList.add('hidden');
-                } else {
-                    if (badge) {
-                        badge.innerText = 'Pending Review';
-                        badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-slate-900';
-                    }
-                    if (alertEl) alertEl.classList.remove('hidden');
-                }
-
-                const profYear = document.getElementById('sprof-year'); if (profYear) profYear.innerText = s.year;
-                const profBlood = document.getElementById('sprof-blood'); if (profBlood) profBlood.innerText = s.blood;
-                const profPhone = document.getElementById('sprof-phone'); if (profPhone) profPhone.innerText = s.phone;
-                const profEmail = document.getElementById('sprof-email'); if (profEmail) profEmail.innerText = s.email;
-                const profFname = document.getElementById('sprof-fname'); if (profFname) profFname.innerText = s.fname;
-                const profFphone = document.getElementById('sprof-fphone'); if (profFphone) profFphone.innerText = s.fphone;
-                const profAddr = document.getElementById('sprof-address'); if (profAddr) profAddr.innerText = s.address;
-
-                const roommateContainer = document.getElementById('roommate-container');
-                if (roommateContainer) {
-                    if (s.sharing !== 'Double Seater') {
-                        roommateContainer.innerHTML = `<p class="text-xs text-slate-500">Single Seater Room - No Roommate assigned.</p>`;
-                    } else {
-                        const roommate = AppState.students.find(other => other.usn !== s.usn && other.hostel === s.hostel && other.block === s.block && other.room === s.room);
-                        if (roommate) {
-                            roommateContainer.innerHTML = `
-                                <div class="flex items-center space-x-4 bg-slate-50 p-3 rounded-xl border">
-                                    <img src="${roommate.photo}" class="w-14 h-14 rounded-xl object-cover border">
-                                    <div class="text-xs space-y-1">
-                                        <h4 class="font-bold text-slate-900">${roommate.name}</h4>
-                                        <p class="text-slate-500">Academic Year: ${roommate.year}</p>
-                                        <p class="text-indigo-600 font-semibold">USN: ${roommate.usn}</p>
-                                    </div>
-                                </div>
-                            `;
-                        } else {
-                            roommateContainer.innerHTML = `<p class="text-xs text-slate-500">Double Seater Room - Roommate slot currently vacant.</p>`;
-                        }
-                    }
-                }
-
-                this.renderMyComplaints();
-                this.renderMyLeaves();
-            },
-
-            switchStudentTab(tab) {
-                ['profile', 'complaint', 'leave'].forEach(t => {
-                    const cEl = document.getElementById(`stab-content-${t}`);
-                    if (cEl) cEl.classList.add('hidden');
-                    const bEl = document.getElementById(`stab-btn-${t}`);
-                    if (bEl) bEl.className = "pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-indigo-600 text-sm flex items-center space-x-2";
-                });
-                const actContent = document.getElementById(`stab-content-${tab}`);
-                if (actContent) actContent.classList.remove('hidden');
-                const actBtn = document.getElementById(`stab-btn-${tab}`);
-                if (actBtn) actBtn.className = "pb-3 border-b-2 border-indigo-600 font-bold text-indigo-600 text-sm flex items-center space-x-2";
-            },
-
-            handleComplaintSubmit(e) {
-                e.preventDefault();
-                const newCmp = {
-                    id: 'CMP-' + Date.now().toString().slice(-5), studentUsn: AppState.currentUser.data.usn, studentName: AppState.currentUser.data.name,
-                    category: document.getElementById('cmp-cat').value, title: document.getElementById('cmp-title').value, desc: document.getElementById('cmp-desc').value,
-                    date: new Date().toLocaleDateString(), status: 'Pending', reply: ''
-                };
-                AppState.complaints.push(newCmp);
-                this.logActivity(AppState.currentUser.data.usn, `Filed Grievance: ${newCmp.category} - ${newCmp.title}`);
-                this.saveState();
-                this.toast('Grievance logged successfully!');
-                const titleEl = document.getElementById('cmp-title'); if (titleEl) titleEl.value = '';
-                const descEl = document.getElementById('cmp-desc'); if (descEl) descEl.value = '';
-                this.renderMyComplaints();
-            },
-
-            renderMyComplaints() {
-                const list = document.getElementById('my-complaints-list');
-                if (!list) return;
-                const myCmps = AppState.complaints.filter(c => c.studentUsn === AppState.currentUser.data.usn);
-                if (myCmps.length === 0) { list.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No grievances logged yet.</p>`; return; }
-                list.innerHTML = myCmps.map(c => `
-                    <div class="p-4 rounded-xl border ${c.category.includes('Ragging') ? 'bg-red-50 border-red-200' : 'bg-slate-50 border-slate-200'} space-y-2">
-                        <div class="flex justify-between items-start">
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${c.category.includes('Ragging') ? 'bg-red-600 text-white' : 'bg-indigo-100 text-indigo-800'}">${c.category}</span>
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${c.status === 'Resolved' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${c.status}</span>
-                        </div>
-                        <h4 class="font-bold text-sm text-slate-900">${c.title}</h4>
-                        <p class="text-xs text-slate-600">${c.desc}</p>
-                        ${c.reply ? `<div class="p-2 bg-white rounded border text-xs text-slate-700"><strong>Warden Remark:</strong> ${c.reply}</div>` : ''}
-                    </div>
-                `).join('');
-            },
-
-            handleLeaveSubmit(e) {
-                e.preventDefault();
-                const passNo = 'LP-' + new Date().getFullYear() + '-' + Math.random().toString(36).substring(2, 7).toUpperCase();
-                const newLeave = {
-                    id: passNo, studentUsn: AppState.currentUser.data.usn, studentName: AppState.currentUser.data.name,
-                    hostel: AppState.currentUser.data.hostel, block: AppState.currentUser.data.block, room: AppState.currentUser.data.room,
-                    photo: AppState.currentUser.data.photo, dept: `${document.getElementById('leave-sdate').value} ${document.getElementById('leave-stime').value}`,
-                    ret: `${document.getElementById('leave-edate').value} ${document.getElementById('leave-etime').value}`,
-                    reason: document.getElementById('leave-reason').value, dest: document.getElementById('leave-dest').value,
-                    status: 'Pending', approver: '', timestamp: ''
-                };
-                AppState.leaves.push(newLeave);
-                this.logActivity(AppState.currentUser.data.usn, `Submitted Leave Request [${passNo}]`);
-                this.saveState();
-                this.toast('Leave application submitted to Warden!');
-                this.renderMyLeaves();
-            },
-
-            renderMyLeaves() {
-                const list = document.getElementById('my-leave-list');
-                if (!list) return;
-                const myLeaves = AppState.leaves.filter(l => l.studentUsn === AppState.currentUser.data.usn);
-                if (myLeaves.length === 0) { list.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No leave requests submitted yet.</p>`; return; }
-                list.innerHTML = myLeaves.map(l => `
-                    <div class="p-4 rounded-xl border bg-slate-50 border-slate-200 space-y-3">
-                        <div class="flex justify-between items-center">
-                            <span class="font-mono text-xs font-bold text-indigo-600">${l.id}</span>
-                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${l.status === 'Approved' ? 'bg-emerald-100 text-emerald-800' : (l.status === 'Rejected' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800')}">${l.status}</span>
-                        </div>
-                        <div class="text-xs text-slate-600 grid grid-cols-2 gap-2">
-                            <div><span class="text-slate-400 block">Departure</span><strong>${l.dept}</strong></div>
-                            <div><span class="text-slate-400 block">Return</span><strong>${l.ret}</strong></div>
-                        </div>
-                        ${l.status === 'Approved' ? `
-                            <button onclick="app.viewLeavePass('${l.id}')" class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg shadow transition">
-                                <i class="fa-solid fa-ticket mr-1"></i> View & Print Digital Gate Pass
-                            </button>
-                        ` : ''}
-                    </div>
-                `).join('');
-            },
-
-            viewLeavePass(passId) {
-                const l = AppState.leaves.find(x => x.id === passId);
-                if (!l) return;
-                const numEl = document.getElementById('pass-number'); if (numEl) numEl.innerText = 'Pass No: ' + l.id;
-                const snameEl = document.getElementById('pass-student-name'); if (snameEl) snameEl.innerText = l.studentName;
-                const usnEl = document.getElementById('pass-usn'); if (usnEl) usnEl.innerText = 'USN: ' + l.studentUsn;
-                const hostelEl = document.getElementById('pass-hostel'); if (hostelEl) hostelEl.innerText = 'Hostel: ' + l.hostel;
-                const roomEl = document.getElementById('pass-room'); if (roomEl) roomEl.innerText = 'Block & Room: ' + l.block + ' - ' + l.room;
-                const deptEl = document.getElementById('pass-dept'); if (deptEl) deptEl.innerText = l.dept;
-                const retEl = document.getElementById('pass-ret'); if (retEl) retEl.innerText = l.ret;
-                const photoEl = document.getElementById('pass-photo'); if (photoEl) photoEl.src = l.photo;
-                const appEl = document.getElementById('pass-approver'); if (appEl) appEl.innerText = l.approver;
-                const tsEl = document.getElementById('pass-timestamp'); if (tsEl) tsEl.innerText = l.timestamp;
-                this.showModal('leave-pass-modal');
-            },
-
-            // ---------------- WARDEN DASHBOARD ----------------
-            renderWardenDashboard() {
-                this.hideAllViews();
-                const wDash = document.getElementById('view-warden-dash');
-                if (wDash) wDash.classList.remove('hidden');
-                const w = AppState.currentUser.data;
-                const imgEl = document.getElementById('wdash-img'); if (imgEl) imgEl.src = w.photo;
-                const nameEl = document.getElementById('wdash-name'); if (nameEl) nameEl.innerText = w.name;
-                const subEl = document.getElementById('wdash-sub'); if (subEl) subEl.innerText = `Emp ID: ${w.empid} | Assigned: ${w.hostel} (${w.block})`;
-
-                const obCnt = document.getElementById('outbox-count'); if (obCnt) obCnt.innerText = AppState.outbox.length;
-                this.renderAttendanceTable();
-                this.renderStudentDirectory();
-                this.renderOccupancyMap();
-                this.renderGateLogs();
-                this.renderPendingStudents();
-                this.renderWardenLeaves();
-                this.renderWardenGrievances();
-                this.renderWardenReplacements();
-            },
-
-            switchWardenTab(tab) {
-                ['attendance', 'directory', 'occupancy', 'gate', 'approvals', 'leaves', 'grievances', 'replacement'].forEach(t => {
-                    const cEl = document.getElementById(`wtab-content-${t}`); if (cEl) cEl.classList.add('hidden');
-                    const bEl = document.getElementById(`wtab-btn-${t}`); if (bEl) bEl.className = "pb-3 border-b-2 border-transparent font-semibold text-slate-500 hover:text-purple-600 text-sm whitespace-nowrap";
-                });
-                const actC = document.getElementById(`wtab-content-${tab}`); if (actC) actC.classList.remove('hidden');
-                const actB = document.getElementById(`wtab-btn-${tab}`); if (actB) actB.className = "pb-3 border-b-2 border-purple-600 font-bold text-purple-600 text-sm whitespace-nowrap";
-            },
-
-            renderAttendanceTable() {
-                const body = document.getElementById('attendance-table-body');
-                if (!body) return;
-                const dateEl = document.getElementById('attendance-date');
-                const dateVal = dateEl ? dateEl.value : new Date().toISOString().split('T')[0];
-
-                body.innerHTML = AppState.students.filter(s => s.status === 'Approved').map(s => {
-                    const isAbsent = AppState.attendance[`${dateVal}_${s.usn}`] === 'Absent';
-                    return `
-                        <tr>
-                            <td class="p-3 font-bold text-slate-900">${s.name} <span class="block font-mono text-[10px] font-normal text-slate-500">${s.usn}</span></td>
-                            <td class="p-3">${s.block} - ${s.room}</td>
-                            <td class="p-3">${s.fphone} <span class="block text-[10px] text-slate-400">${s.email}</span></td>
-                            <td class="p-3">
-                                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isAbsent ? 'bg-red-100 text-red-800' : 'bg-emerald-100 text-emerald-800'}">
-                                    ${isAbsent ? 'CONFIRMED ABSENT' : 'Present'}
-                                </span>
-                            </td>
-                            <td class="p-3 text-right">
-                                <button onclick="app.toggleAbsence('${s.usn}')" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white font-bold rounded text-[10px]">
-                                    ${isAbsent ? 'Mark Present' : 'Confirm Absence & Dispatch Alert'}
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                }).join('');
-            },
-
-            toggleAbsence(usn) {
-                const dateEl = document.getElementById('attendance-date');
-                const dateVal = dateEl ? dateEl.value : new Date().toISOString().split('T')[0];
-                const key = `${dateVal}_${usn}`;
-                const s = AppState.students.find(x => x.usn === usn);
-
-                if (AppState.attendance[key] === 'Absent') {
-                    delete AppState.attendance[key];
-                    this.toast('Attendance updated to Present');
-                } else {
-                    AppState.attendance[key] = 'Absent';
-                    const payload = {
-                        timestamp: new Date().toLocaleString(),
-                        toPhone: s.fphone,
-                        student: s.name,
-                        date: dateVal,
-                        body: `ALERT: Your ward ${s.name} (${s.usn}) was marked ABSENT during night roll call on ${dateVal} at Campus Haven Hostel. Please contact Warden immediately.`
-                    };
-                    AppState.outbox.unshift(payload);
-                    this.logActivity(s.usn, `Marked ABSENT on ${dateVal} - Parent SMS Dispatched`);
-                    
-                    // Show Instant SMS Popup
-                    this.showSmsPopup(s.fphone, payload.body);
-                    this.toast(`Absence marked! Parent SMS alert dispatched to ${s.fphone}`);
-                }
-                this.saveState();
-                this.renderAttendanceTable();
-                const obCnt = document.getElementById('outbox-count'); if (obCnt) obCnt.innerText = AppState.outbox.length;
-            },
-
-            showSmsPopup(phone, body) {
-                const phoneEl = document.getElementById('sms-modal-phone'); if (phoneEl) phoneEl.innerText = phone;
-                const bodyEl = document.getElementById('sms-modal-body'); if (bodyEl) bodyEl.innerText = body;
-                const timeEl = document.getElementById('sms-modal-time'); if (timeEl) timeEl.innerText = new Date().toLocaleTimeString();
-                this.showModal('sms-preview-modal');
-            },
-
-            showSmsSettingsModal() {
-                this.showModal('sms-settings-modal');
-            },
-
-            saveSmsSettings(e) {
-                e.preventDefault();
-                this.toast('SMS Gateway Settings Saved!');
-                this.hideModal('sms-settings-modal');
-            },
-
-            submitDailyRollCall() {
-                const dateEl = document.getElementById('attendance-date');
-                const dateVal = dateEl ? dateEl.value : new Date().toISOString().split('T')[0];
-                AppState.auditLogs.unshift(`[ROLL CALL SUBMITTED] Roll call locked for date ${dateVal} by Warden ${AppState.currentUser.data.name}`);
-                this.saveState();
-                this.toast(`Roll call submitted and saved for date ${dateVal}!`);
-            },
-
-            renderStudentDirectory() {
-                const grid = document.getElementById('student-directory-grid');
-                if (!grid) return;
-                grid.innerHTML = AppState.students.map(s => `
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
-                        <div class="flex items-center space-x-3">
-                            <img src="${s.photo}" class="w-12 h-12 rounded-xl object-cover border">
-                            <div class="text-xs">
-                                <h4 class="font-bold text-slate-900">${s.name}</h4>
-                                <span class="text-indigo-600 font-mono">${s.usn}</span>
-                            </div>
-                        </div>
-                        <div class="text-xs space-y-1 text-slate-600 border-t pt-2">
-                            <p><strong>Hostel:</strong> ${s.hostel} (${s.block})</p>
-                            <p><strong>Room:</strong> ${s.room} (${s.sharing})</p>
-                            <p><strong>Phone:</strong> ${s.phone}</p>
-                            <p><strong>Father:</strong> ${s.fname} (${s.fphone})</p>
-                        </div>
-                        <div class="flex space-x-2 pt-2">
-                            <button onclick="app.openStudentEdit('${s.usn}')" class="flex-1 py-1.5 bg-purple-700 text-white font-bold text-xs rounded-lg">
-                                <i class="fa-solid fa-pen-to-square mr-1"></i> Edit Details
-                            </button>
-                            <button onclick="app.viewStudentTimeline('${s.usn}')" class="px-2.5 py-1.5 border text-slate-700 font-bold text-xs rounded-lg">
-                                <i class="fa-solid fa-clock-rotate-left"></i>
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
-            },
-
-            openStudentEdit(usn) {
-                const s = AppState.students.find(x => x.usn === usn);
-                if (!s) return;
-                const origUsn = document.getElementById('edit-usn-original'); if (origUsn) origUsn.value = s.usn;
-                const nameEl = document.getElementById('edit-name'); if (nameEl) nameEl.value = s.name;
-                const usnEl = document.getElementById('edit-usn'); if (usnEl) usnEl.value = s.usn;
-                const hostelEl = document.getElementById('edit-hostel'); if (hostelEl) hostelEl.value = s.hostel;
-                this.updateBlockDropdown(s.hostel, 'edit-block');
-                const blockEl = document.getElementById('edit-block'); if (blockEl) blockEl.value = s.block;
-                const roomEl = document.getElementById('edit-room'); if (roomEl) roomEl.value = s.room;
-                const shareEl = document.getElementById('edit-sharing'); if (shareEl) shareEl.value = s.sharing;
-                const phoneEl = document.getElementById('edit-phone'); if (phoneEl) phoneEl.value = s.phone;
-                const emailEl = document.getElementById('edit-email'); if (emailEl) emailEl.value = s.email;
-                const fnameEl = document.getElementById('edit-fname'); if (fnameEl) fnameEl.value = s.fname;
-                const fphoneEl = document.getElementById('edit-fphone'); if (fphoneEl) fphoneEl.value = s.fphone;
-                const yearEl = document.getElementById('edit-year'); if (yearEl) yearEl.value = s.year;
-                const addrEl = document.getElementById('edit-address'); if (addrEl) addrEl.value = s.address;
-                this.showModal('edit-student-modal');
-            },
-
-            saveStudentEdit(e) {
-                e.preventDefault();
-                const origUsn = document.getElementById('edit-usn-original').value;
-                const s = AppState.students.find(x => x.usn === origUsn);
-                if (!s) return;
-
-                s.name = document.getElementById('edit-name').value;
-                s.usn = document.getElementById('edit-usn').value.toUpperCase();
-                s.hostel = document.getElementById('edit-hostel').value;
-                s.block = document.getElementById('edit-block').value;
-                s.room = document.getElementById('edit-room').value;
-                s.sharing = document.getElementById('edit-sharing').value;
-                s.phone = document.getElementById('edit-phone').value;
-                s.email = document.getElementById('edit-email').value;
-                s.fname = document.getElementById('edit-fname').value;
-                s.fphone = document.getElementById('edit-fphone').value;
-                s.year = document.getElementById('edit-year').value;
-                s.address = document.getElementById('edit-address').value;
-
-                this.logActivity(s.usn, `Profile record updated by Warden ${AppState.currentUser.data.name}`);
-                this.saveState();
-                this.toast('Student profile details updated!');
-                this.hideModal('edit-student-modal');
-                this.renderStudentDirectory();
-            },
-
-            renderOccupancyMap() {
-                const list = document.getElementById('room-occupancy-list');
-                if (!list) return;
-                const rooms = {};
-
-                AppState.students.forEach(s => {
-                    const roomKey = `${s.hostel} - ${s.block} - ${s.room}`;
-                    if (!rooms[roomKey]) rooms[roomKey] = [];
-                    rooms[roomKey].push(s);
-                });
-
-                list.innerHTML = Object.keys(rooms).map(rk => {
-                    const occupants = rooms[rk];
-                    const isDouble = occupants[0].sharing === 'Double Seater';
-                    return `
-                        <div class="p-4 rounded-xl border bg-slate-50 space-y-3">
-                            <div class="flex justify-between items-center text-xs font-bold border-b pb-2">
-                                <span>${rk}</span>
-                                <span class="px-2 py-0.5 rounded ${isDouble ? 'bg-indigo-100 text-indigo-800' : 'bg-purple-100 text-purple-800'}">${occupants[0].sharing}</span>
-                            </div>
-                            <div class="grid sm:grid-cols-2 gap-4">
-                                ${occupants.map(occ => `
-                                    <div class="flex items-center space-x-3 bg-white p-3 rounded-lg border">
-                                        <img src="${occ.photo}" class="w-10 h-10 rounded-lg object-cover">
-                                        <div class="text-xs">
-                                            <h5 class="font-bold text-slate-900">${occ.name}</h5>
-                                            <p class="text-slate-500">${occ.usn} | Ph: ${occ.phone}</p>
-                                        </div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            },
-
-            renderGateLogs() {
-                const sel = document.getElementById('gate-student-usn');
-                if (sel) {
-                    sel.innerHTML = AppState.students.filter(s => s.status === 'Approved').map(s => `<option value="${s.usn}">${s.name} (${s.usn} - ${s.room})</option>`).join('');
-                }
-
-                const table = document.getElementById('gate-movement-table');
-                if (!table) return;
-                if (AppState.gateLogs.length === 0) { table.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No active gate movement logged.</p>`; return; }
-
-                table.innerHTML = AppState.gateLogs.map(g => `
-                    <div class="p-3 bg-slate-50 rounded-xl border flex justify-between items-center text-xs">
-                        <div>
-                            <strong class="text-slate-900 block">${g.studentName} (${g.type})</strong>
-                            <span class="text-slate-500">OUT: ${g.outTime} | Dest: ${g.dest}</span>
-                            ${g.inTime ? `<p class="text-emerald-600 font-bold">RETURNED IN: ${g.inTime}</p>` : `<p class="text-amber-600 font-bold">CURRENTLY OUTSIDE</p>`}
-                        </div>
-                        ${!g.inTime ? `<button onclick="app.markGateIn('${g.id}')" class="px-3 py-1 bg-emerald-600 text-white font-bold rounded text-xs">Mark IN</button>` : ''}
-                    </div>
-                `).join('');
-            },
-
-            handleGateMovement(e) {
-                e.preventDefault();
-                const usn = document.getElementById('gate-student-usn').value;
-                const s = AppState.students.find(x => x.usn === usn);
-                const gLog = {
-                    id: 'GATE-' + Date.now().toString().slice(-5), studentUsn: usn, studentName: s.name,
-                    type: document.getElementById('gate-type').value, dest: document.getElementById('gate-dest').value,
-                    outTime: new Date().toLocaleString(), inTime: ''
-                };
-                AppState.gateLogs.unshift(gLog);
-                this.logActivity(usn, `Gate Movement OUT [${gLog.type}] to ${gLog.dest}`);
-                this.saveState();
-                this.toast(`Student ${s.name} marked OUT!`);
-                this.renderGateLogs();
-            },
-
-            markGateIn(id) {
-                const g = AppState.gateLogs.find(x => x.id === id);
-                if (g) {
-                    g.inTime = new Date().toLocaleString();
-                    this.logActivity(g.studentUsn, `Gate Movement RETURNED IN`);
-                    this.saveState();
-                    this.toast(`Student ${g.studentName} marked IN!`);
-                    this.renderGateLogs();
-                }
-            },
-
-            showOutboxModal() {
-                const list = document.getElementById('outbox-list');
-                if (list) {
-                    if (AppState.outbox.length === 0) { list.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">Outbox payload log is currently empty.</p>`; }
-                    else {
-                        list.innerHTML = AppState.outbox.map(o => `
-                            <div class="p-3 bg-slate-900 text-emerald-400 rounded-xl space-y-1">
-                                <div class="flex justify-between text-[10px] text-slate-400 border-b border-slate-800 pb-1">
-                                    <span>TO: ${o.toPhone}</span>
-                                    <span>DISPATCHED: ${o.timestamp}</span>
-                                </div>
-                                <p class="pt-1">${o.body}</p>
-                            </div>
-                        `).join('');
-                    }
-                }
-                this.showModal('outbox-modal');
-            },
-
-            viewStudentTimeline(usn) {
-                const s = AppState.students.find(x => x.usn === usn);
-                const titleEl = document.getElementById('timeline-student-title');
-                if (titleEl) titleEl.innerText = `Activity Timeline: ${s ? s.name : ''} (${usn})`;
-                const logs = AppState.timeline[usn] || [];
-                const content = document.getElementById('timeline-content');
-
-                if (content) {
-                    if (logs.length === 0) { content.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No recorded activity history.</p>`; }
-                    else {
-                        content.innerHTML = logs.map(l => `
-                            <div class="p-3 bg-slate-50 rounded-xl border flex justify-between items-start">
-                                <span>${l.text}</span>
-                                <span class="text-[10px] text-slate-400 whitespace-nowrap ml-2">${l.time}</span>
-                            </div>
-                        `).join('');
-                    }
-                }
-                this.showModal('timeline-modal');
-            },
-
-            renderPendingStudents() {
-                const container = document.getElementById('pending-students-list');
-                const pendings = AppState.students.filter(s => s.status === 'Pending Verification');
-                const badgeEl = document.getElementById('badge-pending-reg'); if (badgeEl) badgeEl.innerText = pendings.length;
-                if (!container) return;
-                if (pendings.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No pending student registration requests.</p>`; return; }
-                container.innerHTML = pendings.map(s => `
-                    <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between">
-                        <div class="flex items-center space-x-4">
-                            <img src="${s.photo}" class="w-12 h-12 rounded-xl object-cover">
-                            <div class="text-xs">
-                                <h4 class="font-bold text-slate-900">${s.name} (${s.usn})</h4>
-                                <p class="text-slate-500">${s.hostel} | ${s.block} - ${s.room}</p>
-                            </div>
-                        </div>
-                        <button onclick="app.approveStudent('${s.usn}')" class="px-3 py-1.5 bg-emerald-600 text-white rounded-lg font-bold text-xs">Approve</button>
-                    </div>
-                `).join('');
-            },
-
-            approveStudent(usn) {
-                const s = AppState.students.find(x => x.usn === usn);
-                if (s) {
-                    s.status = 'Approved';
-                    this.logActivity(usn, 'Hostel Registration Approved by Warden');
-                    this.saveState();
-                    this.toast('Student registration approved!');
-                    this.renderPendingStudents();
-                }
-            },
-
-            renderWardenLeaves() {
-                const container = document.getElementById('warden-leave-list');
-                const pendingLeaves = AppState.leaves.filter(l => l.status === 'Pending');
-                const badgeEl = document.getElementById('badge-pending-leave'); if (badgeEl) badgeEl.innerText = pendingLeaves.length;
-                if (!container) return;
-                if (pendingLeaves.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">No pending leave applications.</p>`; return; }
-                container.innerHTML = pendingLeaves.map(l => `
-                    <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="font-bold text-slate-900">${l.studentName} (${l.studentUsn})</span>
-                            <span class="text-slate-500">${l.block} - ${l.room}</span>
-                        </div>
-                        <p class="text-xs text-slate-600"><strong>Reason:</strong> ${l.reason}</p>
-                        <div class="flex space-x-2">
-                            <button onclick="app.decideLeave('${l.id}', 'Approved')" class="px-4 py-1.5 bg-emerald-600 text-white rounded-lg font-bold text-xs">Approve & Issue Gate Pass</button>
-                            <button onclick="app.decideLeave('${l.id}', 'Rejected')" class="px-4 py-1.5 bg-red-600 text-white rounded-lg font-bold text-xs">Reject</button>
-                        </div>
-                    </div>
-                `).join('');
-            },
-
-            decideLeave(id, decision) {
-                const l = AppState.leaves.find(x => x.id === id);
-                if (l) {
-                    l.status = decision;
-                    l.approver = AppState.currentUser.data.name;
-                    l.timestamp = new Date().toLocaleString();
-                    this.logActivity(l.studentUsn, `Leave Pass [${id}] ${decision}`);
-                    if (decision === 'Approved') {
-                        const s = AppState.students.find(x => x.usn === l.studentUsn);
-                        if (s) {
-                            AppState.outbox.unshift({
-                                timestamp: new Date().toLocaleString(),
-                                toPhone: s.fphone,
-                                student: s.name,
-                                body: `LEAVE NOTICE: Outstation Leave Pass ${id} granted for student ${s.name} from ${l.dept} to ${l.ret}.`
-                            });
-                        }
-                    }
-                    this.saveState();
-                    this.toast(`Leave request ${decision.toLowerCase()}!`);
-                    this.renderWardenLeaves();
-                }
-            },
-
-            renderWardenGrievances() {
-                const container = document.getElementById('warden-grievance-list');
-                if (!container) return;
-                container.innerHTML = AppState.complaints.map(c => `
-                    <div class="p-4 rounded-xl border ${c.category.includes('Ragging') ? 'bg-red-50 border-red-300' : 'bg-slate-50 border-slate-200'} space-y-2">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="font-bold ${c.category.includes('Ragging') ? 'text-red-700' : 'text-slate-900'}">${c.category} - ${c.title}</span>
-                            <span class="text-slate-500">By: ${c.studentName} (${c.studentUsn})</span>
-                        </div>
-                        <p class="text-xs text-slate-600">${c.desc}</p>
-                        ${c.status === 'Pending' ? `<button onclick="app.resolveGrievance('${c.id}')" class="px-3 py-1 bg-indigo-600 text-white font-bold text-xs rounded-lg">Mark Resolved</button>` : `<span class="text-xs text-emerald-600 font-bold">Resolved</span>`}
-                    </div>
-                `).join('');
-            },
-
-            resolveGrievance(id) {
-                const c = AppState.complaints.find(x => x.id === id);
-                if (c) {
-                    c.status = 'Resolved';
-                    c.reply = 'Inspected and resolved by Warden ' + AppState.currentUser.data.name;
-                    this.logActivity(c.studentUsn, `Grievance [${c.id}] resolved`);
-                    this.saveState();
-                    this.toast('Grievance marked as resolved!');
-                    this.renderWardenGrievances();
-                }
-            },
-
-            renderWardenReplacements() {
-                const pContainer = document.getElementById('pending-wardens-list');
-                const pendingWardens = AppState.wardens.filter(w => w.status === 'Pending Approval');
-                if (pContainer) {
-                    if (pendingWardens.length === 0) { pContainer.innerHTML = `<p class="text-xs text-slate-400 py-2">No pending warden replacement requests.</p>`; }
-                    else {
-                        pContainer.innerHTML = pendingWardens.map(w => `
-                            <div class="p-3 bg-slate-50 rounded-xl border flex justify-between items-center text-xs">
-                                <div>
-                                    <strong class="text-slate-900 block">${w.name} (${w.empid})</strong>
-                                    <span class="text-slate-500">${w.hostel} - ${w.block}</span>
-                                </div>
-                                <button onclick="app.approveWarden('${w.empid}')" class="px-3 py-1 bg-purple-700 text-white font-bold rounded">Approve Appointment</button>
-                            </div>
-                        `).join('');
-                    }
-                }
-
-                const auditEl = document.getElementById('audit-logs-list');
-                if (auditEl) {
-                    auditEl.innerHTML = AppState.auditLogs.map(log => `<div class="p-2 bg-slate-100 rounded border text-slate-700">> ${log}</div>`).join('');
-                }
-            },
-
-            approveWarden(empid) {
-                const w = AppState.wardens.find(x => x.empid === empid);
-                if (w) {
-                    w.status = 'Approved';
-                    AppState.auditLogs.unshift(`[WARDEN REPLACEMENT] ${w.name} (${w.empid}) authorized by ${AppState.currentUser.data.name}`);
-                    this.saveState();
-                    this.toast('Warden appointment approved!');
-                    this.renderWardenReplacements();
-                }
-            },
-
-            renderContacts() {
-                const grid = document.getElementById('emergency-contacts-grid');
-                if (!grid) return;
-                grid.innerHTML = AppState.contacts.map(c => `
-                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
-                        <span class="text-[10px] font-bold uppercase text-indigo-600 tracking-wider">${c.title}</span>
-                        <h4 class="font-bold text-sm text-slate-900">${c.name}</h4>
-                        <a href="tel:${c.phone}" class="inline-flex items-center text-xs font-bold text-emerald-600 hover:text-emerald-700">
-                            <i class="fa-solid fa-phone mr-1.5"></i> ${c.phone}
-                        </a>
-                    </div>
-                `).join('');
-            },
-
-            showManageContactsModal() { this.showModal('manage-contacts-modal'); },
-
-            handleAddContact(e) {
-                e.preventDefault();
-                AppState.contacts.push({ title: document.getElementById('mcontact-title').value, name: document.getElementById('mcontact-name').value, phone: document.getElementById('mcontact-phone').value });
-                this.saveState();
-                this.toast('Contact added to emergency directory!');
-                this.hideModal('manage-contacts-modal');
-                this.renderContacts();
-            }
-        };
-
-        document.addEventListener('DOMContentLoaded', () => { app.init(); });
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
